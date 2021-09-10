@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThoughtDef>
+    <defName>BOT_Misanthrope_Thought</defName>
+    <thoughtClass>Thought_SituationalSocial</thoughtClass>
+    <workerClass>More_Traits.ThoughtWorker_Misanthrope</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <requiredTraits>
+      <li>BOT_Misanthrope</li>
+    </requiredTraits>
+    <stages>
+      <li>
+        <label>misanthrope hates everyone</label>
+        <description>misanthrope hates everyone</description>
+        <baseOpinionOffset>-25</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>

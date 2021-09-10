@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<!-- Normal food consumtion thoughts -->
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="AteLavishMeal"]</xpath>
+		<value>
+			<nullifyingTraits>
+				<li>BOT_Dysgeusia</li>
+			</nullifyingTraits>
+		</value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="AteFineMeal"]</xpath>
+		<value>
+			<nullifyingTraits>
+				<li>BOT_Dysgeusia</li>
+			</nullifyingTraits>
+		</value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="AteRawFood"]</xpath>
+		<value>
+			<nullifyingTraits>
+				<li>BOT_Dysgeusia</li>
+			</nullifyingTraits>
+		</value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="AteKibble"]</xpath>
+		<value>
+			<nullifyingTraits>
+				<li>BOT_Dysgeusia</li>
+			</nullifyingTraits>
+		</value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="AteInsectMeatDirect"]</xpath>
+		<value>
+			<nullifyingTraits>
+				<li>BOT_Dysgeusia</li>
+			</nullifyingTraits>
+		</value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="AteInsectMeatAsIngredient"]</xpath>
+		<value>
+			<nullifyingTraits>
+				<li>BOT_Dysgeusia</li>
+			</nullifyingTraits>
+		</value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="AteNutrientPasteMeal"]</xpath>
+		<value>
+			<nullifyingTraits>
+				<li>BOT_Dysgeusia</li>
+			</nullifyingTraits>
+		</value>
+	</Operation>
+	
+	<!-- Royality food needs -->
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>Royality</li>
+		</mods>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteFoodInappropriateForTitle"]</xpath>
+			<value>
+				<nullifyingTraits>
+				<li>BOT_Dysgeusia</li>
+				</nullifyingTraits>
+			</value>
+		</match>
+	</Operation>
+</Patch>

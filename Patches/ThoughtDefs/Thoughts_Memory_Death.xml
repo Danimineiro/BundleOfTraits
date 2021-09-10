@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+	<!-- Pacifist death thoughts -->
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="PawnWithBadOpinionDied"]</xpath>
+		<value>
+			<nullifyingTraits>
+				<li>BOT_Pacifist</li>
+			</nullifyingTraits>
+		</value>
+	</Operation>
+</Patch>
