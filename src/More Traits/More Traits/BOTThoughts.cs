@@ -153,9 +153,9 @@ namespace More_Traits
 	{
 		static BOTDefOf()
         {
-			DefOfHelper.EnsureInitializedInCtor(typeof(TraitDef));
-			DefOfHelper.EnsureInitializedInCtor(typeof(ThoughtDef));
-			DefOfHelper.EnsureInitializedInCtor(typeof(PreceptDef));
+			DefOfHelper.EnsureInitializedInCtor(typeof(TraitDefOf));
+			DefOfHelper.EnsureInitializedInCtor(typeof(ThoughtDefOf));
+			DefOfHelper.EnsureInitializedInCtor(typeof(PreceptDefOf));
 		}
 
 		public static TraitDef BOT_Misanthrope;
