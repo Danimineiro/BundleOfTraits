@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+	<!-- Love temperature Thoughts -->
 	<ThoughtDef>
 		<defName>BOT_EnvironmentCold</defName>
 		<workerClass>More_Traits.BOT_ThoughtWorker_Cold</workerClass>
@@ -70,5 +71,18 @@
 		<requiredTraits>
 			<li>BOT_Temperature_Love</li>
 		</requiredTraits>
+	</ThoughtDef>
+
+	<!-- Nyctophobia Darkness Double debuff -->
+	<ThoughtDef>
+		<defName>EnvironmentDark</defName>
+		<workerClass>ThoughtWorker_Dark</workerClass>
+		<stages>
+			<li>
+				<label>darkness</label>
+				<description>I've been in the dark for a while. I really don't like it.</description>
+				<baseMoodEffect>-10</baseMoodEffect>
+			</li>
+		</stages>
 	</ThoughtDef>
 </Defs>

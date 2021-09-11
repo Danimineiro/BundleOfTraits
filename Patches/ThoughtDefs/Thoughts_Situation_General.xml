@@ -8,11 +8,21 @@
 			</nullifyingTraits>
 		</value>
 	</Operation>
+	
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThoughtDef[defName="EnvironmentHot"]</xpath>
 		<value>
 			<nullifyingTraits>
 				<li>BOT_Temperature_Love</li>
+			</nullifyingTraits>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="EnvironmentDark"]</xpath>
+		<value>
+			<nullifyingTraits>
+				<li>BOT_Nyctophobia</li>
 			</nullifyingTraits>
 		</value>
 	</Operation>
