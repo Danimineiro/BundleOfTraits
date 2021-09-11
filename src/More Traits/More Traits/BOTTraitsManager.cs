@@ -74,7 +74,7 @@ namespace More_Traits
 							float closestFireDistance = fires.Min(fire => fire.Position.DistanceTo(pawn.Position));
 							if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
 							{
-								Utils.MakeFlee(pawn, fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires, true);
+								BOTUtils.MakeFlee(pawn, fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires, true);
 							}
 						}
 					}
@@ -163,54 +163,6 @@ namespace More_Traits
 		public static void Prefix(Pawn __instance)
 		{
 			Current.Game.GetComponent<BOTTraitsManager>().RemoveDestroyedPawnFromSets(__instance);
-		}
-	}
-
-	public static class Utils
-	{
-		public static void MakeFlee(Pawn pawn, Thing threat, int distance, List<Thing> threats, bool stayWhenNowhereToGo = false)
-		{
-			MakeFlee(pawn, threat, new IntVec2(distance, distance), threats, stayWhenNowhereToGo);
-		}
-
-		public static void MakeFlee(Pawn pawn, Thing threat, int minDistance, int maxDistance, List<Thing> threats, bool stayWhenNowhereToGo = false)
-		{
-			MakeFlee(pawn, threat, new IntVec2(minDistance, maxDistance), threats, stayWhenNowhereToGo);
-		}
-
-		public static void MakeFlee(Pawn pawn, Thing threat, IntVec2 distance, List<Thing> threats, bool stayWhenNowhereToGo = false)
-		{
-			if (distance.x > distance.z)
-			{
-				Log.Warning("MakeFlee was called where minDistance was bigger than maxDistance. Min: " + distance.x + " Max: " + distance.z + "!");
-				distance.z = distance.x;
-			}
-
-			Job job = null;
-			IntVec3 intVec3;
-			if (pawn.CurJob != null && pawn.CurJob.def == JobDefOf.Flee)
-			{
-				//Continue Fleeing
-				intVec3 = pawn.CurJob.targetA.Cell;
-			}
-			else
-			{
-				//Find a place to flee to
-				intVec3 = CellFinderLoose.GetFleeDest(pawn, threats, Rand.Range(distance.x, distance.z));
-			}
-			if (intVec3 == pawn.Position && !stayWhenNowhereToGo)
-			{
-				//Find a random place to flee to because there was nowhere to go
-				intVec3 = GenRadial.RadialCellsAround(pawn.Position, (float)distance.x, (float)(distance.z)).RandomElement();
-			}
-			if (intVec3 != pawn.Position)
-			{
-				job = JobMaker.MakeJob(JobDefOf.Flee, intVec3, threat);
-			}
-			if (job != null)
-			{
-				pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc, false);
-			}
 		}
 	}
 }

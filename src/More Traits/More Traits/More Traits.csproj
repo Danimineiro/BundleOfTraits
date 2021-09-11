@@ -65,6 +65,7 @@
     <Compile Include="BOTThoughtPatches.cs" />
     <Compile Include="BOTThoughts.cs" />
     <Compile Include="BOTTraitsManager.cs" />
+    <Compile Include="BOTUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
