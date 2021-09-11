@@ -67,4 +67,31 @@
 			</li>
 		</stages>
 	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_PyrophobicBurned</defName>
+		<workerClass>More_Traits.BOT_ThoughtWorker_PyrophobicBurned</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<requiredTraits>
+			<li>BOT_Pyrophobia</li>
+		</requiredTraits>
+		<nullifyingTraits>
+			<li>Masochist</li>
+		</nullifyingTraits>
+		<neverNullifyIfAnyTrait>
+			<li>Wimp</li>
+		</neverNullifyIfAnyTrait>
+		<stages>
+			<li>
+				<label>pyrophobic has burns</label>
+				<description>These burns remind me of scolding hot flames...</description>
+				<baseMoodEffect>-12</baseMoodEffect>
+			</li>
+			<li>
+				<label>pyrophobic has burns</label>
+				<description>These burns remind me of scolding hot flames...</description>
+				<baseMoodEffect>-8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
 </Defs>

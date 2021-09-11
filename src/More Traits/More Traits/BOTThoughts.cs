@@ -132,9 +132,32 @@ namespace More_Traits
 		}
 	}
 
+	public class BOT_ThoughtWorker_PyrophobicBurned : ThoughtWorker
+    {
+		protected override ThoughtState CurrentStateInternal(Pawn p)
+		{
+			if (p.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Burn) != null)
+			{
+				if (ModsConfig.IdeologyActive && p.Ideo.HasPrecept(BOTDefOf.Pain_Idealized))
+				{
+					return ThoughtState.ActiveAtStage(1);
+				}
+				return ThoughtState.ActiveAtStage(0);
+			}
+			return false;
+		}
+	}
+
 	[DefOf]
 	public static class BOTDefOf
 	{
+		static BOTDefOf()
+        {
+			DefOfHelper.EnsureInitializedInCtor(typeof(TraitDef));
+			DefOfHelper.EnsureInitializedInCtor(typeof(ThoughtDef));
+			DefOfHelper.EnsureInitializedInCtor(typeof(PreceptDef));
+		}
+
 		public static TraitDef BOT_Misanthrope;
 
 		public static TraitDef BOT_Dysgeusia;
@@ -174,5 +197,10 @@ namespace More_Traits
 		public static ThoughtDef BOT_PyrophobiaHoldingIncendiary;
 
 		public static ThoughtDef BOT_EclecticPalateAte;
+
+		public static ThoughtDef BOT_PyrophobicBurned;
+
+		[MayRequireIdeology]
+		public static PreceptDef Pain_Idealized;
 	}
 }
