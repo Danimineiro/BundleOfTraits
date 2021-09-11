@@ -113,6 +113,27 @@
 				<description>I'm getting out of here! This is insane!</description>
 				<baseMoodEffect>-18</baseMoodEffect>
 			</li>
+			<li>
+				<label>pyrophobic burning</label>
+				<description>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</description>
+				<baseMoodEffect>-100</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_PyrophobicOnFire</defName>
+		<workerClass>More_Traits.BOT_ThoughtWorker_PyrophobicOnFire</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<requiredTraits>
+			<li>BOT_Pyrophobia</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>pyrophobic burning</label>
+				<description>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</description>
+				<baseMoodEffect>-100</baseMoodEffect>
+			</li>
 		</stages>
 	</ThoughtDef>
 </Defs>

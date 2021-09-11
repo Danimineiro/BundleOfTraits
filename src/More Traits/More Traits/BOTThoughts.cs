@@ -22,6 +22,14 @@ namespace More_Traits
 		}
 	}
 
+	public class BOT_ThoughtWorker_PyrophobicOnFire : ThoughtWorker
+	{
+		protected override ThoughtState CurrentStateInternal(Pawn p)
+		{
+			return p.IsBurning();
+		}
+	}
+
 	public class BOT_ThoughtWorker_Hot : ThoughtWorker
 	{
 		protected override ThoughtState CurrentStateInternal(Pawn p)
