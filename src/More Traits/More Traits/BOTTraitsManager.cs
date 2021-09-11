@@ -15,8 +15,11 @@ namespace More_Traits
 		public static string src = "I made a lot of code in this looking at Vanilla Traits Expanded. Check out their mod at: https://steamcommunity.com/sharedfiles/filedetails/?id=2296404655";
 		private static IntVec2 PyrophobeMinMaxFleeDistance = new IntVec2(12,24);
 
-		public static HashSet<Pawn> Narcoleptics;
+		public static Dictionary<Pawn, int> Narcoleptics;
 		public static HashSet<Pawn> Pyrophobics;
+
+		private List<Pawn> NarcolepticPawnKeys = new List<Pawn>();
+		private List<int> NarcolepticPawnInts = new List<int>();
 
 		static BOTTraitsManager()
 		{
@@ -28,10 +31,8 @@ namespace More_Traits
 
 		public void PreInit()
 		{
-			if (Narcoleptics == null) Narcoleptics = new HashSet<Pawn>();
+			if (Narcoleptics == null) Narcoleptics = new Dictionary<Pawn, int>();
 			if (Pyrophobics == null) Pyrophobics = new HashSet<Pawn>();
-
-			RemoveWrongPawnsFromSets();
 		}
 
 		public override void LoadedGame()
@@ -51,10 +52,6 @@ namespace More_Traits
 			base.GameComponentTick();
 			if (GameTicksDivisibleBy(300))
 			{
-				foreach (Pawn pawn in Narcoleptics)
-				{
-				}
-
 				Dictionary<Map, List<Thing>> MapFireDic = new Dictionary<Map, List<Thing>>();
 				foreach (Pawn pawn in Pyrophobics)
 				{
@@ -97,6 +94,63 @@ namespace More_Traits
 					}
 				}
 			}
+
+			if (GameTicksDivisibleBy(1000))
+			{
+				HashSet<Pawn> reset = new HashSet<Pawn>();
+				HashSet<Pawn> increment = new HashSet<Pawn>();
+				foreach (KeyValuePair<Pawn, int> keyValuePair in Narcoleptics)
+				{
+					float sleepChance = 0.03125f;
+					if (Narcoleptics[keyValuePair.Key] > 120000)
+					{
+						sleepChance = 0.25f;
+					}
+					else if (Narcoleptics[keyValuePair.Key] > 60000)
+					{
+						sleepChance = 0.125f;
+					}
+					else if (Narcoleptics[keyValuePair.Key] > 30000)
+					{
+						sleepChance = 0.0625f;
+					}
+
+					if (Narcoleptics[keyValuePair.Key] > 15000 && keyValuePair.Key.Spawned)
+					{
+						if (Rand.Value > sleepChance && (keyValuePair.Key.CurJob == null || keyValuePair.Key.CurJob.def != JobDefOf.LayDown))
+						{
+							keyValuePair.Key.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, keyValuePair.Key.Position), JobCondition.InterruptForced, null, false, true, null, new JobTag?(JobTag.SatisfyingNeeds), false, false);
+							if (keyValuePair.Key.InMentalState && keyValuePair.Key.MentalStateDef.recoverFromCollapsingExhausted)
+							{
+								keyValuePair.Key.mindState.mentalStateHandler.CurState.RecoverFromState();
+							}
+							if (PawnUtility.ShouldSendNotificationAbout(keyValuePair.Key))
+							{
+								Messages.Message("BOTNarcolepticInvoluntarySleep".Translate(keyValuePair.Key.LabelShort, keyValuePair.Key), keyValuePair.Key, MessageTypeDefOf.NegativeEvent, true);
+							}
+							reset.Add(keyValuePair.Key);
+						}
+					}
+					else
+					{
+						if (!(keyValuePair.Key.jobs != null && keyValuePair.Key.jobs.curDriver != null && keyValuePair.Key.jobs.curDriver.asleep))
+						{
+							increment.Add(keyValuePair.Key);
+						}
+					}
+				}
+
+				foreach (Pawn p in reset)
+				{
+					Narcoleptics[p] = 0;
+				}
+
+				foreach (Pawn p in increment)
+				{
+					Narcoleptics[p] += 1000;
+				}
+			}
+
 			if (GameTicksDivisibleBy(2000))
 			{
 				RemoveWrongPawnsFromSets();
@@ -115,7 +169,7 @@ namespace More_Traits
 				if (pawn.story.traits.HasTrait(BOTDefOf.BOT_Narcoleptic))
 				{
 					PreInit();
-					Narcoleptics.Add(pawn);
+					Narcoleptics[pawn] = 0;
 				}
 
 				if (pawn.story.traits.HasTrait(BOTDefOf.BOT_Pyrophobia))
@@ -129,19 +183,32 @@ namespace More_Traits
 		public override void ExposeData()
 		{
 			base.ExposeData();
-			Scribe_Collections.Look<Pawn>(ref Narcoleptics, "Narcoleptics", LookMode.Reference);
+			Scribe_Collections.Look<Pawn, int>(ref Narcoleptics, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
 			Scribe_Collections.Look<Pawn>(ref Pyrophobics, "Pyrophobics", LookMode.Reference);
 		}
 
 		public void RemoveWrongPawnsFromSets()
 		{
-			Narcoleptics.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTDefOf.BOT_Narcoleptic));
+			List<Pawn> removeNarcoleptic = new List<Pawn>();
+			foreach (KeyValuePair<Pawn, int> keyValuePair in Narcoleptics)
+			{
+				if (!keyValuePair.Key.story.traits.HasTrait(BOTDefOf.BOT_Narcoleptic))
+				{
+					removeNarcoleptic.Add(keyValuePair.Key);
+				}
+			}
+
+			foreach(Pawn p in removeNarcoleptic)
+			{
+				Narcoleptics.Remove(p);
+			}
+
 			Pyrophobics.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTDefOf.BOT_Pyrophobia));
 		}
 
 		public void RemoveDestroyedPawnFromSets(Pawn pawn)
 		{
-			Narcoleptics.RemoveWhere((Pawn p) => p == pawn);
+			Narcoleptics.Remove(pawn);
 			Pyrophobics.RemoveWhere((Pawn p) => p == pawn);
 		}
 	}
