@@ -75,7 +75,7 @@
 
 	<!-- Nyctophobia Darkness Double debuff -->
 	<ThoughtDef>
-		<defName>EnvironmentDark</defName>
+		<defName>BOT_EnvironmentDark</defName>
 		<workerClass>ThoughtWorker_Dark</workerClass>
 		<stages>
 			<li>

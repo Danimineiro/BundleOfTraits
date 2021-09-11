@@ -19,11 +19,9 @@
 	</Operation>
 	
 	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThoughtDef[defName="EnvironmentDark"]</xpath>
+		<xpath>/Defs/ThoughtDef[defName="EnvironmentDark"]/nullifyingTraits</xpath>
 		<value>
-			<nullifyingTraits>
-				<li>BOT_Nyctophobia</li>
-			</nullifyingTraits>
+			<li>BOT_Nyctophobia</li>
 		</value>
 	</Operation>
 </Patch>
