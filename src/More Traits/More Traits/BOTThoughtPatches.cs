@@ -12,7 +12,7 @@ namespace More_Traits
 	{
 		static BOTThoughtPatches()
 		{
-			var harmony = new Harmony("dani.BOT.patch");
+			var harmony = new Harmony("dani.BOT.thoughts");
 			harmony.PatchAll();
 		}
 	}
