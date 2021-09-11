@@ -154,7 +154,7 @@
 			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_DrunkenMaster</li>
 		</conflictingTraits>
 		<requiredWorkTags>
-  		    <li>Violent</li>
+			<li>Violent</li>
 		 </requiredWorkTags>
 	</TraitDef>
 	
