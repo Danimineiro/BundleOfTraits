@@ -58,23 +58,40 @@ namespace More_Traits
 				Dictionary<Map, List<Thing>> MapFireDic = new Dictionary<Map, List<Thing>>();
 				foreach (Pawn pawn in Pyrophobics)
 				{
-					if (!pawn.Drafted && pawn.Map != null && pawn.Map.fireWatcher.FireDanger > 0)
+					if (pawn.Map != null && pawn.Map.fireWatcher.FireDanger > 0)
 					{
 						List<Thing> fires = null;
 
 						if (MapFireDic.ContainsKey(pawn.Map))
 						{
 							fires = MapFireDic[pawn.Map];
-						} else {
+						}
+						else
+						{
 							fires = pawn.Map.listerThings.ThingsOfDef(ThingDefOf.Fire);
 						}
 
-						if (fires != null && fires.Count != 0)
+						if (!pawn.Drafted)
 						{
-							float closestFireDistance = fires.Min(fire => fire.Position.DistanceTo(pawn.Position));
-							if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
+							if (fires != null && fires.Count != 0)
 							{
-								BOTUtils.MakeFlee(pawn, fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires, true);
+								float closestFireDistance = fires.Min(fire => fire.Position.DistanceTo(pawn.Position));
+								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
+								{
+									BOTUtils.MakeFlee(pawn, fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires, true);
+									pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTDefOf.BOT_PyrophobicNearFire, 1));
+								}
+							}
+						}
+						else if (pawn.Drafted)
+						{
+							if (fires != null && fires.Count != 0)
+							{
+								float closestFireDistance = fires.Min(fire => fire.Position.DistanceTo(pawn.Position));
+								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
+								{
+									pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTDefOf.BOT_PyrophobicNearFire, 0));
+								}
 							}
 						}
 					}

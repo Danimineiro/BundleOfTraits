@@ -200,6 +200,8 @@ namespace More_Traits
 
 		public static ThoughtDef BOT_PyrophobicBurned;
 
+		public static ThoughtDef BOT_PyrophobicNearFire;
+
 		[MayRequireIdeology]
 		public static PreceptDef Pain_Idealized;
 	}

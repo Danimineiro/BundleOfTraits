@@ -94,4 +94,25 @@
 			</li>
 		</stages>
 	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_PyrophobicNearFire</defName>
+		<validWhileDespawned>true</validWhileDespawned>
+		<durationDays>0.010417</durationDays>
+		<requiredTraits>
+			<li>BOT_Pyrophobia</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>pyrophobic drafted near fire</label>
+				<description>Keep it away from me.. Keep it away from me.. Keep it away from me..</description>
+				<baseMoodEffect>-30</baseMoodEffect>
+			</li>
+			<li>
+				<label>pyrophobic running from fire</label>
+				<description>I'm getting out of here! This is insane!</description>
+				<baseMoodEffect>-18</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
 </Defs>
