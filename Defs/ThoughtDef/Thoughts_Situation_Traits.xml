@@ -84,12 +84,12 @@
 		<stages>
 			<li>
 				<label>pyrophobic has burns</label>
-				<description>These burns remind me of scolding hot flames...</description>
+				<description>These burns remind me of scalding hot flames...</description>
 				<baseMoodEffect>-12</baseMoodEffect>
 			</li>
 			<li>
 				<label>pyrophobic has burns</label>
-				<description>These burns remind me of scolding hot flames...</description>
+				<description>These burns remind me of scalding hot flames...</description>
 				<baseMoodEffect>-8</baseMoodEffect>
 			</li>
 		</stages>
