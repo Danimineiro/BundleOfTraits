@@ -62,6 +62,10 @@ namespace More_Traits
 		public static ThoughtDef BOT_PyrophobicBurned;
 
 		public static ThoughtDef BOT_PyrophobicNearFire;
+
+		public static ThoughtDef BOT_PyrophobicOnFire;
+
+		public static ThoughtDef BOT_LovesSleepWellRested;
 	}
 
 	[DefOf]
@@ -75,4 +79,15 @@ namespace More_Traits
 		[MayRequireIdeology]
 		public static PreceptDef Pain_Idealized;
 	}
+
+	[DefOf]
+	public static class BOTJoyKindDefOf
+	{
+		static BOTJoyKindDefOf()
+        {
+			DefOfHelper.EnsureInitializedInCtor(typeof(JoyKindDefOf));
+		}
+
+		public static JoyKindDef BOT_LovesSleepSleeping;
+    }
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- Loves Sleeping Joy -->
+	<JoyKindDef>
+		<defName>BOT_LovesSleepSleeping</defName>
+		<label>sleep lover sleeping</label>
+	</JoyKindDef>
+</Defs>

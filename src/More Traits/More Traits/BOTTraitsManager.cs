@@ -15,11 +15,15 @@ namespace More_Traits
 		public static string src = "I made a lot of code in this looking at Vanilla Traits Expanded. Check out their mod at: https://steamcommunity.com/sharedfiles/filedetails/?id=2296404655";
 		private static IntVec2 PyrophobeMinMaxFleeDistance = new IntVec2(12,24);
 
-		public static Dictionary<Pawn, int> Narcoleptics;
-		public static HashSet<Pawn> Pyrophobics;
+		private static Dictionary<Pawn, float> Loves_Sleep;
+		private static Dictionary<Pawn, int> Narcoleptics;
+		private static HashSet<Pawn> Pyrophobics;
 
 		private List<Pawn> NarcolepticPawnKeys = new List<Pawn>();
 		private List<int> NarcolepticPawnInts = new List<int>();
+
+		private List<Pawn> Loves_SleepPawnKeys = new List<Pawn>();
+		private List<float> Loves_SleepInitialRestPercentage = new List<float>();
 
 		static BOTTraitsManager()
 		{
@@ -33,6 +37,7 @@ namespace More_Traits
 		{
 			if (Narcoleptics == null) Narcoleptics = new Dictionary<Pawn, int>();
 			if (Pyrophobics == null) Pyrophobics = new HashSet<Pawn>();
+			if (Loves_Sleep == null) Loves_Sleep = new Dictionary<Pawn, float>();
 		}
 
 		public override void LoadedGame()
@@ -162,19 +167,19 @@ namespace More_Traits
 			return (Find.TickManager.TicksGame % n == 0);
 		}
 
+		//This runs on game load when a pawn is spawned so PreInit should always get executed
 		public void AddPawn(Pawn pawn)
 		{
+			PreInit();
 			if (pawn.story != null && pawn.story.traits != null)
 			{
 				if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Narcoleptic))
 				{
-					PreInit();
 					Narcoleptics[pawn] = 0;
 				}
 
 				if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia))
 				{
-					PreInit();
 					Pyrophobics.Add(pawn);
 				}
 			}
@@ -184,6 +189,7 @@ namespace More_Traits
 		{
 			base.ExposeData();
 			Scribe_Collections.Look<Pawn, int>(ref Narcoleptics, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
+			Scribe_Collections.Look<Pawn, float>(ref Loves_Sleep, "Loves_Sleep", LookMode.Reference, LookMode.Value, ref Loves_SleepPawnKeys, ref Loves_SleepInitialRestPercentage);
 			Scribe_Collections.Look<Pawn>(ref Pyrophobics, "Pyrophobics", LookMode.Reference);
 		}
 
@@ -211,6 +217,11 @@ namespace More_Traits
 			Narcoleptics.Remove(pawn);
 			Pyrophobics.RemoveWhere((Pawn p) => p == pawn);
 		}
+
+		public Dictionary<Pawn, float> GetLoves_SleepDic()
+        {
+			return Loves_Sleep;
+        }
 	}
 
 	[StaticConstructorOnStartup]
@@ -224,7 +235,7 @@ namespace More_Traits
 	}
 
 	[HarmonyPatch(typeof(TraitSet), "GainTrait")]
-	public static class GainTrait_Patch
+	public static class GainTraitPatch
 	{
 		public static void Postfix(Pawn ___pawn)
 		{
@@ -233,7 +244,7 @@ namespace More_Traits
 	}
 
 	[HarmonyPatch(typeof(Pawn), "SpawnSetup")]
-	public static class SpawnSetup_Patch
+	public static class SpawnSetupPatch
 	{
 		public static void Postfix(Pawn __instance)
 		{
@@ -242,7 +253,7 @@ namespace More_Traits
 	}
 
 	[HarmonyPatch(typeof(Pawn), "Destroy")]
-	public static class Destroy_Patch
+	public static class DestroyPatch
 	{
 		public static void Prefix(Pawn __instance)
 		{

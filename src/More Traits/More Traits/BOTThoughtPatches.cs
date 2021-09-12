@@ -54,14 +54,14 @@ namespace More_Traits
 		{
 			if (dinfo != null && thoughtsKind == PawnDiedOrDownedThoughtsKind.Died)
 			{
-                if (dinfo.Value.Instigator is Pawn pawn2 && pawn2 != victim && victim.needs != null)
-                {
-                    if (pawn2.story.traits.HasTrait(BOTTraitDefOf.BOT_Pacifist) && victim.RaceProps.Animal)
-                    {
-                        outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_Pacifist_KilledAnimal, pawn2, null, 1, 1));
-                    }
-                }
-            }
+				if (dinfo.Value.Instigator is Pawn pawn2 && pawn2 != victim && victim.needs != null)
+				{
+					if (pawn2.story.traits.HasTrait(BOTTraitDefOf.BOT_Pacifist) && victim.RaceProps.Animal)
+					{
+						outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_Pacifist_KilledAnimal, pawn2, null, 1, 1));
+					}
+				}
+			}
 		}
 	}
 
@@ -74,12 +74,50 @@ namespace More_Traits
 			bool isMeal = food.HasThingCategory(ThingCategoryDefOf.FoodMeals);
 
 			if (ingester.needs.mood != null && isMeal)
-            {
+			{
 				int ingredients = food.TryGetComp<CompIngredients>().ingredients.Count;
 				ingredients = (ingredients > BOTThoughtDefOf.BOT_EclecticPalateAte.stages.Count) ? BOTThoughtDefOf.BOT_EclecticPalateAte.stages.Count : ingredients;
 				ingredients = (ingredients > 0) ? ingredients - 1 : 0;
 
 				ingester.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_EclecticPalateAte, ingredients));
+			}
+		}
+	}
+
+	[HarmonyPatch(typeof(Pawn_JobTracker), "StartJob")]
+	class StartJobPatch
+	{
+		public static void Prefix(Pawn ___pawn, Job newJob, JobCondition lastJobEndCondition)
+		{
+			if (___pawn.RaceProps.Animal) return;
+
+			BOTTraitsManager Manager = Current.Game.GetComponent<BOTTraitsManager>();
+
+			if (newJob.def == JobDefOf.LayDown && newJob.targetA.HasThing && newJob.targetA.Thing.GetType() == typeof(Building_Bed) && ___pawn.story != null && ___pawn.story.traits != null && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Loves_Sleeping))
+			{
+				if (!Manager.GetLoves_SleepDic().ContainsKey(___pawn))
+				{
+					Manager.GetLoves_SleepDic()[___pawn] = ___pawn.needs.rest.CurLevelPercentage;
+				}
+
+				return;
+			}
+
+			//Only executed if the pawn was entered in here due to Job.LayDown in a Bed
+			if (Manager.GetLoves_SleepDic().ContainsKey(___pawn))
+			{
+				float initialRestPercent = Manager.GetLoves_SleepDic()[___pawn];
+				float currentRestPercent = ___pawn.needs.rest.CurLevelPercentage;
+				float recreationGainPercent = (currentRestPercent - initialRestPercent) * 0.3f;
+
+				___pawn.needs.joy.GainJoy(recreationGainPercent, BOTJoyKindDefOf.BOT_LovesSleepSleeping);
+
+				if (currentRestPercent > 0.9)
+				{
+					___pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_LovesSleepWellRested, 0));
+				}
+
+				Manager.GetLoves_SleepDic().Remove(___pawn);
 			}
 		}
 	}
