@@ -89,11 +89,25 @@ namespace More_Traits
 	{
 		public static void Prefix(Pawn ___pawn, Job newJob, JobCondition lastJobEndCondition)
 		{
-			if (___pawn.RaceProps.Animal) return;
+			if (___pawn.RaceProps.Animal || ___pawn.story == null || ___pawn.story.traits == null) return;
 
 			BOTTraitsManager Manager = Current.Game.GetComponent<BOTTraitsManager>();
 
-			if (newJob.def == JobDefOf.LayDown && newJob.targetA.HasThing && newJob.targetA.Thing.GetType() == typeof(Building_Bed) && ___pawn.story != null && ___pawn.story.traits != null && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Loves_Sleeping))
+			if (newJob.def == JobDefOf.LayDown && newJob.targetA.HasThing && newJob.targetA.Thing.GetType() == typeof(Building_Bed) && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Nyctophobia))
+			{
+				IntVec3 bedPosition = newJob.targetA.Thing.Position;
+				Map map = ___pawn.Map;
+
+				if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && ___pawn.needs.rest.CurInstantLevelPercentage != 0)
+                {
+					newJob.def = JobDefOf.LayDownAwake;
+					___pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0));
+					Messages.Message("BOTNyctophobeCantSleep".Translate(___pawn.LabelShort, ___pawn), ___pawn, MessageTypeDefOf.NegativeEvent, true);
+					Manager.GetNyctophobesWhoCantSleepDic()[___pawn] = (Building_Bed) newJob.targetA.Thing;
+				}
+			}
+
+			if (newJob.def == JobDefOf.LayDown && newJob.targetA.HasThing && newJob.targetA.Thing.GetType() == typeof(Building_Bed) && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Loves_Sleeping))
 			{
 				if (!Manager.GetLoves_SleepDic().ContainsKey(___pawn))
 				{

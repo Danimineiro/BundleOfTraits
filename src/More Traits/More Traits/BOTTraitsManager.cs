@@ -13,11 +13,15 @@ namespace More_Traits
 	class BOTTraitsManager : GameComponent
 	{
 		public static string src = "I made a lot of code in this looking at Vanilla Traits Expanded. Check out their mod at: https://steamcommunity.com/sharedfiles/filedetails/?id=2296404655";
-		private static IntVec2 PyrophobeMinMaxFleeDistance = new IntVec2(12,24);
+		private static IntVec2 PyrophobeMinMaxFleeDistance = new IntVec2(12, 24);
 
+		private static Dictionary<Pawn, Building_Bed> NyctophobesWhoCantSleep;
 		private static Dictionary<Pawn, float> Loves_Sleep;
 		private static Dictionary<Pawn, int> Narcoleptics;
 		private static HashSet<Pawn> Pyrophobics;
+
+		private List<Pawn> Nyctophobes = new List<Pawn>();
+		private List<Building_Bed> NyctophobeBeds = new List<Building_Bed>();
 
 		private List<Pawn> NarcolepticPawnKeys = new List<Pawn>();
 		private List<int> NarcolepticPawnInts = new List<int>();
@@ -38,6 +42,7 @@ namespace More_Traits
 			if (Narcoleptics == null) Narcoleptics = new Dictionary<Pawn, int>();
 			if (Pyrophobics == null) Pyrophobics = new HashSet<Pawn>();
 			if (Loves_Sleep == null) Loves_Sleep = new Dictionary<Pawn, float>();
+			if (NyctophobesWhoCantSleep == null) NyctophobesWhoCantSleep = new Dictionary<Pawn, Building_Bed>();
 		}
 
 		public override void LoadedGame()
@@ -102,6 +107,7 @@ namespace More_Traits
 
 			if (GameTicksDivisibleBy(1000))
 			{
+				//Narcoleptics
 				HashSet<Pawn> reset = new HashSet<Pawn>();
 				HashSet<Pawn> increment = new HashSet<Pawn>();
 				foreach (KeyValuePair<Pawn, int> keyValuePair in Narcoleptics)
@@ -154,6 +160,29 @@ namespace More_Traits
 				{
 					Narcoleptics[p] += 1000;
 				}
+
+				HashSet<Pawn> removeFromNycto = new HashSet<Pawn>();
+
+				//Nyctophobes who can't sleep
+				foreach (KeyValuePair<Pawn, Building_Bed> keyValuePair in NyctophobesWhoCantSleep)
+				{
+					IntVec3 bedPosition = keyValuePair.Value.Position;
+					Map map = keyValuePair.Key.Map;
+
+					if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && keyValuePair.Key.needs.rest.CurInstantLevelPercentage != 0 && keyValuePair.Key.CurJobDef == JobDefOf.LayDownAwake)
+					{
+						keyValuePair.Key.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0));
+					} else
+                    {
+						removeFromNycto.Add(keyValuePair.Key);
+						keyValuePair.Key.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, keyValuePair.Value), JobCondition.InterruptForced, null, false, true, null, new JobTag?(JobTag.SatisfyingNeeds), false, false);
+					}
+				}
+
+				foreach (Pawn p in removeFromNycto)
+                {
+					NyctophobesWhoCantSleep.Remove(p);
+                }
 			}
 
 			if (GameTicksDivisibleBy(2000))
@@ -191,6 +220,7 @@ namespace More_Traits
 			Scribe_Collections.Look<Pawn, int>(ref Narcoleptics, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
 			Scribe_Collections.Look<Pawn, float>(ref Loves_Sleep, "Loves_Sleep", LookMode.Reference, LookMode.Value, ref Loves_SleepPawnKeys, ref Loves_SleepInitialRestPercentage);
 			Scribe_Collections.Look<Pawn>(ref Pyrophobics, "Pyrophobics", LookMode.Reference);
+			Scribe_Collections.Look<Pawn, Building_Bed>(ref NyctophobesWhoCantSleep, "NyctophobesWhoCantSleep", LookMode.Reference, LookMode.Reference, ref Nyctophobes, ref NyctophobeBeds);
 		}
 
 		public void RemoveWrongPawnsFromSets()
@@ -204,7 +234,7 @@ namespace More_Traits
 				}
 			}
 
-			foreach(Pawn p in removeNarcoleptic)
+			foreach (Pawn p in removeNarcoleptic)
 			{
 				Narcoleptics.Remove(p);
 			}
@@ -218,10 +248,15 @@ namespace More_Traits
 			Pyrophobics.RemoveWhere((Pawn p) => p == pawn);
 		}
 
+		public Dictionary<Pawn, Building_Bed> GetNyctophobesWhoCantSleepDic()
+		{
+			return NyctophobesWhoCantSleep;
+		}
+
 		public Dictionary<Pawn, float> GetLoves_SleepDic()
-        {
+		{
 			return Loves_Sleep;
-        }
+		}
 	}
 
 	[StaticConstructorOnStartup]
@@ -260,5 +295,21 @@ namespace More_Traits
 			Current.Game.GetComponent<BOTTraitsManager>().RemoveDestroyedPawnFromSets(__instance);
 		}
 	}
+
+	//[HarmonyPatch(typeof(TraitSet), "GainTrait")]
+	//public static class TraitConflictPatch
+	//{
+	//	public static void Postfix(TraitSet __instance, Trait trait)
+	//	{
+	//		if (trait.def == BOTTraitDefOf.Immunity || trait.def == BOTTraitDefOf.BOT_StrongBody)
+ //         {
+	//			if (__instance.HasTrait(BOTTraitDefOf.Immunity) && __instance.HasTrait(BOTTraitDefOf.BOT_StrongBody) && __instance.DegreeOfTrait(BOTTraitDefOf.Immunity) == -1)
+ //               {
+	//				__instance.RemoveTrait(trait);
+	//				Log.Message("Removed " + trait.def.defName);
+ //               }
+ //           }
+	//	}
+	//}
 }
 

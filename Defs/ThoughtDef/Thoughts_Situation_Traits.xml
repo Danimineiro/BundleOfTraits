@@ -113,11 +113,6 @@
 				<description>I'm getting out of here! This is insane!</description>
 				<baseMoodEffect>-18</baseMoodEffect>
 			</li>
-			<li>
-				<label>pyrophobic burning</label>
-				<description>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</description>
-				<baseMoodEffect>-100</baseMoodEffect>
-			</li>
 		</stages>
 	</ThoughtDef>
 
@@ -150,6 +145,23 @@
 				<label>sleep lover well rested</label>
 				<description>I slept really nicely last night.</description>
 				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
+	<!-- Nyctophobia -->
+	<ThoughtDef>
+		<defName>BOT_NyctophobiaCantSleep</defName>
+		<validWhileDespawned>true</validWhileDespawned>
+		<durationDays>0.0167</durationDays>
+		<requiredTraits>
+			<li>BOT_Nyctophobia</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>nyctophobic can't sleep</label>
+				<description>It's too dark in here. I can't sleep like this.</description>
+				<baseMoodEffect>-1</baseMoodEffect>
 			</li>
 		</stages>
 	</ThoughtDef>

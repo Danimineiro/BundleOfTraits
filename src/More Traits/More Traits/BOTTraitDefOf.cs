@@ -39,6 +39,8 @@ namespace More_Traits
 		public static TraitDef BOT_Metabolism;
 
 		public static TraitDef BOT_Temperature_Love;
+
+		public static TraitDef Immunity;
 	}
 
 	[DefOf]
@@ -66,6 +68,8 @@ namespace More_Traits
 		public static ThoughtDef BOT_PyrophobicOnFire;
 
 		public static ThoughtDef BOT_LovesSleepWellRested;
+
+		public static ThoughtDef BOT_NyctophobiaCantSleep;
 	}
 
 	[DefOf]

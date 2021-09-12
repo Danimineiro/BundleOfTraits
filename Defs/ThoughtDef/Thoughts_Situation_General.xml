@@ -84,5 +84,8 @@
 				<baseMoodEffect>-10</baseMoodEffect>
 			</li>
 		</stages>
+		<requiredTraits>
+			<li>BOT_Nyctophobia</li>
+		</requiredTraits>
 	</ThoughtDef>
 </Defs>
