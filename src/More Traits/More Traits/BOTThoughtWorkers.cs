@@ -7,7 +7,6 @@ namespace More_Traits
 {
 	public class ThoughtWorker_Misanthrope : ThoughtWorker
 	{
-		// Token: 0x060000F1 RID: 241 RVA: 0x0000BE6C File Offset: 0x0000A06C
 		protected override ThoughtState CurrentSocialStateInternal(Pawn p, Pawn otherPawn)
 		{
 			return p.RaceProps.Humanlike && otherPawn.RaceProps.Humanlike && RelationsUtility.PawnsKnowEachOther(p, otherPawn);
@@ -36,7 +35,7 @@ namespace More_Traits
 		{
 			float num = p.AmbientTemperature - p.GetStatValue(StatDefOf.ComfyTemperatureMax, true);
 
-			if (p.story.traits.DegreeOfTrait(BOTDefOf.BOT_Temperature_Love) == -1)
+			if (p.story.traits.DegreeOfTrait(BOTTraitDefOf.BOT_Temperature_Love) == -1)
 			{
 				//Loves the heat
 				if (p.AmbientTemperature > 25f && num < 10f)
@@ -44,7 +43,7 @@ namespace More_Traits
 					return ThoughtState.ActiveAtStage(4);
 				}
 				return false;
-			} else if (p.story.traits.DegreeOfTrait(BOTDefOf.BOT_Temperature_Love) == 1)
+			} else if (p.story.traits.DegreeOfTrait(BOTTraitDefOf.BOT_Temperature_Love) == 1)
 			{
 				//Loves the cold
 			} else
@@ -90,11 +89,11 @@ namespace More_Traits
 		{
 			float num = p.GetStatValue(StatDefOf.ComfyTemperatureMin, true) - p.AmbientTemperature;
 
-			if (p.story.traits.DegreeOfTrait(BOTDefOf.BOT_Temperature_Love) == -1)
+			if (p.story.traits.DegreeOfTrait(BOTTraitDefOf.BOT_Temperature_Love) == -1)
 			{
 				//Loves the heat
 			}
-			else if (p.story.traits.DegreeOfTrait(BOTDefOf.BOT_Temperature_Love) == 1)
+			else if (p.story.traits.DegreeOfTrait(BOTTraitDefOf.BOT_Temperature_Love) == 1)
 			{
 				//Loves the cold
 				if (p.AmbientTemperature < 5f && num < 10f)
@@ -146,7 +145,7 @@ namespace More_Traits
 		{
 			if (p.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Burn) != null)
 			{
-				if (ModsConfig.IdeologyActive && p.Ideo.HasPrecept(BOTDefOf.Pain_Idealized))
+				if (ModsConfig.IdeologyActive && p.Ideo.HasPrecept(BOTPreceptDefOf.Pain_Idealized))
 				{
 					return ThoughtState.ActiveAtStage(1);
 				}
@@ -154,63 +153,5 @@ namespace More_Traits
 			}
 			return false;
 		}
-	}
-
-	[DefOf]
-	public static class BOTDefOf
-	{
-		static BOTDefOf()
-        {
-			DefOfHelper.EnsureInitializedInCtor(typeof(TraitDefOf));
-			DefOfHelper.EnsureInitializedInCtor(typeof(ThoughtDefOf));
-			DefOfHelper.EnsureInitializedInCtor(typeof(PreceptDefOf));
-		}
-
-		public static TraitDef BOT_Misanthrope;
-
-		public static TraitDef BOT_Dysgeusia;
-
-		public static TraitDef BOT_Eclectic_Palate;
-
-		public static TraitDef BOT_Pacifist;
-
-		public static TraitDef BOT_Narcoleptic;
-
-		public static TraitDef BOT_Pyrophobia;
-
-		public static TraitDef BOT_Nyctophobia;
-
-		public static TraitDef BOT_Sleepyhead;
-
-		public static TraitDef BOT_GunKata;
-
-		public static TraitDef BOT_Loves_Sleeping;
-
-		public static TraitDef BOT_Cynical;
-
-		public static TraitDef BOT_StrongBody;
-
-		public static TraitDef BOT_WeakBody;
-
-		public static TraitDef BOT_Metabolism;
-
-		public static TraitDef BOT_Temperature_Love;
-
-		public static ThoughtDef BOT_Pacifist_KilledAnimal;
-
-		public static ThoughtDef BOT_Pacifist_KilledHuman;
-
-		public static ThoughtDef BOT_WittnessedDeathPacifist;
-
-		public static ThoughtDef BOT_PyrophobiaHoldingIncendiary;
-
-		public static ThoughtDef BOT_EclecticPalateAte;
-
-		public static ThoughtDef BOT_PyrophobicBurned;
-
-		public static ThoughtDef BOT_PyrophobicNearFire;
-
-		[MayRequireIdeology]
-		public static PreceptDef Pain_Idealized;
 	}
 }

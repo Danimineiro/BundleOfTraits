@@ -76,7 +76,7 @@ namespace More_Traits
 								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
 								{
 									BOTUtils.MakeFlee(pawn, fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires);
-									pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTDefOf.BOT_PyrophobicNearFire, 1));
+									pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_PyrophobicNearFire, 1));
 								}
 							}
 						}
@@ -87,7 +87,7 @@ namespace More_Traits
 								float closestFireDistance = fires.Min(fire => fire.Position.DistanceTo(pawn.Position));
 								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
 								{
-									pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTDefOf.BOT_PyrophobicNearFire, 0));
+									pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_PyrophobicNearFire, 0));
 								}
 							}
 						}
@@ -166,13 +166,13 @@ namespace More_Traits
 		{
 			if (pawn.story != null && pawn.story.traits != null)
 			{
-				if (pawn.story.traits.HasTrait(BOTDefOf.BOT_Narcoleptic))
+				if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Narcoleptic))
 				{
 					PreInit();
 					Narcoleptics[pawn] = 0;
 				}
 
-				if (pawn.story.traits.HasTrait(BOTDefOf.BOT_Pyrophobia))
+				if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia))
 				{
 					PreInit();
 					Pyrophobics.Add(pawn);
@@ -192,7 +192,7 @@ namespace More_Traits
 			List<Pawn> removeNarcoleptic = new List<Pawn>();
 			foreach (KeyValuePair<Pawn, int> keyValuePair in Narcoleptics)
 			{
-				if (!keyValuePair.Key.story.traits.HasTrait(BOTDefOf.BOT_Narcoleptic))
+				if (!keyValuePair.Key.story.traits.HasTrait(BOTTraitDefOf.BOT_Narcoleptic))
 				{
 					removeNarcoleptic.Add(keyValuePair.Key);
 				}
@@ -203,7 +203,7 @@ namespace More_Traits
 				Narcoleptics.Remove(p);
 			}
 
-			Pyrophobics.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTDefOf.BOT_Pyrophobia));
+			Pyrophobics.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia));
 		}
 
 		public void RemoveDestroyedPawnFromSets(Pawn pawn)

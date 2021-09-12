@@ -31,13 +31,13 @@ namespace More_Traits
 					{
 						if (ThoughtUtility.Witnessed(pawn2, victim))
 						{
-							if (pawn2.story.traits.HasTrait(BOTDefOf.BOT_Pacifist))
+							if (pawn2.story.traits.HasTrait(BOTTraitDefOf.BOT_Pacifist))
 							{
-								outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTDefOf.BOT_WittnessedDeathPacifist, pawn2, null, 1, 1));
+								outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_WittnessedDeathPacifist, pawn2, null, 1, 1));
 
 								if (pawn2 == (Pawn)dinfo.Value.Instigator)
 								{
-									outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTDefOf.BOT_Pacifist_KilledHuman, pawn2, null, 1, 1));
+									outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_Pacifist_KilledHuman, pawn2, null, 1, 1));
 								}
 							}
 						}
@@ -56,9 +56,9 @@ namespace More_Traits
 			{
                 if (dinfo.Value.Instigator is Pawn pawn2 && pawn2 != victim && victim.needs != null)
                 {
-                    if (pawn2.story.traits.HasTrait(BOTDefOf.BOT_Pacifist) && victim.RaceProps.Animal)
+                    if (pawn2.story.traits.HasTrait(BOTTraitDefOf.BOT_Pacifist) && victim.RaceProps.Animal)
                     {
-                        outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTDefOf.BOT_Pacifist_KilledAnimal, pawn2, null, 1, 1));
+                        outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_Pacifist_KilledAnimal, pawn2, null, 1, 1));
                     }
                 }
             }
@@ -76,10 +76,10 @@ namespace More_Traits
 			if (ingester.needs.mood != null && isMeal)
             {
 				int ingredients = food.TryGetComp<CompIngredients>().ingredients.Count;
-				ingredients = (ingredients > BOTDefOf.BOT_EclecticPalateAte.stages.Count) ? BOTDefOf.BOT_EclecticPalateAte.stages.Count : ingredients;
+				ingredients = (ingredients > BOTThoughtDefOf.BOT_EclecticPalateAte.stages.Count) ? BOTThoughtDefOf.BOT_EclecticPalateAte.stages.Count : ingredients;
 				ingredients = (ingredients > 0) ? ingredients - 1 : 0;
 
-				ingester.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTDefOf.BOT_EclecticPalateAte, ingredients));
+				ingester.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_EclecticPalateAte, ingredients));
 			}
 		}
 	}
