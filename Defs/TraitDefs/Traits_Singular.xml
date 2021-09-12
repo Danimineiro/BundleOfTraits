@@ -202,10 +202,13 @@
 				<statOffsets>
 					<CarryingCapacity>25.0</CarryingCapacity>
 					<IncomingDamageFactor>-0.15</IncomingDamageFactor>
+					<ImmunityGainSpeed>0.15</ImmunityGainSpeed>
+					<MeleeHitChance>4</MeleeHitChance>
 				</statOffsets>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
+			<li>Sickly</li>
 			<li>Wimp</li>
 		</conflictingTraits>
 	</TraitDef>
@@ -224,7 +227,8 @@
 				</statFactors>
 				<statOffsets>
 					<CarryingCapacity>-25.0</CarryingCapacity>
-					<IncomingDamageFactor>1.15</IncomingDamageFactor>
+					<IncomingDamageFactor>0.15</IncomingDamageFactor>
+					<MeleeHitChance>-4</MeleeHitChance>
 				</statOffsets>
 			</li>   
 		</degreeDatas>
