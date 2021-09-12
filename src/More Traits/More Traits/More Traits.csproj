@@ -62,7 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BOTTraitDefOf.cs" />
+    <Compile Include="BOTDefOf.cs" />
     <Compile Include="BOTThoughtPatches.cs" />
     <Compile Include="BOTThoughtWorkers.cs" />
     <Compile Include="BOTTraitsManager.cs" />

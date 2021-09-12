@@ -51,5 +51,16 @@ namespace More_Traits
 				pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc, false);
 			}
 		}
+
+		public static void InjureHediff(this Hediff toInjure, float amount)
+		{
+			if ((toInjure.def.lethalSeverity >= 0 && toInjure.Severity + amount > toInjure.def.lethalSeverity) || toInjure.Severity + amount > toInjure.Part.def.GetMaxHealth(toInjure.pawn))
+            {
+				return;
+            }
+			
+			toInjure.Severity += amount;
+			toInjure.pawn.health.Notify_HediffChanged(toInjure);
+		}
 	}
 }
