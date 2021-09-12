@@ -75,7 +75,7 @@ namespace More_Traits
 								float closestFireDistance = fires.Min(fire => fire.Position.DistanceTo(pawn.Position));
 								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
 								{
-									BOTUtils.MakeFlee(pawn, fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires, true);
+									BOTUtils.MakeFlee(pawn, fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires);
 									pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTDefOf.BOT_PyrophobicNearFire, 1));
 								}
 							}
