@@ -246,7 +246,7 @@ namespace More_Traits
 					IntVec3 bedPosition = keyValuePair.Value.Position;
 					Map map = keyValuePair.Key.Map;
 
-					if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && keyValuePair.Key.needs.rest.CurInstantLevelPercentage != 0 && keyValuePair.Key.CurJobDef == JobDefOf.LayDownAwake)
+					if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && keyValuePair.Key.needs.rest.CurCategory != RestCategory.Exhausted && keyValuePair.Key.CurJobDef == JobDefOf.LayDownAwake)
 					{
 						keyValuePair.Key.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0));
 					} else
@@ -311,7 +311,6 @@ namespace More_Traits
 			RemoveWrongPawnsFromDic(Narcoleptics, BOTTraitDefOf.BOT_Narcoleptic);
 			RemoveWrongPawnsFromDic(Loves_Sleep, BOTTraitDefOf.BOT_Narcoleptic);
 			RemoveWrongPawnsFromDic(MetabolismPawns, BOTTraitDefOf.BOT_Metabolism);
-			RemoveWrongPawnsFromDic(NyctophobesWhoCantSleep, BOTTraitDefOf.BOT_Nyctophobia);
 
 			Pyrophobics.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia));
 		}

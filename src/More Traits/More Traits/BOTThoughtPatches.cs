@@ -98,7 +98,7 @@ namespace More_Traits
 				IntVec3 bedPosition = newJob.targetA.Thing.Position;
 				Map map = ___pawn.Map;
 
-				if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && ___pawn.needs.rest.CurInstantLevelPercentage != 0)
+				if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && ___pawn.needs.rest.CurCategory != RestCategory.Exhausted)
                 {
 					newJob.def = JobDefOf.LayDownAwake;
 					___pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0));
@@ -133,6 +133,15 @@ namespace More_Traits
 
 				Manager.GetLoves_SleepDic().Remove(___pawn);
 			}
+
+			if (___pawn.CurJobDef == JobDefOf.LayDown && newJob.def != JobDefOf.LayDown && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Sleepyhead) && ___pawn.needs.rest.CurCategory == RestCategory.Rested) 
+			{
+				if (Rand.Value < 0.1)
+				{
+					___pawn.needs.rest.CurLevelPercentage = 0.30f;
+					newJob = ___pawn.CurJob;
+				}
+            }
 		}
 	}
 }
