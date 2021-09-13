@@ -29,11 +29,7 @@ namespace More_Traits
 
 		public static TraitDef BOT_Sleepyhead;
 
-		public static TraitDef BOT_GunKata;
-
 		public static TraitDef BOT_Loves_Sleeping;
-
-		public static TraitDef BOT_Cynical;
 
 		public static TraitDef BOT_StrongBody;
 
