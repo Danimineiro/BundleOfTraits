@@ -22,6 +22,7 @@ namespace More_Traits
 		private static Dictionary<Pawn, float> Loves_Sleep;
 		private static Dictionary<Pawn, int> Narcoleptics;
 		private static HashSet<Pawn> Pyrophobics;
+		private static HashSet<Pawn> SleepyHeads;
 
 		private List<Pawn> Nyctophobes = new List<Pawn>();
 		private List<Building_Bed> NyctophobeBeds = new List<Building_Bed>();
@@ -51,6 +52,7 @@ namespace More_Traits
 		{
 			if (Narcoleptics == null) Narcoleptics = new Dictionary<Pawn, int>();
 			if (Pyrophobics == null) Pyrophobics = new HashSet<Pawn>();
+			if (SleepyHeads == null) SleepyHeads = new HashSet<Pawn>();
 			if (Loves_Sleep == null) Loves_Sleep = new Dictionary<Pawn, float>();
 			if (NyctophobesWhoCantSleep == null) NyctophobesWhoCantSleep = new Dictionary<Pawn, Building_Bed>();
 			if (MetabolismPawns == null) MetabolismPawns = new Dictionary<Pawn, int>();
@@ -76,6 +78,7 @@ namespace More_Traits
 			base.GameComponentTick();
 
 			ManagePyrophobes(300);
+			ManageSleepyHeads(500);
 			ManageNarcoleptics(1000);
 			ManageMetabolism(2400);
 
@@ -93,7 +96,7 @@ namespace More_Traits
 		}
 
 		private void ManagePyrophobes(int whenTicksDivisibleBy)
-        {
+		{
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
 				Dictionary<Map, List<Thing>> MapFireDic = new Dictionary<Map, List<Thing>>();
@@ -141,7 +144,7 @@ namespace More_Traits
 		}
 
 		private void ManageMetabolism(int whenTicksDivisibleBy)
-        {
+		{
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
 				foreach (KeyValuePair<Pawn, int> keyValuePair in MetabolismPawns)
@@ -219,7 +222,7 @@ namespace More_Traits
 		}
 
 		private void ManageNarcoleptics(int whenTicksDivisibleBy)
-        {
+		{
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
 				//Narcoleptics
@@ -227,23 +230,24 @@ namespace More_Traits
 				HashSet<Pawn> increment = new HashSet<Pawn>();
 				foreach (KeyValuePair<Pawn, int> keyValuePair in Narcoleptics)
 				{
-					float sleepChance = 0.03125f;
+					float baseSleepChance = 0.015625f;
+					float sleepChance = baseSleepChance;
 					if (Narcoleptics[keyValuePair.Key] > 120000)
 					{
-						sleepChance = 0.25f;
+						sleepChance *= 8f;
 					}
 					else if (Narcoleptics[keyValuePair.Key] > 60000)
 					{
-						sleepChance = 0.125f;
+						sleepChance *= 4f;
 					}
 					else if (Narcoleptics[keyValuePair.Key] > 30000)
 					{
-						sleepChance = 0.0625f;
+						sleepChance *= 2f;
 					}
 
 					if (Narcoleptics[keyValuePair.Key] > 15000 && keyValuePair.Key.Spawned)
 					{
-						if (Rand.Value > sleepChance && (keyValuePair.Key.CurJob == null || keyValuePair.Key.CurJob.def != JobDefOf.LayDown))
+						if (Rand.Value < sleepChance && (keyValuePair.Key.CurJob == null || keyValuePair.Key.CurJob.def != JobDefOf.LayDown))
 						{
 							keyValuePair.Key.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, keyValuePair.Key.Position), JobCondition.InterruptForced, null, false, true, null, new JobTag?(JobTag.SatisfyingNeeds), false, false);
 							if (keyValuePair.Key.InMentalState && keyValuePair.Key.MentalStateDef.recoverFromCollapsingExhausted)
@@ -302,6 +306,33 @@ namespace More_Traits
 			}
 		}
 
+		private void ManageSleepyHeads(int whenTicksDivisibleBy)
+		{
+			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
+			{
+				List<Pawn> toRemove = new List<Pawn>();
+				foreach(Pawn p in SleepyHeads)
+				{
+					if (Rand.Value > 0.1 && p.CurJobDef == JobDefOf.LayDown)
+					{
+						p.jobs.EndCurrentJob(JobCondition.Succeeded);
+						toRemove.Add(p);
+					} 
+					//Might got drafted or removed from the bed for other reasons
+					else if (p.CurJobDef != JobDefOf.LayDown)
+                    {
+						toRemove.Add(p);
+                    }
+				}
+
+				foreach(Pawn p in toRemove)
+                {
+					SleepyHeads.Remove(p);
+					p.needs.rest.CurLevelPercentage = 1f;
+				}
+			}
+		}
+
 		//This runs on game load when a pawn is spawned so PreInit should always get executed
 		/// <summary>
 		///		Adds a pawn to the correct list
@@ -335,6 +366,7 @@ namespace More_Traits
 			Scribe_Collections.Look<Pawn, int>(ref Narcoleptics, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
 			Scribe_Collections.Look<Pawn, float>(ref Loves_Sleep, "Loves_Sleep", LookMode.Reference, LookMode.Value, ref Loves_SleepPawnKeys, ref Loves_SleepInitialRestPercentage);
 			Scribe_Collections.Look<Pawn>(ref Pyrophobics, "Pyrophobics", LookMode.Reference);
+			Scribe_Collections.Look<Pawn>(ref SleepyHeads, "SleepyHeads", LookMode.Reference);
 			Scribe_Collections.Look<Pawn, int>(ref MetabolismPawns, "MetabolismPawns", LookMode.Reference, LookMode.Value, ref MetabolismPawnKeys, ref MetabolismPawnInts);
 			Scribe_Collections.Look<Pawn, Building_Bed>(ref NyctophobesWhoCantSleep, "NyctophobesWhoCantSleep", LookMode.Reference, LookMode.Reference, ref Nyctophobes, ref NyctophobeBeds);
 		}
@@ -346,7 +378,7 @@ namespace More_Traits
 		public void RemoveWrongPawnsFromSets(int whenTicksDivisibleBy)
 		{
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
-            {
+			{
 				RemoveWrongPawnsFromDic(Narcoleptics, BOTTraitDefOf.BOT_Narcoleptic);
 				RemoveWrongPawnsFromDic(Loves_Sleep, BOTTraitDefOf.BOT_Narcoleptic);
 				RemoveWrongPawnsFromDic(MetabolismPawns, BOTTraitDefOf.BOT_Metabolism);
@@ -417,7 +449,8 @@ namespace More_Traits
 			MetabolismPawns.Remove(pawn);
 			NyctophobesWhoCantSleep.Remove(pawn);
 
-			Pyrophobics.RemoveWhere((Pawn p) => p == pawn);
+			SleepyHeads.Remove(pawn);
+			Pyrophobics.Remove(pawn);
 		}
 
 		public Dictionary<Pawn, Building_Bed> GetNyctophobesWhoCantSleepDic()
@@ -428,6 +461,11 @@ namespace More_Traits
 		public Dictionary<Pawn, float> GetLoves_SleepDic()
 		{
 			return Loves_Sleep;
+		}
+
+		public HashSet<Pawn> GetSleepyHeadSet()
+		{
+			return SleepyHeads;
 		}
 	}
 

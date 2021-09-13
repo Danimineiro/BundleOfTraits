@@ -113,7 +113,7 @@ namespace More_Traits
 
 				//Exhaustion will eventually start sleeping jobs which is very buggy when these aren't accepted by my check, so exhausted pawns can always sleep
 				if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && ___pawn.needs.rest.CurCategory != RestCategory.Exhausted)
-                {
+				{
 					newJob.def = JobDefOf.LayDownAwake;
 					___pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0));
 					Messages.Message("BOTNyctophobeCantSleep".Translate(___pawn.LabelShort, ___pawn), ___pawn, MessageTypeDefOf.NegativeEvent, true);
@@ -151,14 +151,17 @@ namespace More_Traits
 			}
 
 			//Deals with sleepyheads not wanting to wake up
-			if (___pawn.CurJobDef == JobDefOf.LayDown && newJob.def != JobDefOf.LayDown && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Sleepyhead) && ___pawn.needs.rest.CurCategory == RestCategory.Rested) 
+			if ((___pawn.CurJobDef == JobDefOf.LayDown || ___pawn.CurJobDef == JobDefOf.LayDownAwake) && newJob.def != JobDefOf.LayDown && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Sleepyhead) && ___pawn.needs.rest.CurCategory == RestCategory.Rested && !Manager.GetSleepyHeadSet().Contains(___pawn)) 
 			{
-				if (Rand.Value < 0.1)
+				if (Rand.Value > 0.3)
 				{
-					___pawn.needs.rest.CurLevelPercentage = 0.30f;
 					newJob = ___pawn.CurJob;
+					newJob.def = JobDefOf.LayDown;
+					newJob.forceSleep = true;
+					___pawn.needs.rest.CurLevelPercentage = 0.30f;
+					Manager.GetSleepyHeadSet().Add(___pawn);
 				}
-            }
+			}
 		}
 	}
 }

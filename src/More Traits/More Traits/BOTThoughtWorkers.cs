@@ -39,7 +39,7 @@ namespace More_Traits
 			{
 				//Loves the heat
 				if (p.AmbientTemperature > 25f && num < 10f)
-                {
+				{
 					return ThoughtState.ActiveAtStage(4);
 				}
 				return false;
@@ -47,9 +47,9 @@ namespace More_Traits
 			{
 				//Loves the cold
 			} else
-            {
+			{
 				return false;
-            }
+			}
 			if (num <= 0f)
 			{
 				return ThoughtState.Inactive;
@@ -140,7 +140,7 @@ namespace More_Traits
 	}
 
 	public class BOT_ThoughtWorker_PyrophobicBurned : ThoughtWorker
-    {
+	{
 		protected override ThoughtState CurrentStateInternal(Pawn p)
 		{
 			if (p.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Burn) != null)
