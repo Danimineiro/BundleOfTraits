@@ -350,7 +350,10 @@ namespace More_Traits
 			{
 				if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Narcoleptic))
 				{
-					Narcoleptics[pawn] = 0;
+					if (!Narcoleptics.ContainsKey(pawn))
+					{
+						Narcoleptics[pawn] = 0; 
+					}
 				}
 
 				if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia))
@@ -360,7 +363,10 @@ namespace More_Traits
 
 				if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Metabolism))
 				{
-					MetabolismPawns[pawn] = 0;
+					if (!MetabolismPawns.ContainsKey(pawn))
+					{
+						MetabolismPawns[pawn] = 0;
+					}
 				}
 			}
 		}
