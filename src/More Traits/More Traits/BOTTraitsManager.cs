@@ -315,13 +315,18 @@ namespace More_Traits
 				{
 					if (Rand.Value > 0.1 && p.CurJobDef == JobDefOf.LayDown)
 					{
+						p.TryGainMemory(BOTThoughtDefOf.BOT_SleepyHeadStopsSleeping, 0);
 						p.jobs.EndCurrentJob(JobCondition.Succeeded);
 						toRemove.Add(p);
 					} 
 					//Might got drafted or removed from the bed for other reasons
 					else if (p.CurJobDef != JobDefOf.LayDown)
                     {
+						p.TryGainMemory(BOTThoughtDefOf.BOT_SleepyHeadForcefullyWokenUp, 0);
 						toRemove.Add(p);
+                    } else
+                    {
+						p.TryGainMemory(BOTThoughtDefOf.BOT_SleepyHeadContinuesSleeping, 0);
                     }
 				}
 

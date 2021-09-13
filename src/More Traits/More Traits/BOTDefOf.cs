@@ -76,6 +76,12 @@ namespace More_Traits
 		public static ThoughtDef BOT_LovesSleepWellRested;
 
 		public static ThoughtDef BOT_NyctophobiaCantSleep;
+		
+		public static ThoughtDef BOT_SleepyHeadContinuesSleeping;
+
+		public static ThoughtDef BOT_SleepyHeadForcefullyWokenUp;
+		
+		public static ThoughtDef BOT_SleepyHeadStopsSleeping;
 	}
 
 

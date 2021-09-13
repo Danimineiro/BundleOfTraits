@@ -159,6 +159,7 @@ namespace More_Traits
 					newJob.def = JobDefOf.LayDown;
 					newJob.forceSleep = true;
 					___pawn.needs.rest.CurLevelPercentage = 0.30f;
+					___pawn.TryGainMemory(BOTThoughtDefOf.BOT_SleepyHeadContinuesSleeping, 0);
 					Manager.GetSleepyHeadSet().Add(___pawn);
 				}
 			}
