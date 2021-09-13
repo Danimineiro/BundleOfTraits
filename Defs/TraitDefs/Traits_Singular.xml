@@ -109,7 +109,7 @@
 		<degreeDatas>
 			<li>
 				<label>nyctophobia</label>
-				<description>{PAWN_nameDef} is afraid of the dark. {PAWN_pronoun} will be extra unhappy when in darkness and has trouble sleeping without light.</description>
+				<description>{PAWN_nameDef} is afraid of the dark. {PAWN_objective} will be extra unhappy when in darkness and has trouble sleeping without light.</description>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
