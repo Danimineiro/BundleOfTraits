@@ -95,5 +95,10 @@ namespace More_Traits
 			toInjure.Severity += amount;
 			toInjure.pawn.health.Notify_HediffChanged(toInjure);
 		}
+
+		public static void TryGainMemory(this Pawn pawn, ThoughtDef thoughtDef, int forcedLevel)
+        {
+			pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(thoughtDef, forcedLevel));
+		}
 	}
 }

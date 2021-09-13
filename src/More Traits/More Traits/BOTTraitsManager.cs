@@ -123,7 +123,7 @@ namespace More_Traits
 								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
 								{
 									pawn.MakeFlee(fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires);
-									pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_PyrophobicNearFire, 1));
+									pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 1);
 								}
 							}
 						}
@@ -134,7 +134,7 @@ namespace More_Traits
 								float closestFireDistance = fires.Min(fire => fire.Position.DistanceTo(pawn.Position));
 								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
 								{
-									pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_PyrophobicNearFire, 0));
+									pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 0);
 								}
 							}
 						}
@@ -290,7 +290,7 @@ namespace More_Traits
 
 					if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && keyValuePair.Key.needs.rest.CurCategory != RestCategory.Exhausted && keyValuePair.Key.CurJobDef == JobDefOf.LayDownAwake)
 					{
-						keyValuePair.Key.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0));
+						keyValuePair.Key.TryGainMemory(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0);
 					}
 					else
 					{

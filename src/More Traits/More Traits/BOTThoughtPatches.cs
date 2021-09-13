@@ -88,7 +88,7 @@ namespace More_Traits
 				ingredients = (ingredients > BOTThoughtDefOf.BOT_EclecticPalateAte.stages.Count) ? BOTThoughtDefOf.BOT_EclecticPalateAte.stages.Count : ingredients;
 				ingredients = (ingredients > 0) ? ingredients - 1 : 0;
 
-				ingester.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_EclecticPalateAte, ingredients));
+				ingester.TryGainMemory(BOTThoughtDefOf.BOT_EclecticPalateAte, ingredients);
 			}
 		}
 	}
@@ -115,7 +115,7 @@ namespace More_Traits
 				if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && ___pawn.needs.rest.CurCategory != RestCategory.Exhausted)
 				{
 					newJob.def = JobDefOf.LayDownAwake;
-					___pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0));
+					___pawn.TryGainMemory(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0);
 					Messages.Message("BOTNyctophobeCantSleep".Translate(___pawn.LabelShort, ___pawn), ___pawn, MessageTypeDefOf.NegativeEvent, true);
 					Manager.GetNyctophobesWhoCantSleepDic()[___pawn] = (Building_Bed) newJob.targetA.Thing;
 				}
@@ -144,7 +144,7 @@ namespace More_Traits
 
 				if (currentRestPercent > 0.9)
 				{
-					___pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_LovesSleepWellRested, 0));
+					___pawn.TryGainMemory(BOTThoughtDefOf.BOT_LovesSleepWellRested, 0);
 				}
 
 				Manager.GetLoves_SleepDic().Remove(___pawn);
