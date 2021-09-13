@@ -135,31 +135,6 @@
 	</TraitDef>
 	
 	<TraitDef>
-		<defName>BOT_GunKata</defName>
-		<commonality>0.3</commonality>
-		<degreeDatas>
-			<li>
-				<label>gun-kata</label>
-				<description>{PAWN_nameDef} has mastered the martial art of using their guns in close quarters combat. </description>
-				<skillGains>
-					<li>
-						<key>Shooting</key>
-						<value>2</value>
-					</li>
-				</skillGains>
-			</li>
-		</degreeDatas>
-		<conflictingTraits>
-			<li>Brawler</li>
-			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_MartialArtist</li>
-			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_DrunkenMaster</li>
-		</conflictingTraits>
-		<requiredWorkTags>
-			<li>Violent</li>
-		 </requiredWorkTags>
-	</TraitDef>
-	
-	<TraitDef>
 		<defName>BOT_Loves_Sleeping</defName>
 		<commonality>0.5</commonality>
 		<degreeDatas>
@@ -171,20 +146,6 @@
 		<conflictingTraits>
 			<li>BOT_Narcoleptic</li>
 			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Insomniac</li>
-		</conflictingTraits>
-	</TraitDef>
-	
-	<TraitDef>
-		<defName>BOT_Cynical</defName>
-		<commonality>0.3</commonality>
-		<degreeDatas>
-			<li>
-				<label>cynical</label>
-				<description>{PAWN_nameDef} expects the worst and will never get disappointed. All Positive AND negative moods are halved. </description>
-			</li>
-		</degreeDatas>
-		<conflictingTraits>
-			<li>NaturalMood</li>
 		</conflictingTraits>
 	</TraitDef>
 	
