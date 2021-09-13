@@ -8,6 +8,10 @@ using UnityEngine;
 
 namespace More_Traits
 {
+	/// <summary>
+	///		This class is used to store information regarding traits added by this mod and to manage trait behaviour.
+	///		A lot of what is seen here is based on Vanilla Traits expanded code
+	/// </summary>
 	class BOTTraitsManager : GameComponent
 	{
 		public static string src = "I made a lot of code in this looking at Vanilla Traits Expanded. Check out their mod at: https://steamcommunity.com/sharedfiles/filedetails/?id=2296404655";
@@ -31,6 +35,7 @@ namespace More_Traits
 		private List<Pawn> Loves_SleepPawnKeys = new List<Pawn>();
 		private List<float> Loves_SleepInitialRestPercentage = new List<float>();
 
+		//I don't actually know if these constructors are requiered, but they don't really do harm being here anyways
 		static BOTTraitsManager()
 		{
 		}
@@ -39,6 +44,9 @@ namespace More_Traits
 		{
 		}
 
+		/// <summary>
+		///		This function checks if the dictionaries and hashsets used to store variables in this mod are initialized, and if not, does so
+		/// </summary>
 		public void PreInit()
 		{
 			if (Narcoleptics == null) Narcoleptics = new Dictionary<Pawn, int>();
@@ -60,10 +68,33 @@ namespace More_Traits
 			base.StartedNewGame();
 		}
 
+		/// <summary>
+		///		This function manages the behaviour of traits
+		/// </summary>
 		public override void GameComponentTick()
 		{
 			base.GameComponentTick();
-			if (GameTicksDivisibleBy(300))
+
+			ManagePyrophobes(300);
+			ManageNarcoleptics(1000);
+			ManageMetabolism(2400);
+
+			RemoveWrongPawnsFromSets(2000);
+		}
+
+		/// <summary>
+		///		Determines if the current game tick is divisible by n
+		/// </summary>
+		/// <param name="n">the divisor</param>
+		/// <returns>true if the game tick is divisible by n, false otherwise</returns>
+		private bool GameTicksDivisibleBy(int n)
+		{
+			return (Find.TickManager.TicksGame % n == 0);
+		}
+
+		private void ManagePyrophobes(int whenTicksDivisibleBy)
+        {
+			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
 				Dictionary<Map, List<Thing>> MapFireDic = new Dictionary<Map, List<Thing>>();
 				foreach (Pawn pawn in Pyrophobics)
@@ -88,7 +119,7 @@ namespace More_Traits
 								float closestFireDistance = fires.Min(fire => fire.Position.DistanceTo(pawn.Position));
 								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
 								{
-									BOTUtils.MakeFlee(pawn, fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires);
+									pawn.MakeFlee(fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires);
 									pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_PyrophobicNearFire, 1));
 								}
 							}
@@ -107,8 +138,11 @@ namespace More_Traits
 					}
 				}
 			}
+		}
 
-			if (GameTicksDivisibleBy(2400))
+		private void ManageMetabolism(int whenTicksDivisibleBy)
+        {
+			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
 				foreach (KeyValuePair<Pawn, int> keyValuePair in MetabolismPawns)
 				{
@@ -147,12 +181,12 @@ namespace More_Traits
 								 where x.CanHealNaturally()
 								 select x).RandomElement<Hediff_Injury>().Heal(num * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
 								flag2 = true;
-							} 
+							}
 							else
 							{
 								(from x in hediffSet.GetHediffs<Hediff_Injury>()
 								 where x.CanHealNaturally()
-								 select x).RandomElement<Hediff_Injury>().InjureHediff(num * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
+								 select x).RandomElement<Hediff_Injury>().Injure(num * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
 
 							}
 						}
@@ -160,8 +194,8 @@ namespace More_Traits
 						if (hediffSet.HasTendedAndHealingInjury() && (p.needs.food == null || !p.needs.food.Starving))
 						{
 							Hediff_Injury hediff_Injury = (from x in hediffSet.GetHediffs<Hediff_Injury>()
-															where x.CanHealFromTending()
-															select x).RandomElement<Hediff_Injury>();
+														   where x.CanHealFromTending()
+														   select x).RandomElement<Hediff_Injury>();
 							float tendQuality = hediff_Injury.TryGetComp<HediffComp_TendDuration>().tendQuality;
 							float num2 = GenMath.LerpDouble(0f, 1f, 0.5f, 1.5f, Mathf.Clamp01(tendQuality));
 
@@ -169,9 +203,10 @@ namespace More_Traits
 							{
 								hediff_Injury.Heal(8f * num2 * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
 								flag2 = true;
-							} else
+							}
+							else
 							{
-								hediff_Injury.InjureHediff(8f * num2 * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
+								hediff_Injury.Injure(8f * num2 * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
 							}
 						}
 						if (flag2 && !p.health.HasHediffsNeedingTendByPlayer(false) && !HealthAIUtility.ShouldSeekMedicalRest(p) && !p.health.hediffSet.HasTendedAndHealingInjury() && PawnUtility.ShouldSendNotificationAbout(p))
@@ -181,8 +216,11 @@ namespace More_Traits
 					}
 				}
 			}
+		}
 
-			if (GameTicksDivisibleBy(1000))
+		private void ManageNarcoleptics(int whenTicksDivisibleBy)
+        {
+			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
 				//Narcoleptics
 				HashSet<Pawn> reset = new HashSet<Pawn>();
@@ -249,7 +287,8 @@ namespace More_Traits
 					if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && keyValuePair.Key.needs.rest.CurCategory != RestCategory.Exhausted && keyValuePair.Key.CurJobDef == JobDefOf.LayDownAwake)
 					{
 						keyValuePair.Key.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0));
-					} else
+					}
+					else
 					{
 						removeFromNycto.Add(keyValuePair.Key);
 						keyValuePair.Key.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, keyValuePair.Value), JobCondition.InterruptForced, null, false, true, null, new JobTag?(JobTag.SatisfyingNeeds), false, false);
@@ -261,19 +300,13 @@ namespace More_Traits
 					NyctophobesWhoCantSleep.Remove(p);
 				}
 			}
-
-			if (GameTicksDivisibleBy(2000))
-			{
-				RemoveWrongPawnsFromSets();
-			}
-		}
-
-		private bool GameTicksDivisibleBy(int n)
-		{
-			return (Find.TickManager.TicksGame % n == 0);
 		}
 
 		//This runs on game load when a pawn is spawned so PreInit should always get executed
+		/// <summary>
+		///		Adds a pawn to the correct list
+		/// </summary>
+		/// <param name="pawn">the pawn to be added</param>
 		public void AddPawn(Pawn pawn)
 		{
 			PreInit();
@@ -306,13 +339,20 @@ namespace More_Traits
 			Scribe_Collections.Look<Pawn, Building_Bed>(ref NyctophobesWhoCantSleep, "NyctophobesWhoCantSleep", LookMode.Reference, LookMode.Reference, ref Nyctophobes, ref NyctophobeBeds);
 		}
 
-		public void RemoveWrongPawnsFromSets()
+		/// <summary>
+		///		Checks if the pawns in the dictionaries and hashlists should be inside them
+		/// </summary>
+		/// <param name="whenTicksDivisibleBy"></param>
+		public void RemoveWrongPawnsFromSets(int whenTicksDivisibleBy)
 		{
-			RemoveWrongPawnsFromDic(Narcoleptics, BOTTraitDefOf.BOT_Narcoleptic);
-			RemoveWrongPawnsFromDic(Loves_Sleep, BOTTraitDefOf.BOT_Narcoleptic);
-			RemoveWrongPawnsFromDic(MetabolismPawns, BOTTraitDefOf.BOT_Metabolism);
-
-			Pyrophobics.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia));
+			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
+            {
+				RemoveWrongPawnsFromDic(Narcoleptics, BOTTraitDefOf.BOT_Narcoleptic);
+				RemoveWrongPawnsFromDic(Loves_Sleep, BOTTraitDefOf.BOT_Narcoleptic);
+				RemoveWrongPawnsFromDic(MetabolismPawns, BOTTraitDefOf.BOT_Metabolism);
+	
+				Pyrophobics.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia));
+			}
 		}
 
 		public void RemoveWrongPawnsFromDic(Dictionary<Pawn, int> dic, TraitDef traitDef)
@@ -366,6 +406,10 @@ namespace More_Traits
 			}
 		}
 
+		/// <summary>
+		///		Removes a dead pawn from any lists/dictionaries/hashSets
+		/// </summary>
+		/// <param name="pawn"></param>
 		public void RemoveDestroyedPawnFromSets(Pawn pawn)
 		{
 			Narcoleptics.Remove(pawn);
@@ -430,13 +474,13 @@ namespace More_Traits
 	//	public static void Postfix(TraitSet __instance, Trait trait)
 	//	{
 	//		if (trait.def == BOTTraitDefOf.Immunity || trait.def == BOTTraitDefOf.BOT_StrongBody)
- //         {
+	//      {
 	//			if (__instance.HasTrait(BOTTraitDefOf.Immunity) && __instance.HasTrait(BOTTraitDefOf.BOT_StrongBody) && __instance.DegreeOfTrait(BOTTraitDefOf.Immunity) == -1)
- //               {
+	//               {
 	//				__instance.RemoveTrait(trait);
 	//				Log.Message("Removed " + trait.def.defName);
- //               }
- //           }
+	//               }
+	//           }
 	//	}
 	//}
 }

@@ -1,8 +1,10 @@
 ﻿using RimWorld;
-using Verse;
 
 namespace More_Traits
 {
+	/// <summary>
+	///		Class <c>BOTTraitDefOf</c> defines <c>TraitDef</c>s
+	/// </summary>
 	[DefOf]
 	public static class BOTTraitDefOf
 	{
@@ -44,9 +46,12 @@ namespace More_Traits
 		public static TraitDef Immunity;
 	}
 
+	/// <summary>
+	///		Class <c>BOTThoughtDefOf</c> defines <c>ThoughtDef</c>s
+	/// </summary>
 	[DefOf]
 	public static class BOTThoughtDefOf
-    {
+	{
 		static BOTThoughtDefOf()
 		{
 			DefOfHelper.EnsureInitializedInCtor(typeof(ThoughtDefOf));
@@ -73,6 +78,11 @@ namespace More_Traits
 		public static ThoughtDef BOT_NyctophobiaCantSleep;
 	}
 
+
+	/// <summary>
+	///		Class <c>BOTPreceptDefOf</c> defines <c>PreceptDef</c>s
+	///		As of right now the mod doesn't come with it's own precepts, so the only precept here is one not present in Vanilla, but required in code
+	/// </summary>
 	[DefOf]
 	public static class BOTPreceptDefOf
 	{
@@ -85,14 +95,17 @@ namespace More_Traits
 		public static PreceptDef Pain_Idealized;
 	}
 
+	/// <summary>
+	///		Class <c>BOTJoyKindDefOf</c> defines <c>JoyKindDef</c>s
+	/// </summary>
 	[DefOf]
 	public static class BOTJoyKindDefOf
 	{
 		static BOTJoyKindDefOf()
-        {
+		{
 			DefOfHelper.EnsureInitializedInCtor(typeof(JoyKindDefOf));
 		}
 
 		public static JoyKindDef BOT_LovesSleepSleeping;
-    }
+	}
 }

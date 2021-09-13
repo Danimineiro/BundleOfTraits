@@ -17,6 +17,9 @@ namespace More_Traits
 		}
 	}
 
+	/// <summary>
+	///		This class manages the adding of some death related thoughts to pacifists
+	/// </summary>
 	[HarmonyPatch(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_ForHumanlike")]
 	class PacifistWitnessDeathPatch
 	{
@@ -47,6 +50,9 @@ namespace More_Traits
 		}
 	}
 
+	/// <summary>
+	///		This class manages the adding of some death related thoughts to pacifists
+	/// </summary>
 	[HarmonyPatch(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_Relations")]
 	class PacifistKilledPatch
 	{
@@ -65,6 +71,9 @@ namespace More_Traits
 		}
 	}
 
+	/// <summary>
+	///		This class manages the adding of some food related thoughts to eclectics
+	/// </summary>
 	[HarmonyPatch(typeof(Toils_Ingest), "FinalizeIngest")]
 	class EclecticIngestPatch
 	{
@@ -84,6 +93,9 @@ namespace More_Traits
 		}
 	}
 
+	/// <summary>
+	///		This class patches the startjob function to modify the behaviour of sleep related traits
+	/// </summary>
 	[HarmonyPatch(typeof(Pawn_JobTracker), "StartJob")]
 	class StartJobPatch
 	{
@@ -93,11 +105,13 @@ namespace More_Traits
 
 			BOTTraitsManager Manager = Current.Game.GetComponent<BOTTraitsManager>();
 
+			//Determine if a Nyctophobic person can sleep
 			if (newJob.def == JobDefOf.LayDown && newJob.targetA.HasThing && newJob.targetA.Thing.GetType() == typeof(Building_Bed) && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Nyctophobia))
 			{
 				IntVec3 bedPosition = newJob.targetA.Thing.Position;
 				Map map = ___pawn.Map;
 
+				//Exhaustion will eventually start sleeping jobs which is very buggy when these aren't accepted by my check, so exhausted pawns can always sleep
 				if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && ___pawn.needs.rest.CurCategory != RestCategory.Exhausted)
                 {
 					newJob.def = JobDefOf.LayDownAwake;
@@ -107,6 +121,7 @@ namespace More_Traits
 				}
 			}
 
+			//Save the amount of rest a pawn with the Loves_Sleep trait has in order to later calculate how much recreation they should gain from that
 			if (newJob.def == JobDefOf.LayDown && newJob.targetA.HasThing && newJob.targetA.Thing.GetType() == typeof(Building_Bed) && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Loves_Sleeping))
 			{
 				if (!Manager.GetLoves_SleepDic().ContainsKey(___pawn))
@@ -118,6 +133,7 @@ namespace More_Traits
 			}
 
 			//Only executed if the pawn was entered in here due to Job.LayDown in a Bed
+			//determines how much recreation a pawn should get
 			if (Manager.GetLoves_SleepDic().ContainsKey(___pawn))
 			{
 				float initialRestPercent = Manager.GetLoves_SleepDic()[___pawn];
@@ -134,6 +150,7 @@ namespace More_Traits
 				Manager.GetLoves_SleepDic().Remove(___pawn);
 			}
 
+			//Deals with sleepyheads not wanting to wake up
 			if (___pawn.CurJobDef == JobDefOf.LayDown && newJob.def != JobDefOf.LayDown && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Sleepyhead) && ___pawn.needs.rest.CurCategory == RestCategory.Rested) 
 			{
 				if (Rand.Value < 0.1)
