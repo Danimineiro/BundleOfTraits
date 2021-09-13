@@ -60,7 +60,7 @@ namespace More_Traits
 		{
 			if (dinfo != null && thoughtsKind == PawnDiedOrDownedThoughtsKind.Died)
 			{
-				if (dinfo.Value.Instigator is Pawn pawn2 && pawn2 != victim && victim.needs != null)
+				if (dinfo.Value.Instigator is Pawn pawn2 && pawn2 != victim && victim.needs != null && !pawn2.RaceProps.Animal)
 				{
 					if (pawn2.story.traits.HasTrait(BOTTraitDefOf.BOT_Pacifist) && victim.RaceProps.Animal)
 					{
