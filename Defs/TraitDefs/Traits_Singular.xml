@@ -156,6 +156,7 @@
 			<li>
 				<label>strong Body</label>
 				<description>{PAWN_nameDef} was born with a strong, healthy body. They can carry more, mine faster, deal more damage in melee combat and take reduced damage from attacks.</description>
+				<degree>-1</degree>
 				<statFactors>
 					<MiningSpeed>1.2</MiningSpeed>
 				</statFactors>
@@ -180,6 +181,7 @@
 			<li>
 				<label>weak body</label>
 				<description>{PAWN_nameDef} was unfortunately born with a weak, feeble body. They cannot carry as much as everyone else, mine slower, deal less damage in melee and take increased damage from attacks.</description>
+				<degree>1</degree>
 				<statFactors>
 					<MiningSpeed>0.8</MiningSpeed>
 				</statFactors>
