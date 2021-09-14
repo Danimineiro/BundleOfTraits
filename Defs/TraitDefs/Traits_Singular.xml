@@ -169,6 +169,7 @@
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
+			<li>BOT_WeakBody</li>
 			<li>Wimp</li>
 		</conflictingTraits>
 	</TraitDef>
@@ -193,6 +194,7 @@
 			</li>   
 		</degreeDatas>
 		<conflictingTraits>
+			<li>BOT_StrongBody</li>
 			<li>Tough</li>
 			<li>Brawler</li>
 		</conflictingTraits>
