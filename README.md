@@ -1,4 +1,4 @@
-# BucketOfTraits
+# BundleOfTraits
 This mod adds 15 new traits to the game. Each trait is designed to be unique by providing gameplay challenges or advantages:
 
 ### Misanthrope
