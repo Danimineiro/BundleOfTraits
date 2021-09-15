@@ -99,12 +99,15 @@ namespace More_Traits
 		{
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
-				Dictionary<Map, List<Thing>> MapFireDic = new Dictionary<Map, List<Thing>>();
-				foreach (Pawn pawn in Pyrophobics)
+				Dictionary<Map, Dictionary<Thing, float>> MapFireDic = new Dictionary<Map, Dictionary<Thing, float>>();
+				foreach (Pawn pawn in PyrophobicPawns)
 				{
 					if (pawn.Map != null && pawn.Map.fireWatcher.FireDanger > 0)
 					{
-						List<Thing> fires = null;
+						Dictionary<Thing, float> fires = null;
+						Thing closestFire = null;
+						float closestFireDistance = float.MaxValue;
+						bool hasLOS = false;
 
 						if (MapFireDic.ContainsKey(pawn.Map))
 						{
@@ -112,26 +115,35 @@ namespace More_Traits
 						}
 						else
 						{
-							fires = pawn.Map.listerThings.ThingsOfDef(ThingDefOf.Fire);
+							foreach (Thing fire in pawn.Map.listerThings.ThingsOfDef(ThingDefOf.Fire))
+                            {
+								float fireDistance = fire.Position.DistanceTo(pawn.Position);
+								fires[fire] = fireDistance;
+								hasLOS = hasLOS ? hasLOS : GenSight.LineOfSight(pawn.Position, fire.Position, pawn.Map);
+
+								if (fireDistance < closestFireDistance)
+                                {
+									closestFireDistance = fireDistance;
+									closestFire = fire;
+                                }
+                            }
 						}
 
-						if (!pawn.Drafted)
+						if (!pawn.Drafted && hasLOS)
 						{
 							if (fires != null && fires.Count != 0)
 							{
-								float closestFireDistance = fires.Min(fire => fire.Position.DistanceTo(pawn.Position));
 								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
 								{
-									pawn.MakeFlee(fires.RandomElement(), PyrophobeMinMaxFleeDistance, fires);
+									pawn.MakeFlee(closestFire, PyrophobeMinMaxFleeDistance, fires.Keys.ToList());
 									pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 1);
 								}
 							}
 						}
-						else if (pawn.Drafted)
+						else if (pawn.Drafted && hasLOS)
 						{
 							if (fires != null && fires.Count != 0)
 							{
-								float closestFireDistance = fires.Min(fire => fire.Position.DistanceTo(pawn.Position));
 								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
 								{
 									pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 0);
