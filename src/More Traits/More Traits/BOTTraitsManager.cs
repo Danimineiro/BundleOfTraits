@@ -100,11 +100,11 @@ namespace More_Traits
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
 				Dictionary<Map, Dictionary<Thing, float>> MapFireDic = new Dictionary<Map, Dictionary<Thing, float>>();
-				foreach (Pawn pawn in PyrophobicPawns)
+				foreach (Pawn pawn in Pyrophobics)
 				{
 					if (pawn.Map != null && pawn.Map.fireWatcher.FireDanger > 0)
 					{
-						Dictionary<Thing, float> fires = null;
+						Dictionary<Thing, float> fires = new Dictionary<Thing, float>();
 						Thing closestFire = null;
 						float closestFireDistance = float.MaxValue;
 						bool hasLOS = false;
