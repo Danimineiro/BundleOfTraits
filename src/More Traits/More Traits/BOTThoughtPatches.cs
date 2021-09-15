@@ -8,12 +8,13 @@ using Verse.AI;
 namespace More_Traits
 {
 	[StaticConstructorOnStartup]
-	class BOTThoughtPatches
+	class BOTPatches
 	{
-		static BOTThoughtPatches()
+		static BOTPatches()
 		{
-			var harmony = new Harmony("dani.BOT.thoughts");
+			var harmony = new Harmony("dani.BOT.Patches");
 			harmony.PatchAll();
+
 		}
 	}
 
@@ -36,11 +37,11 @@ namespace More_Traits
 						{
 							if (pawn2.story.traits.HasTrait(BOTTraitDefOf.BOT_Pacifist))
 							{
-								outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_WittnessedDeathPacifist, pawn2, null, 1, 1));
+								outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_WittnessedDeathPacifist, pawn2, null));
 
 								if (pawn2 == (Pawn)dinfo.Value.Instigator)
 								{
-									outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_Pacifist_KilledHuman, pawn2, null, 1, 1));
+									outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_Pacifist_KilledHuman, pawn2, null));
 								}
 							}
 						}
@@ -64,7 +65,7 @@ namespace More_Traits
 				{
 					if (pawn2.story.traits.HasTrait(BOTTraitDefOf.BOT_Pacifist) && victim.RaceProps.Animal)
 					{
-						outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_Pacifist_KilledAnimal, pawn2, null, 1, 1));
+						outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_Pacifist_KilledAnimal, pawn2, null));
 					}
 				}
 			}

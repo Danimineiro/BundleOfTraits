@@ -480,16 +480,6 @@ namespace More_Traits
 		}
 	}
 
-	[StaticConstructorOnStartup]
-	class BOTTraitsPatcher
-	{
-		static BOTTraitsPatcher()
-		{
-			var harmony = new Harmony("dani.BOT.traits");
-			harmony.PatchAll();
-		}
-	}
-
 	[HarmonyPatch(typeof(TraitSet), "GainTrait")]
 	public static class GainTraitPatch
 	{
