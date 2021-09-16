@@ -4,6 +4,7 @@ using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using Verse.AI;
+using System;
 
 namespace More_Traits
 {
@@ -76,20 +77,54 @@ namespace More_Traits
 	///		This class manages the adding of some food related thoughts to eclectics
 	/// </summary>
 	[HarmonyPatch(typeof(Toils_Ingest), "FinalizeIngest")]
-	class EclecticIngestPatch
+	class IngestPatch
 	{
-		public static void Postfix(Pawn ingester, TargetIndex ingestibleInd)
+		public static void Postfix(Pawn ingester, TargetIndex ingestibleInd, ref Toil __result)
 		{
 			Thing food = ingester.CurJob.GetTarget(ingestibleInd).Thing;
 			bool isMeal = food.HasThingCategory(ThingCategoryDefOf.FoodMeals);
 
-			if (ingester.needs.mood != null && isMeal)
-			{
-				int ingredients = food.TryGetComp<CompIngredients>().ingredients.Count;
-				ingredients = (ingredients > BOTThoughtDefOf.BOT_EclecticPalateAte.stages.Count) ? BOTThoughtDefOf.BOT_EclecticPalateAte.stages.Count : ingredients;
-				ingredients = (ingredients > 0) ? ingredients - 1 : 0;
 
-				ingester.TryGainMemory(BOTThoughtDefOf.BOT_EclecticPalateAte, ingredients);
+			AddThoughtsClass finisher = new AddThoughtsClass(food, isMeal, ingester);
+			Action actionTarget = finisher.AddThoughts;
+
+			__result.AddFinishAction(actionTarget);
+		}
+
+		private class AddThoughtsClass
+        {
+			Thing food;
+			bool isMeal;
+			Pawn ingester;
+
+			public AddThoughtsClass(Thing food, bool isMeal, Pawn ingester)
+            {
+				this.food = food;
+				this.isMeal = isMeal;
+				this.ingester = ingester;
+            }
+
+			public void AddThoughts()
+			{
+				if (ingester.needs.mood != null && isMeal)
+				{
+
+					List<ThingDef> ingredients = food.TryGetComp<CompIngredients>().ingredients;
+					int nrOfIngredients = ingredients.Count;
+					nrOfIngredients = (nrOfIngredients > BOTThoughtDefOf.BOT_EclecticPalateAte.stages.Count) ? BOTThoughtDefOf.BOT_EclecticPalateAte.stages.Count : nrOfIngredients;
+					nrOfIngredients = (nrOfIngredients > 0) ? nrOfIngredients - 1 : 0;
+
+					ingester.TryGainMemory(BOTThoughtDefOf.BOT_EclecticPalateAte, nrOfIngredients);
+
+					foreach (ThingDef thingDef in ingredients)
+					{
+						Log.Message("Ingredient: " + thingDef.defName);
+					}
+				}
+				else if (ingester.needs.mood != null && !isMeal)
+				{
+					Log.Message("Food: " + food.def.defName);
+				}
 			}
 		}
 	}
