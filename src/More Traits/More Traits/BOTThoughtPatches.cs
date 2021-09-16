@@ -115,15 +115,6 @@ namespace More_Traits
 					nrOfIngredients = (nrOfIngredients > 0) ? nrOfIngredients - 1 : 0;
 
 					ingester.TryGainMemory(BOTThoughtDefOf.BOT_EclecticPalateAte, nrOfIngredients);
-
-					foreach (ThingDef thingDef in ingredients)
-					{
-						Log.Message("Ingredient: " + thingDef.defName);
-					}
-				}
-				else if (ingester.needs.mood != null && !isMeal)
-				{
-					Log.Message("Food: " + food.def.defName);
 				}
 			}
 		}
