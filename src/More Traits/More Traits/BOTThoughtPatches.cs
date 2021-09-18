@@ -82,6 +82,10 @@ namespace More_Traits
 		public static void Postfix(Pawn ingester, TargetIndex ingestibleInd, ref Toil __result)
 		{
 			Thing food = ingester.CurJob.GetTarget(ingestibleInd).Thing;
+			Log.Message("Is food null" + (food != null));
+			
+			if (food == null) return;
+
 			bool isMeal = food.HasThingCategory(ThingCategoryDefOf.FoodMeals);
 
 
