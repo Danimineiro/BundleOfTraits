@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Manifest>
+	<identifier>BundleOfTraits</identifier>
+	<version>1.0.0.7</version>
+	<dependencies>
+		<li>net.pardeike.rimworld.mod.harmony</li>
+	</dependencies>
+	<loadAfter>
+		<li>net.pardeike.rimworld.mod.harmony</li>
+		<li>Core</li>
+		<li>Royality</li>
+		<li>Ideology</li>
+		<li>VanillaTraitsExpanded</li>
+	</loadAfter>
+	<manifestUri>https://github.com/Danimineiro/BundleOfTraits/tree/master/About/Manifest.xml</manifestUri>
+	<downloadUri>https://github.com/Danimineiro/BundleOfTraits/releases/latest</downloadUri>
+</Manifest>
