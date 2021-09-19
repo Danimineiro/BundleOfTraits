@@ -3,14 +3,14 @@
 	<identifier>BundleOfTraits</identifier>
 	<version>1.0.0.7</version>
 	<dependencies>
-		<li>net.pardeike.rimworld.mod.harmony</li>
+		<li>brrainz.harmony</li>
 	</dependencies>
 	<loadAfter>
-		<li>net.pardeike.rimworld.mod.harmony</li>
-		<li>Core</li>
-		<li>Royality</li>
-		<li>Ideology</li>
-		<li>VanillaTraitsExpanded</li>
+		<li>brrainz.harmony</li>
+		<li>Ludeon.RimWorld</li>
+		<li>Ludeon.RimWorld.Royality</li>
+		<li>Ludeon.RimWorld.Ideology</li>
+		<li>VanillaExpanded.VanillaTraitsExpanded</li>
 	</loadAfter>
 	<manifestUri>https://github.com/Danimineiro/BundleOfTraits/tree/master/About/Manifest.xml</manifestUri>
 	<downloadUri>https://github.com/Danimineiro/BundleOfTraits/releases/latest</downloadUri>
