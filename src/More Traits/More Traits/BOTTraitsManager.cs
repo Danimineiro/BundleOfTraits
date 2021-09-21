@@ -102,6 +102,7 @@ namespace More_Traits
 				Dictionary<Map, Dictionary<Thing, float>> MapFireDic = new Dictionary<Map, Dictionary<Thing, float>>();
 				foreach (Pawn pawn in Pyrophobics)
 				{
+					if (!IsPawnStillThere(pawn)) return;
 					if (pawn.Map != null && pawn.Map.fireWatcher.FireDanger > 0)
 					{
 						Dictionary<Thing, float> fires = new Dictionary<Thing, float>();
@@ -163,6 +164,7 @@ namespace More_Traits
 				{
 					//Get 25% more/less healing by running the healing part of the HealthTick function
 					Pawn p = keyValuePair.Key;
+					if (!IsPawnStillThere(p)) return;
 					HediffSet hediffSet = p.health.hediffSet;
 
 					//Heal fast Metabolism, damage flow by the same amount it was healed.
@@ -242,6 +244,7 @@ namespace More_Traits
 				HashSet<Pawn> increment = new HashSet<Pawn>();
 				foreach (KeyValuePair<Pawn, int> keyValuePair in Narcoleptics)
 				{
+					if (!IsPawnStillThere(keyValuePair.Key)) return;
 					float baseSleepChance = 0.015625f;
 					float sleepChance = baseSleepChance;
 					if (Narcoleptics[keyValuePair.Key] > 120000)
@@ -325,6 +328,7 @@ namespace More_Traits
 				List<Pawn> toRemove = new List<Pawn>();
 				foreach(Pawn p in SleepyHeads)
 				{
+					if (!IsPawnStillThere(p)) return;
 					if (Rand.Value > 0.1 && p.CurJobDef == JobDefOf.LayDown)
 					{
 						p.TryGainMemory(BOTThoughtDefOf.BOT_SleepyHeadStopsSleeping, 0);
@@ -349,6 +353,26 @@ namespace More_Traits
 				}
 			}
 		}
+
+		public static bool IsPawnStillThere(Pawn pawn)
+        {
+			bool flag = pawn != null && pawn.Spawned && pawn.story != null && pawn.story.traits != null;
+
+			if (!flag)
+			{
+				Log.Error("One of your pawns dissapeared in a way that was not accounted for in the mod: Bundle of Traits. Please message me the developer about this and if possible, tell me if you have an idea about what might have caused this.");
+
+				if (pawn != null && pawn.Name != null)
+				{
+					Log.Error("Pawn name: " + pawn.Name + " Pawn is spawned: " + pawn.Spawned + " Pawn has story: " + (pawn.story != null) + " Pawn has traits: " + (pawn.story.traits != null));
+				}
+				else
+				{
+					Log.Error("For some reason, the Pawn doesn't exist anymore. Has name: " + (pawn.Name != null));
+				}
+			}
+			return flag;
+        }
 
 		//This runs on game load when a pawn is spawned so PreInit should always get executed
 		/// <summary>
@@ -405,7 +429,7 @@ namespace More_Traits
 				RemoveWrongPawnsFromDic(Narcoleptics, BOTTraitDefOf.BOT_Narcoleptic);
 				RemoveWrongPawnsFromDic(Loves_Sleep, BOTTraitDefOf.BOT_Narcoleptic);
 				RemoveWrongPawnsFromDic(MetabolismPawns, BOTTraitDefOf.BOT_Metabolism);
-	
+
 				Pyrophobics.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia));
 			}
 		}
@@ -415,7 +439,7 @@ namespace More_Traits
 			List<Pawn> removePawns = new List<Pawn>();
 			foreach (KeyValuePair<Pawn, int> keyValuePair in dic)
 			{
-				if (!keyValuePair.Key.story.traits.HasTrait(traitDef))
+				if (!keyValuePair.Key.story.traits.HasTrait(traitDef) || !IsPawnStillThere(keyValuePair.Key))
 				{
 					removePawns.Add(keyValuePair.Key);
 				}
@@ -432,7 +456,7 @@ namespace More_Traits
 			List<Pawn> removePawns = new List<Pawn>();
 			foreach (KeyValuePair<Pawn, float> keyValuePair in dic)
 			{
-				if (!keyValuePair.Key.story.traits.HasTrait(traitDef))
+				if (!keyValuePair.Key.story.traits.HasTrait(traitDef) || !IsPawnStillThere(keyValuePair.Key))
 				{
 					removePawns.Add(keyValuePair.Key);
 				}
@@ -449,7 +473,7 @@ namespace More_Traits
 			List<Pawn> removePawns = new List<Pawn>();
 			foreach (KeyValuePair<Pawn, Building_Bed> keyValuePair in dic)
 			{
-				if (!keyValuePair.Key.story.traits.HasTrait(traitDef))
+				if (!keyValuePair.Key.story.traits.HasTrait(traitDef) || !IsPawnStillThere(keyValuePair.Key))
 				{
 					removePawns.Add(keyValuePair.Key);
 				}
