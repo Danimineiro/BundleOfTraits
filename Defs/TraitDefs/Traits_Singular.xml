@@ -69,6 +69,7 @@
 			<li>Bloodlust</li>
 			<li>Psychopath</li>
 			<li>Brawler</li>
+			<li>BOT_Sadist</li>
 			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Vengeful</li>
 		</conflictingTraits>
 	</TraitDef>
@@ -197,6 +198,235 @@
 			<li>BOT_StrongBody</li>
 			<li>Tough</li>
 			<li>Brawler</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Apathetic</defName>
+		<commonality>0.6</commonality>
+		<degreeDatas>
+			<li>
+				<label>apathetic</label>
+				<description>{PAWN_nameDef} has no goals in life. No dreams, motivation or passions. It's going to take a lot to break what is left of them.</description>
+				<statOffsets>
+					<MentalBreakThreshold>-0.24</MentalBreakThreshold>
+				</statOffsets>
+				<!-- Inspirations are dissabled at BOTTraitsPatcher.BOTTraitsPatcher()
+				<disallowedInspirations>
+					<li>Frenzy_Work</li>
+					<li>Frenzy_Go</li>
+					<li>Frenzy_Shoot</li>
+					<li>Inspired_Trade</li>
+					<li>Inspired_Recruitment</li>
+					<li>Inspired_Taming</li>
+					<li>Inspired_Surgery</li>
+					<li>Inspired_Creativity</li>
+				</disallowedInspirations>
+				-->
+			</li>
+		</degreeDatas>
+		<!-- Passions are dissabled at BOTTraitsPatcher.BOTTraitsPatcher()
+		<conflictingPassions>
+			<li>Shooting</li>
+			<li>Melee</li>
+			<li>Construction</li>
+			<li>Mining</li>
+			<li>Cooking</li>
+			<li>Plants</li>
+			<li>Animals</li>
+			<li>Crafting</li>
+			<li>Artistic</li>
+			<li>Medicine</li>
+			<li>Social</li>
+			<li>Intellectual</li>
+		</conflictingPassions>
+		-->
+		<conflictingTraits>
+			<li>Nerves</li>
+			<li>TorturedArtist</li>
+			<li>NaturalMood</li>
+			<li>BOT_Moody</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Anxious</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Entomophobia</defName>
+		<commonality>0.4</commonality>
+		<degreeDatas>
+			<li>
+				<label>entomophobia</label>
+				<description>{PAWN_nameDef} has an intense fear of insects and will not hesitate to run away upon spotting one.</description>
+			</li>
+		</degreeDatas>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Entomophagous</defName>
+		<commonality>0.4</commonality>
+		<degreeDatas>
+			<li>
+				<label>entomophagous</label>
+				<description>Having had easy access to insect meat during most of their life {PAWN_nameDef} became accustomed to eating it to the point that {PAWN_pronoun} preferred it over normal meat.</description>
+				<disallowedThoughtsFromIngestion>
+					<li>
+						<meatSource>Insect</meatSource>
+						<thoughts>
+							<li>AteRawFood</li>
+							<li>AteInsectMeatDirect</li>
+							<li>AteInsectMeatAsIngredient</li>
+						</thoughts>
+					</li>
+				</disallowedThoughtsFromIngestion>
+				<extraThoughtsFromIngestion>
+					<li>
+						<meatSource>Insect</meatSource>
+						<thoughtsDirect>
+							<li>BOT_Entomophagous_AteInsectMeatDirect</li>
+						</thoughtsDirect>
+						<thoughtsAsIngredient>
+							<li>BOT_Entomophagous_AteInsectMeatAsIngredient</li>
+						</thoughtsAsIngredient>
+					</li>
+				</extraThoughtsFromIngestion>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Cannibal</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Gregarious</defName>
+		<commonality>0.6</commonality>
+		<degreeDatas>
+			<li>
+				<label>gregarious</label>
+				<description>{PAWN_nameDef} loves the company of others. The more, the merrier.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Psychopath</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Pluviophile</defName>
+		<commonality>0.5</commonality>
+		<degreeDatas>
+			<li>
+				<label>pluviophile</label>
+				<description>{PAWN_nameDef} loves the rain. {PAWN_pronoun} doesn't mind being wet and gets happy during rainy weather.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>BOT_Chionophile</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Chionophile</defName>
+		<commonality>0.5</commonality>
+		<degreeDatas>
+			<li>
+				<label>chionophile</label>
+				<description>There's nothing {PAWN_nameDef} loves more than snow! No amount of snow are is going to slow them down.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>BOT_Pluviophile</li>
+			<li>BOT_Temperature_Love</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Moody</defName>
+		<commonality>0.4</commonality>
+		<degreeDatas>
+			<li>
+				<label>moody</label>
+				<description>It doesn't take much to make {PAWN_nameDef} either really excited or to bring {PAWN_objective} mood completely down.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>TorturedArtist</li>
+			<li>NaturalMood</li>
+			<li>BOT_Apathetic</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_EarlyBird</defName>
+		<commonality>1.3</commonality>
+		<degreeDatas>
+			<li>
+				<label>early bird</label>
+				<description>{PAWN_nameDef} prefers to wake up early in the day to get as much work done as possible during the day.\n\n{PAWN_pronoun} gets a mood boost if awake during the early hours of a day (5h-12h) and mood loss if awake during the evening (17h-0h).</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>NightOwl</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Communal</defName>
+		<commonality>0.8</commonality>
+		<degreeDatas>
+			<li>
+				<label>communal</label>
+				<description>{PAWN_nameDef} has grown accustomed to a tightly nit colony and loves sleeping in barracks. Preferably with many other pawns.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Jealous</li>
+			<li>Greedy</li>
+		</conflictingTraits>
+	</TraitDef>
+	
+	<TraitDef>
+		<defName>BOT_Sadist</defName>
+		<commonality>0.4</commonality>
+		<degreeDatas>
+			<li>
+				<label>sadist</label>
+				<description>{PAWN_nameDef} likes seeing other pawns suffer and gets excited from causing damage.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>BOT_Pacifist</li>
+			<li>Kind</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Vulgar</defName>
+		<commonality>0.8</commonality>
+		<degreeDatas>
+			<li>
+				<label>vulgar</label>
+				<description>For whatever purpose, {PAWN_nameDef} has taught himself every swear word in the dictionary and uses his profane knowledge unconsciously in {PAWN_objective} day-to-day.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Kind</li>
+			<li>BOT_Comedian</li>
+			<li>Abrasive</li>
+		</conflictingTraits>
+	</TraitDef>
+	
+	<TraitDef>
+		<defName>BOT_Comedian</defName>
+		<commonality>0.8</commonality>
+		<degreeDatas>
+			<li>
+				<label>comedian</label>
+				<description>{PAWN_nameDef} always tries to raise their fellow pawns' mood by telling jokes. Or try to, at least.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>BOT_Vulgar</li>
+			<li>Abrasive</li>
 		</conflictingTraits>
 	</TraitDef>
 </Defs>

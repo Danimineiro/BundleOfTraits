@@ -153,7 +153,7 @@
 	<ThoughtDef>
 		<defName>BOT_NyctophobiaCantSleep</defName>
 		<validWhileDespawned>true</validWhileDespawned>
-		<durationDays>0.0167</durationDays>
+		<durationDays>0.25</durationDays>
 		<requiredTraits>
 			<li>BOT_Nyctophobia</li>
 		</requiredTraits>
@@ -211,6 +211,326 @@
 				<label>sleepyhead got up himself</label>
 				<description>I feel great after getting to sleep some more!</description>
 				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
+	<!-- Gregarious Thoughts -->
+	<ThoughtDef>
+		<defName>BOT_GregariousCompany</defName>
+		<validWhileDespawned>true</validWhileDespawned>
+		<workerClass>More_Traits.ThoughtWorker_GregariousCompany</workerClass>
+		<requiredTraits>
+			<li>BOT_Gregarious</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>gregarious all alone</label>
+				<description>I wish I had some company...</description>
+				<baseMoodEffect>-3</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious not alone</label>
+				<description>I like having someone around.</description>
+				<baseMoodEffect>1</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious has some company</label>
+				<description>It's neat having a few people around.</description>
+				<baseMoodEffect>2</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious has some company</label>
+				<description>I like having {NUMBER} people around.</description>
+				<baseMoodEffect>4</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious has company</label>
+				<description>It's cool having {NUMBER} people around!</description>
+				<baseMoodEffect>6</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious has company</label>
+				<description>It's really cool having {NUMBER} people around!</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious likes company</label>
+				<description>There are so many nice people here!</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious likes company</label>
+				<description>More and more and more and more!</description>
+				<baseMoodEffect>12</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious enjoys company</label>
+				<description>{NUMBER} and we are still not stopping! It's just so great!</description>
+				<baseMoodEffect>14</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious enjoys company</label>
+				<description>This is the place of my dreams!</description>
+				<baseMoodEffect>16</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious loves company</label>
+				<description>With {NUMBER} people here, I have interesting encounters every day!</description>
+				<baseMoodEffect>18</baseMoodEffect>
+			</li>
+			<li>
+				<label>gregarious lives dream</label>
+				<description>I would have never dreamt of this, and yet I can experience it.</description>
+				<baseMoodEffect>20</baseMoodEffect>
+			</li>
+		</stages>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+	</ThoughtDef>
+
+	<!-- Pluviophile Thoughts -->
+	<ThoughtDef>
+		<defName>BOT_PluviophileLikesRain</defName>
+		<workerClass>More_Traits.BOT_ThoughtWorker_PluviophileLikesRain</workerClass>
+		<stages>
+			<li>
+				<label>pluviophile enjoying the rain</label>
+				<description>I love the calm and peaceful nature of rain.</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_Pluviophile</li>
+		</requiredTraits>
+	</ThoughtDef>
+
+	<!-- Chionophile Thoughts -->
+	<ThoughtDef>
+		<defName>BOT_ChionophileLikesSnow</defName>
+		<workerClass>More_Traits.BOT_ThoughtWorker_ChionophileLikesSnow</workerClass>
+		<stages>
+			<li>
+				<label>chionophile enjoying the weather</label>
+				<description>It's so beautiful when it's snowing. I could watch it all day.</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_Chionophile</li>
+		</requiredTraits>
+	</ThoughtDef>
+	
+	<!-- Moody Thoughts -->
+	<ThoughtDef>
+		<defName>BOT_MoodyModifier</defName>
+		<workerClass>More_Traits.BOT_ThoughtWorker_MoodyModifier</workerClass>
+		<stages>
+			<li>
+				<label>moody pawn is very unhappy</label>
+				<description>I hate how everything is going.</description>
+				<baseMoodEffect>-10</baseMoodEffect>
+			</li>
+			<li>
+				<label>moody pawn is unhappy</label>
+				<description>I really dislike the current situation.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+			<li>
+				<label>moody pawn is happy</label>
+				<description>Today is a good day.</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+			<li>
+				<label>moody pawn is very happy</label>
+				<description>Everything has been going great!</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_Moody</li>
+		</requiredTraits>
+	</ThoughtDef>
+	
+	<!-- Early Bird Thoughts -->
+
+	<ThoughtDef>
+		<defName>BOT_EarlyBirdTimeThought</defName>
+		<workerClass>More_Traits.BOT_ThoughtWorker_EarlyBirdTimeThought</workerClass>
+		<stages>
+			<li>
+				<label>early bird is up early</label>
+				<description>The early hours are the best part of the day!</description>
+				<baseMoodEffect>16</baseMoodEffect>
+			</li>
+			<li>
+				<label>early bird is up late</label>
+				<description>I don't like working late.</description>
+				<baseMoodEffect>-10</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_EarlyBird</li>
+		</requiredTraits>
+	</ThoughtDef>
+	
+	<!-- Communal Thoughts -->
+	<ThoughtDef>
+		<defName>BOT_CommunalSharing</defName>
+		<durationDays>1</durationDays>
+		<stackLimit>1</stackLimit>
+		<stages>
+			<li>
+				<label>communal slept all alone</label>
+				<description>I wish I could share my room with someone..</description>
+				<baseMoodEffect>-3</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal didn't sleep alone</label>
+				<description>I like being able to share my room.</description>
+				<baseMoodEffect>1</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with a few people</label>
+				<description>It's neat being able to share my room.</description>
+				<baseMoodEffect>2</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with others</label>
+				<description>I like sharing my room with others.</description>
+				<baseMoodEffect>4</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>It's cool being able to share my room with many others!</description>
+				<baseMoodEffect>6</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>It's really cool having many others sleep in my room with me!</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>There are so many nice people sleeping inside my room with me!</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>More and more and more and more!</description>
+				<baseMoodEffect>12</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>The number of others sleeping in my room with me is making me so happy!</description>
+				<baseMoodEffect>14</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>Sharing my room with so many other people is the greatest thing ever!</description>
+				<baseMoodEffect>16</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>With so many other people in my room, I don't ever have to feel alone at night.</description>
+				<baseMoodEffect>18</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>It's so great! We get to sleep together in this room!</description>
+				<baseMoodEffect>20</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_Communal</li>
+		</requiredTraits>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
+	</ThoughtDef>
+	
+	<!-- Comedian thoughts -->
+	<ThoughtDef>
+		<defName>BOT_ComedianGoodJokeMood</defName>
+		<durationDays>0.5</durationDays>
+		<stackLimit>10</stackLimit>
+		<stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+		<stages>
+			<li>
+				<label>heard a good joke</label>
+				<description>I heard a good joke today.</description>
+				<baseMoodEffect>3</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_ComedianBadJokeMood</defName>
+		<durationDays>0.5</durationDays>
+		<stackLimit>10</stackLimit>
+		<stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+		<stages>
+			<li>
+				<label>heard a bad joke</label>
+				<description>I heard a bad joke today.</description>
+				<baseMoodEffect>-3</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_ComedianGoodJokeOpinion</defName>
+		<thoughtClass>Thought_MemorySocial</thoughtClass>
+		<durationDays>20</durationDays>
+		<stackLimit>300</stackLimit>
+		<stackLimitForSameOtherPawn>10</stackLimitForSameOtherPawn>
+		<stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+		<stages>
+			<li>
+				<label>made a good joke</label>
+				<baseOpinionOffset>9</baseOpinionOffset>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_ComedianBadJokeOpinion</defName>
+		<thoughtClass>Thought_MemorySocial</thoughtClass>
+		<durationDays>20</durationDays>
+		<stackLimit>300</stackLimit>
+		<stackLimitForSameOtherPawn>10</stackLimitForSameOtherPawn>
+		<stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+		<stages>
+			<li>
+				<label>made a bad joke</label>
+				<baseOpinionOffset>-9</baseOpinionOffset>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
+	<ThoughtDef>
+		<defName>BOT_ComedianGoodJokeOpinionSelf</defName>
+		<thoughtClass>Thought_MemorySocial</thoughtClass>
+		<durationDays>20</durationDays>
+		<stackLimit>300</stackLimit>
+		<stackLimitForSameOtherPawn>10</stackLimitForSameOtherPawn>
+		<stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+		<stages>
+			<li>
+				<label>liked my joke</label>
+				<baseOpinionOffset>9</baseOpinionOffset>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_ComedianBadJokeOpinionSelf</defName>
+		<thoughtClass>Thought_MemorySocial</thoughtClass>
+		<durationDays>20</durationDays>
+		<stackLimit>300</stackLimit>
+		<stackLimitForSameOtherPawn>10</stackLimitForSameOtherPawn>
+		<stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+		<stages>
+			<li>
+				<label>disliked my joke</label>
+				<baseOpinionOffset>-9</baseOpinionOffset>
 			</li>
 		</stages>
 	</ThoughtDef>

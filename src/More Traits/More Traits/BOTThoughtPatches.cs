@@ -5,17 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Verse.AI;
 using System;
+using UnityEngine;
+using RimWorld.Planet;
 
 namespace More_Traits
 {
 	[StaticConstructorOnStartup]
-	class BOTPatches
+	class BOTThoughtPatches
 	{
-		static BOTPatches()
+		static BOTThoughtPatches()
 		{
 			var harmony = new Harmony("dani.BOT.Patches");
 			harmony.PatchAll();
-
 		}
 	}
 
@@ -58,7 +59,7 @@ namespace More_Traits
 	[HarmonyPatch(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_Relations")]
 	class PacifistKilledPatch
 	{
-		public static void Postfix (Pawn victim, DamageInfo? dinfo, PawnDiedOrDownedThoughtsKind thoughtsKind, List<IndividualThoughtToAdd> outIndividualThoughts, List<ThoughtToAddToAll> outAllColonistsThoughts)
+		public static void Postfix(Pawn victim, DamageInfo? dinfo, PawnDiedOrDownedThoughtsKind thoughtsKind, List<IndividualThoughtToAdd> outIndividualThoughts, List<ThoughtToAddToAll> outAllColonistsThoughts)
 		{
 			if (dinfo != null && thoughtsKind == PawnDiedOrDownedThoughtsKind.Died)
 			{
@@ -82,7 +83,7 @@ namespace More_Traits
 		public static void Postfix(Pawn ingester, TargetIndex ingestibleInd, ref Toil __result)
 		{
 			Thing food = ingester.CurJob.GetTarget(ingestibleInd).Thing;
-			
+
 			if (food == null) return;
 
 			bool isMeal = food.HasThingCategory(ThingCategoryDefOf.FoodMeals);
@@ -95,17 +96,17 @@ namespace More_Traits
 		}
 
 		private class AddThoughtsClass
-        {
-			Thing food;
-			bool isMeal;
-			Pawn ingester;
+		{
+			private readonly Thing food;
+			private readonly bool isMeal;
+			private readonly Pawn ingester;
 
 			public AddThoughtsClass(Thing food, bool isMeal, Pawn ingester)
-            {
+			{
 				this.food = food;
 				this.isMeal = isMeal;
 				this.ingester = ingester;
-            }
+			}
 
 			public void AddThoughts()
 			{
@@ -124,75 +125,133 @@ namespace More_Traits
 	}
 
 	/// <summary>
-	///		This class patches the startjob function to modify the behaviour of sleep related traits
+	///		This class manages Communal pawn thoughts
 	/// </summary>
-	[HarmonyPatch(typeof(Pawn_JobTracker), "StartJob")]
-	class StartJobPatch
+	[HarmonyPatch(typeof(Toils_LayDown), "ApplyBedThoughts")]
+	class BedPatch
 	{
-		public static void Prefix(Pawn ___pawn, Job newJob, JobCondition lastJobEndCondition)
+		public static void Postfix(Pawn actor)
 		{
-			if (___pawn.RaceProps.Animal || ___pawn.story == null || ___pawn.story.traits == null) return;
+			if (actor.needs.mood == null || !actor.HasTrait(BOTTraitDefOf.BOT_Communal)) return;
 
-			BOTTraitsManager Manager = Current.Game.GetComponent<BOTTraitsManager>();
+			Building_Bed building_Bed = actor.CurrentBed();
 
-			//Determine if a Nyctophobic person can sleep
-			if (newJob.def == JobDefOf.LayDown && newJob.targetA.HasThing && newJob.targetA.Thing.GetType() == typeof(Building_Bed) && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Nyctophobia))
+			actor.needs.mood.thoughts.memories.RemoveMemoriesOfDef(BOTThoughtDefOf.BOT_Communal_SleptInBarracks);
+			actor.needs.mood.thoughts.memories.RemoveMemoriesOfDef(BOTThoughtDefOf.BOT_Communal_SleptInBedroom);
+
+			if (actor.GetRoom(RegionType.Set_All).PsychologicallyOutdoors || building_Bed == null || building_Bed.CostListAdjusted().Count == 0) return;
+
+			if (building_Bed != null && building_Bed == actor.ownership.OwnedBed && !building_Bed.ForPrisoners && !actor.HasTrait(TraitDefOf.Ascetic))
 			{
-				IntVec3 bedPosition = newJob.targetA.Thing.Position;
-				Map map = ___pawn.Map;
-
-				//Exhaustion will eventually start sleeping jobs which is very buggy when these aren't accepted by my check, so exhausted pawns can always sleep
-				if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && ___pawn.needs.rest.CurCategory != RestCategory.Exhausted)
+				ThoughtDef thoughtDef = null;
+				if (building_Bed.GetRoom(RegionType.Set_All).Role == RoomRoleDefOf.Bedroom)
 				{
-					newJob.def = JobDefOf.LayDownAwake;
-					___pawn.TryGainMemory(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0);
-					Messages.Message("BOTNyctophobeCantSleep".Translate(___pawn.LabelShort, ___pawn), ___pawn, MessageTypeDefOf.NegativeEvent, true);
-					Manager.GetNyctophobesWhoCantSleepDic()[___pawn] = (Building_Bed) newJob.targetA.Thing;
+					thoughtDef = BOTThoughtDefOf.BOT_Communal_SleptInBedroom;
+				}
+				else if (building_Bed.GetRoom(RegionType.Set_All).Role == RoomRoleDefOf.Barracks)
+				{
+					thoughtDef = BOTThoughtDefOf.BOT_Communal_SleptInBarracks;
+				}
+				if (thoughtDef != null)
+				{
+					int scoreStageIndex = RoomStatDefOf.Impressiveness.GetScoreStageIndex(building_Bed.GetRoom(RegionType.Set_All).GetStat(RoomStatDefOf.Impressiveness));
+					if (thoughtDef.stages[scoreStageIndex] != null)
+					{
+						int owners = 0;
+
+						foreach (Building_Bed bed in building_Bed.GetRoom(RegionType.Set_All).ContainedBeds)
+						{
+							owners += bed.OwnersForReading.Count;
+						}
+
+						int nrOfOthers = Mathf.Clamp(owners - 1, 0, BOTThoughtDefOf.BOT_CommunalSharing.stages.Count - 1);
+
+						actor.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_CommunalSharing, BOTUtils.StageOfTwenty(nrOfOthers)));
+						actor.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(thoughtDef, scoreStageIndex));
+					}
 				}
 			}
+		}
+	}
 
-			//Save the amount of rest a pawn with the Loves_Sleep trait has in order to later calculate how much recreation they should gain from that
-			if (newJob.def == JobDefOf.LayDown && newJob.targetA.HasThing && newJob.targetA.Thing.GetType() == typeof(Building_Bed) && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Loves_Sleeping))
+	[HarmonyPatch(typeof(ThoughtUtility), "RemovePositiveBedroomThoughts")]
+	class RemovePositiveBedroomThoughtsPatch
+	{
+		public static void Postfix(Pawn pawn)
+		{
+			if (pawn.needs.mood == null)
 			{
-				if (!Manager.GetLoves_SleepDic().ContainsKey(___pawn))
-				{
-					Manager.GetLoves_SleepDic()[___pawn] = ___pawn.needs.rest.CurLevelPercentage;
-				}
-
 				return;
 			}
 
-			//Only executed if the pawn was entered in here due to Job.LayDown in a Bed
-			//determines how much recreation a pawn should get
-			if (Manager.GetLoves_SleepDic().ContainsKey(___pawn))
+			pawn.needs.mood.thoughts.memories.RemoveMemoriesOfDefIf(BOTThoughtDefOf.BOT_Communal_SleptInBarracks, (Thought_Memory thought) => thought.MoodOffset() > 0f);
+			pawn.needs.mood.thoughts.memories.RemoveMemoriesOfDefIf(BOTThoughtDefOf.BOT_Communal_SleptInBedroom, (Thought_Memory thought) => thought.MoodOffset() > 0f);
+			pawn.needs.mood.thoughts.memories.RemoveMemoriesOfDefIf(BOTThoughtDefOf.BOT_CommunalSharing, (Thought_Memory thought) => thought.MoodOffset() > 0f);
+		}
+	}
+
+	/// <summary>
+	///		This class manages Sadist thoughts
+	/// </summary>
+	[HarmonyPatch(typeof(Pawn_StanceTracker), "Notify_DamageTaken")]
+	class Notify_DamageTakenPatch
+	{
+		public static bool tag = false;
+
+		public static void Postfix(Pawn_StanceTracker __instance, DamageInfo dinfo)
+		{
+			Pawn victim = __instance.pawn;
+			Pawn instigator = dinfo.Instigator as Pawn;
+
+			if (dinfo.Def == DamageDefOf.SurgicalCut)
+            {
+				tag = true;
+				return;
+            }
+
+			if (dinfo.Def == DamageDefOf.ExecutionCut)
+            {
+				return;
+            }
+
+			if (instigator.HasTrait(BOTTraitDefOf.BOT_Sadist) && instigator.needs.mood != null)
 			{
-				float initialRestPercent = Manager.GetLoves_SleepDic()[___pawn];
-				float currentRestPercent = ___pawn.needs.rest.CurLevelPercentage;
-				float recreationGainPercent = (currentRestPercent - initialRestPercent) * 0.3f;
-
-				___pawn.needs.joy.GainJoy(recreationGainPercent, BOTJoyKindDefOf.BOT_LovesSleepSleeping);
-
-				if (currentRestPercent > 0.9)
-				{
-					___pawn.TryGainMemory(BOTThoughtDefOf.BOT_LovesSleepWellRested, 0);
-				}
-
-				Manager.GetLoves_SleepDic().Remove(___pawn);
+				instigator.needs.mood.thoughts.memories.TryGainMemory(BOTThoughtDefOf.BOT_HurtHumanlikeSadist);
 			}
 
-			//Deals with sleepyheads not wanting to wake up
-			if ((___pawn.CurJobDef == JobDefOf.LayDown || ___pawn.CurJobDef == JobDefOf.LayDownAwake) && newJob.def != JobDefOf.LayDown && ___pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Sleepyhead) && ___pawn.needs.rest.CurCategory == RestCategory.Rested && !Manager.GetSleepyHeadSet().Contains(___pawn)) 
+			foreach (Pawn pawn in victim.Map.mapPawns.AllPawnsSpawned.Where(thePawn => thePawn.HasTrait(BOTTraitDefOf.BOT_Sadist) && thePawn.needs.mood != null && thePawn != instigator && thePawn != victim && instigator != null))
 			{
-				if (Rand.Value > 0.3)
-				{
-					newJob = ___pawn.CurJob;
-					newJob.def = JobDefOf.LayDown;
-					newJob.forceSleep = true;
-					___pawn.needs.rest.CurLevelPercentage = 0.30f;
-					___pawn.TryGainMemory(BOTThoughtDefOf.BOT_SleepyHeadContinuesSleeping, 0);
-					Manager.GetSleepyHeadSet().Add(___pawn);
-				}
+				bool flag = false;
+
+				try
+                {
+					flag = ThoughtUtility.Witnessed(pawn, instigator);
+				} 
+				catch
+                {
+					Log.Warning("[Bundle of Traits] Some kind of damage could have caused major errors here: " + dinfo.ToString() + " You can ignore this warning but it would be nice if you could send the BOT dev this log file.");
+                }
+
+				if (flag) pawn.needs.mood.thoughts.memories.TryGainMemory(BOTThoughtDefOf.BOT_WitnessedDamageSadist);
 			}
+		}
+	}
+
+	[HarmonyPatch(typeof(Recipe_RemoveBodyPart), "ApplyOnPawn")]
+	class ApplyOnPawnPatch
+	{
+		public static void Prefix()
+		{
+			Notify_DamageTakenPatch.tag = false;
+		}
+
+		public static void Postfix(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
+		{
+			if (billDoer.needs.mood != null && billDoer.HasTrait(BOTTraitDefOf.BOT_Sadist) && Notify_DamageTakenPatch.tag)
+			{
+				billDoer.needs.mood.thoughts.memories.TryGainMemory(BOTThoughtDefOf.BOT_HarvestedOrgan_Sadist);
+			}
+			Notify_DamageTakenPatch.tag = false;
 		}
 	}
 }

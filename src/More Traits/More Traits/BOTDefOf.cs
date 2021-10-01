@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using Verse;
 
 namespace More_Traits
 {
@@ -39,6 +40,24 @@ namespace More_Traits
 
 		public static TraitDef BOT_Temperature_Love;
 
+		public static TraitDef BOT_Apathetic;
+
+		public static TraitDef BOT_Entomophobia;
+
+		public static TraitDef BOT_Entomophagous;
+
+		public static TraitDef BOT_Gregarious;
+
+		public static TraitDef BOT_Chionophile;
+
+		public static TraitDef BOT_Communal;
+
+		public static TraitDef BOT_Sadist;
+
+		public static TraitDef BOT_Vulgar;
+
+		public static TraitDef BOT_Comedian;
+
 		public static TraitDef Immunity;
 	}
 
@@ -78,6 +97,30 @@ namespace More_Traits
 		public static ThoughtDef BOT_SleepyHeadForcefullyWokenUp;
 		
 		public static ThoughtDef BOT_SleepyHeadStopsSleeping;
+
+		public static ThoughtDef BOT_Communal_SleptInBarracks;
+
+		public static ThoughtDef BOT_Communal_SleptInBedroom;
+
+		public static ThoughtDef BOT_CommunalSharing;
+
+		public static ThoughtDef BOT_WitnessedDamageSadist;
+
+		public static ThoughtDef BOT_HurtHumanlikeSadist;
+
+		public static ThoughtDef BOT_HarvestedOrgan_Sadist;
+
+		public static ThoughtDef BOT_ComedianGoodJokeMood;
+
+		public static ThoughtDef BOT_ComedianBadJokeMood;
+
+		public static ThoughtDef BOT_ComedianGoodJokeOpinion;
+
+		public static ThoughtDef BOT_ComedianBadJokeOpinion;
+
+		public static ThoughtDef BOT_ComedianGoodJokeOpinionSelf;
+
+		public static ThoughtDef BOT_ComedianBadJokeOpinionSelf;
 	}
 
 

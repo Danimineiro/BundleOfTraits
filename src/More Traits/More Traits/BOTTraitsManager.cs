@@ -5,6 +5,7 @@ using Verse;
 using HarmonyLib;
 using Verse.AI;
 using UnityEngine;
+using RimWorld.Planet;
 
 namespace More_Traits
 {
@@ -15,17 +16,15 @@ namespace More_Traits
 	class BOTTraitsManager : GameComponent
 	{
 		public static string src = "I made a lot of code in this looking at Vanilla Traits Expanded. Check out their mod at: https://steamcommunity.com/sharedfiles/filedetails/?id=2296404655";
-		private static IntVec2 PyrophobeMinMaxFleeDistance = new IntVec2(12, 24);
+		private static IntVec2 MinMaxFleeDistance = new IntVec2(12, 24);
 
+		private static HashSet<Pawn> EntomophobicPawns;
 		private static Dictionary<Pawn, int> MetabolismPawns;
-		private static Dictionary<Pawn, Building_Bed> NyctophobesWhoCantSleep;
-		private static Dictionary<Pawn, float> Loves_Sleep;
-		private static Dictionary<Pawn, int> Narcoleptics;
-		private static HashSet<Pawn> Pyrophobics;
-		private static HashSet<Pawn> SleepyHeads;
-
-		private List<Pawn> Nyctophobes = new List<Pawn>();
-		private List<Building_Bed> NyctophobeBeds = new List<Building_Bed>();
+		private static HashSet<Pawn> Nyctophobes;
+		private static Dictionary<Pawn, float> Loves_SleepPawns;
+		private static Dictionary<Pawn, int> NarcolepticPawns;
+		private static HashSet<Pawn> PyrophobicPawns;
+		private static HashSet<Pawn> SleepyHeadPawns;
 
 		private List<Pawn> NarcolepticPawnKeys = new List<Pawn>();
 		private List<int> NarcolepticPawnInts = new List<int>();
@@ -36,13 +35,26 @@ namespace More_Traits
 		private List<Pawn> Loves_SleepPawnKeys = new List<Pawn>();
 		private List<float> Loves_SleepInitialRestPercentage = new List<float>();
 
+		private readonly int fleeIntervallInTicks = 200;
+
 		//I don't actually know if these constructors are requiered, but they don't really do harm being here anyways
 		static BOTTraitsManager()
 		{
 		}
 
-		public BOTTraitsManager(Game game)
+		public BOTTraitsManager(Game _)
 		{
+		}
+		public override void ExposeData()
+		{
+			base.ExposeData();
+			Scribe_Collections.Look<Pawn, int>(ref NarcolepticPawns, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
+			Scribe_Collections.Look<Pawn, float>(ref Loves_SleepPawns, "Loves_Sleep", LookMode.Reference, LookMode.Value, ref Loves_SleepPawnKeys, ref Loves_SleepInitialRestPercentage);
+			Scribe_Collections.Look<Pawn>(ref PyrophobicPawns, "Pyrophobics", LookMode.Reference);
+			Scribe_Collections.Look<Pawn>(ref SleepyHeadPawns, "SleepyHeads", LookMode.Reference);
+			Scribe_Collections.Look<Pawn>(ref EntomophobicPawns, "Entomophobics", LookMode.Reference);
+			Scribe_Collections.Look<Pawn, int>(ref MetabolismPawns, "MetabolismPawns", LookMode.Reference, LookMode.Value, ref MetabolismPawnKeys, ref MetabolismPawnInts);
+			Scribe_Collections.Look<Pawn>(ref Nyctophobes, "Nyctophobes", LookMode.Reference);
 		}
 
 		/// <summary>
@@ -50,12 +62,14 @@ namespace More_Traits
 		/// </summary>
 		public void PreInit()
 		{
-			if (Narcoleptics == null) Narcoleptics = new Dictionary<Pawn, int>();
-			if (Pyrophobics == null) Pyrophobics = new HashSet<Pawn>();
-			if (SleepyHeads == null) SleepyHeads = new HashSet<Pawn>();
-			if (Loves_Sleep == null) Loves_Sleep = new Dictionary<Pawn, float>();
-			if (NyctophobesWhoCantSleep == null) NyctophobesWhoCantSleep = new Dictionary<Pawn, Building_Bed>();
+			if (NarcolepticPawns == null) NarcolepticPawns = new Dictionary<Pawn, int>();
+			if (PyrophobicPawns == null) PyrophobicPawns = new HashSet<Pawn>();
+			if (SleepyHeadPawns == null) SleepyHeadPawns = new HashSet<Pawn>();
+			if (Loves_SleepPawns == null) Loves_SleepPawns = new Dictionary<Pawn, float>();
+			if (Nyctophobes == null) Nyctophobes = new HashSet<Pawn>();
 			if (MetabolismPawns == null) MetabolismPawns = new Dictionary<Pawn, int>();
+			if (EntomophobicPawns == null) EntomophobicPawns = new HashSet<Pawn>();
+
 		}
 
 		public override void LoadedGame()
@@ -77,7 +91,8 @@ namespace More_Traits
 		{
 			base.GameComponentTick();
 
-			ManagePyrophobes(300);
+			ManageFleeing(fleeIntervallInTicks, PyrophobicPawns, PyrophobicPawns.Any(pawn => pawn.Map != null && pawn.Map.fireWatcher.FireDanger > 0));
+			ManageFleeing(fleeIntervallInTicks, EntomophobicPawns, EntomophobicPawns.Any(pawn => pawn.Map != null && pawn.Map.mapPawns.AllPawnsSpawned.Exists(x => x.def.devNote == "insect" || x.def.race.FleshType == FleshTypeDefOf.Insectoid)), true);
 			ManageSleepyHeads(500);
 			ManageNarcoleptics(1000);
 			ManageMetabolism(2400);
@@ -95,57 +110,56 @@ namespace More_Traits
 			return (Find.TickManager.TicksGame % n == 0);
 		}
 
-		private void ManagePyrophobes(int whenTicksDivisibleBy)
+		private void ManageFleeing(int whenTicksDivisibleBy, HashSet<Pawn> hashSet, bool underCondition, bool alsoWhenDrafted = false)
 		{
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
-				Dictionary<Map, Dictionary<Thing, float>> MapFireDic = new Dictionary<Map, Dictionary<Thing, float>>();
-				foreach (Pawn pawn in Pyrophobics)
+				Dictionary<Map, Dictionary<Thing, float>> MapDic = new Dictionary<Map, Dictionary<Thing, float>>();
+				foreach (Pawn pawn in hashSet)
 				{
-					if (!IsPawnStillThere(pawn)) return;
-					if (pawn.Map != null && pawn.Map.fireWatcher.FireDanger > 0)
+					if (underCondition)
 					{
-						Dictionary<Thing, float> fires = new Dictionary<Thing, float>();
-						Thing closestFire = null;
-						float closestFireDistance = float.MaxValue;
-						bool hasLOS = false;
+						Dictionary<Thing, float> dangers = new Dictionary<Thing, float>();
+						Thing closestDanger = null;
+						float closestDangerDistance = float.MaxValue;
+						bool hasLOSofAnyDanger = false;
 
-						if (MapFireDic.ContainsKey(pawn.Map))
+						if (MapDic.ContainsKey(pawn.Map))
 						{
-							fires = MapFireDic[pawn.Map];
+							dangers = MapDic[pawn.Map];
 						}
 						else
 						{
-							foreach (Thing fire in pawn.Map.listerThings.ThingsOfDef(ThingDefOf.Fire))
-                            {
-								float fireDistance = fire.Position.DistanceTo(pawn.Position);
-								fires[fire] = fireDistance;
-								hasLOS = hasLOS ? hasLOS : GenSight.LineOfSight(pawn.Position, fire.Position, pawn.Map);
+							foreach (Thing danger in GetListOfDangers(pawn))
+							{
+								float dangerDistance = danger.Position.DistanceTo(pawn.Position);
+								dangers[danger] = dangerDistance;
+								hasLOSofAnyDanger = hasLOSofAnyDanger ? hasLOSofAnyDanger : GenSight.LineOfSight(pawn.Position, danger.Position, pawn.Map);
 
-								if (fireDistance < closestFireDistance)
-                                {
-									closestFireDistance = fireDistance;
-									closestFire = fire;
-                                }
-                            }
+								if (dangerDistance < closestDangerDistance)
+								{
+									closestDangerDistance = dangerDistance;
+									closestDanger = danger;
+								}
+							}
 						}
 
-						if (!pawn.Drafted && hasLOS)
+						if ((!pawn.Drafted || (alsoWhenDrafted && dangers.Any(entry => ((entry.Key.def.devNote != null && entry.Key.def.devNote == "insect") || (entry.Key.def.race != null && entry.Key.def.race.FleshType == FleshTypeDefOf.Insectoid)) && entry.Value < MinMaxFleeDistance.x && GenSight.LineOfSight(pawn.Position, entry.Key.Position, pawn.Map)))) && hasLOSofAnyDanger)
 						{
-							if (fires != null && fires.Count != 0)
+							if (dangers != null && dangers.Count != 0)
 							{
-								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
+								if (closestDangerDistance < MinMaxFleeDistance.x)
 								{
-									pawn.MakeFlee(closestFire, PyrophobeMinMaxFleeDistance, fires.Keys.ToList());
+									pawn.MakeFlee(closestDanger, MinMaxFleeDistance, dangers.Keys.ToList());
 									pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 1);
 								}
 							}
 						}
-						else if (pawn.Drafted && hasLOS)
+						else if (pawn.Drafted && hasLOSofAnyDanger)
 						{
-							if (fires != null && fires.Count != 0)
+							if (dangers != null && dangers.Count != 0)
 							{
-								if (closestFireDistance < PyrophobeMinMaxFleeDistance.x)
+								if (closestDangerDistance < MinMaxFleeDistance.x)
 								{
 									pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 0);
 								}
@@ -242,25 +256,25 @@ namespace More_Traits
 				//Narcoleptics
 				HashSet<Pawn> reset = new HashSet<Pawn>();
 				HashSet<Pawn> increment = new HashSet<Pawn>();
-				foreach (KeyValuePair<Pawn, int> keyValuePair in Narcoleptics)
+				foreach (KeyValuePair<Pawn, int> keyValuePair in NarcolepticPawns)
 				{
 					if (!IsPawnStillThere(keyValuePair.Key)) return;
 					float baseSleepChance = 0.015625f;
 					float sleepChance = baseSleepChance;
-					if (Narcoleptics[keyValuePair.Key] > 120000)
+					if (NarcolepticPawns[keyValuePair.Key] > 120000)
 					{
 						sleepChance *= 8f;
 					}
-					else if (Narcoleptics[keyValuePair.Key] > 60000)
+					else if (NarcolepticPawns[keyValuePair.Key] > 60000)
 					{
 						sleepChance *= 4f;
 					}
-					else if (Narcoleptics[keyValuePair.Key] > 30000)
+					else if (NarcolepticPawns[keyValuePair.Key] > 30000)
 					{
 						sleepChance *= 2f;
 					}
 
-					if (Narcoleptics[keyValuePair.Key] > 15000 && keyValuePair.Key.Spawned)
+					if (NarcolepticPawns[keyValuePair.Key] > 15000 && keyValuePair.Key.Spawned)
 					{
 						if (Rand.Value < sleepChance && (keyValuePair.Key.CurJob == null || keyValuePair.Key.CurJob.def != JobDefOf.LayDown))
 						{
@@ -287,36 +301,12 @@ namespace More_Traits
 
 				foreach (Pawn p in reset)
 				{
-					Narcoleptics[p] = 0;
+					NarcolepticPawns[p] = 0;
 				}
 
 				foreach (Pawn p in increment)
 				{
-					Narcoleptics[p] += 1000;
-				}
-
-				HashSet<Pawn> removeFromNycto = new HashSet<Pawn>();
-
-				//Nyctophobes who can't sleep
-				foreach (KeyValuePair<Pawn, Building_Bed> keyValuePair in NyctophobesWhoCantSleep)
-				{
-					IntVec3 bedPosition = keyValuePair.Value.Position;
-					Map map = keyValuePair.Key.Map;
-
-					if (bedPosition.InBounds(map) && bedPosition.Roofed(map) && map.glowGrid.GameGlowAt(bedPosition) < 0.3 && keyValuePair.Key.needs.rest.CurCategory != RestCategory.Exhausted && keyValuePair.Key.CurJobDef == JobDefOf.LayDownAwake)
-					{
-						keyValuePair.Key.TryGainMemory(BOTThoughtDefOf.BOT_NyctophobiaCantSleep, 0);
-					}
-					else
-					{
-						removeFromNycto.Add(keyValuePair.Key);
-						keyValuePair.Key.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, keyValuePair.Value), JobCondition.InterruptForced, null, false, true, null, new JobTag?(JobTag.SatisfyingNeeds), false, false);
-					}
-				}
-
-				foreach (Pawn p in removeFromNycto)
-				{
-					NyctophobesWhoCantSleep.Remove(p);
+					NarcolepticPawns[p] += 1000;
 				}
 			}
 		}
@@ -326,7 +316,7 @@ namespace More_Traits
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
 				List<Pawn> toRemove = new List<Pawn>();
-				foreach(Pawn p in SleepyHeads)
+				foreach(Pawn p in SleepyHeadPawns)
 				{
 					if (!IsPawnStillThere(p)) return;
 					if (Rand.Value > 0.1 && p.CurJobDef == JobDefOf.LayDown)
@@ -336,19 +326,24 @@ namespace More_Traits
 						toRemove.Add(p);
 					} 
 					//Might got drafted or removed from the bed for other reasons
-					else if (p.CurJobDef != JobDefOf.LayDown)
-                    {
+					else if (p.Drafted)
+					{
 						p.TryGainMemory(BOTThoughtDefOf.BOT_SleepyHeadForcefullyWokenUp, 0);
 						toRemove.Add(p);
-                    } else
+					}
+					else if (p.CurJobDef != JobDefOf.LayDown)
                     {
+						toRemove.Add(p);
+					}
+					else
+					{
 						p.TryGainMemory(BOTThoughtDefOf.BOT_SleepyHeadContinuesSleeping, 0);
-                    }
+					}
 				}
 
 				foreach(Pawn p in toRemove)
-                {
-					SleepyHeads.Remove(p);
+				{
+					SleepyHeadPawns.Remove(p);
 					p.needs.rest.CurLevelPercentage = 1f;
 				}
 			}
@@ -384,38 +379,30 @@ namespace More_Traits
 			PreInit();
 			if (pawn.story != null && pawn.story.traits != null)
 			{
-				if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Narcoleptic))
-				{
-					if (!Narcoleptics.ContainsKey(pawn))
-					{
-						Narcoleptics[pawn] = 0; 
-					}
-				}
-
-				if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia))
-				{
-					Pyrophobics.Add(pawn);
-				}
-
-				if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Metabolism))
-				{
-					if (!MetabolismPawns.ContainsKey(pawn))
-					{
-						MetabolismPawns[pawn] = 0;
-					}
-				}
+				AddPawnToHashSetIfPawnHasTrait(pawn, PyrophobicPawns, BOTTraitDefOf.BOT_Pyrophobia);
+				AddPawnToHashSetIfPawnHasTrait(pawn, EntomophobicPawns, BOTTraitDefOf.BOT_Entomophobia);
+				AddPawnToDicIfPawnHasTrait(pawn, MetabolismPawns, BOTTraitDefOf.BOT_Metabolism, 0);
+				AddPawnToDicIfPawnHasTrait(pawn, NarcolepticPawns, BOTTraitDefOf.BOT_Narcoleptic, 0);
 			}
 		}
 
-		public override void ExposeData()
+		private void AddPawnToHashSetIfPawnHasTrait(Pawn pawn, HashSet<Pawn> set, TraitDef traitDef)
 		{
-			base.ExposeData();
-			Scribe_Collections.Look<Pawn, int>(ref Narcoleptics, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
-			Scribe_Collections.Look<Pawn, float>(ref Loves_Sleep, "Loves_Sleep", LookMode.Reference, LookMode.Value, ref Loves_SleepPawnKeys, ref Loves_SleepInitialRestPercentage);
-			Scribe_Collections.Look<Pawn>(ref Pyrophobics, "Pyrophobics", LookMode.Reference);
-			Scribe_Collections.Look<Pawn>(ref SleepyHeads, "SleepyHeads", LookMode.Reference);
-			Scribe_Collections.Look<Pawn, int>(ref MetabolismPawns, "MetabolismPawns", LookMode.Reference, LookMode.Value, ref MetabolismPawnKeys, ref MetabolismPawnInts);
-			Scribe_Collections.Look<Pawn, Building_Bed>(ref NyctophobesWhoCantSleep, "NyctophobesWhoCantSleep", LookMode.Reference, LookMode.Reference, ref Nyctophobes, ref NyctophobeBeds);
+			if (pawn.story.traits.HasTrait(traitDef))
+			{
+				set.Add(pawn);
+			}
+		}
+
+		private void AddPawnToDicIfPawnHasTrait<T>(Pawn pawn, Dictionary<Pawn, T> dic, TraitDef traitDef, T defaultValue)
+		{
+			if (pawn.story.traits.HasTrait(traitDef))
+			{
+				if (!dic.ContainsKey(pawn))
+				{
+					dic[pawn] = defaultValue;
+				}
+			}
 		}
 
 		/// <summary>
@@ -426,54 +413,21 @@ namespace More_Traits
 		{
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
-				RemoveWrongPawnsFromDic(Narcoleptics, BOTTraitDefOf.BOT_Narcoleptic);
-				RemoveWrongPawnsFromDic(Loves_Sleep, BOTTraitDefOf.BOT_Narcoleptic);
+				RemoveWrongPawnsFromDic(NarcolepticPawns, BOTTraitDefOf.BOT_Narcoleptic);
+				RemoveWrongPawnsFromDic(Loves_SleepPawns, BOTTraitDefOf.BOT_Narcoleptic);
 				RemoveWrongPawnsFromDic(MetabolismPawns, BOTTraitDefOf.BOT_Metabolism);
 
-				Pyrophobics.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia));
+				PyrophobicPawns.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia));
+				EntomophobicPawns.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTTraitDefOf.BOT_Entomophobia));
 			}
 		}
 
-		public void RemoveWrongPawnsFromDic(Dictionary<Pawn, int> dic, TraitDef traitDef)
+		public void RemoveWrongPawnsFromDic<T>(Dictionary<Pawn, T> dic, TraitDef traitDef)
 		{
 			List<Pawn> removePawns = new List<Pawn>();
-			foreach (KeyValuePair<Pawn, int> keyValuePair in dic)
+			foreach (KeyValuePair<Pawn, T> keyValuePair in dic)
 			{
-				if (!keyValuePair.Key.story.traits.HasTrait(traitDef) || !IsPawnStillThere(keyValuePair.Key))
-				{
-					removePawns.Add(keyValuePair.Key);
-				}
-			}
-
-			foreach (Pawn p in removePawns)
-			{
-				dic.Remove(p);
-			}
-		}
-
-		public void RemoveWrongPawnsFromDic(Dictionary<Pawn, float> dic, TraitDef traitDef)
-		{
-			List<Pawn> removePawns = new List<Pawn>();
-			foreach (KeyValuePair<Pawn, float> keyValuePair in dic)
-			{
-				if (!keyValuePair.Key.story.traits.HasTrait(traitDef) || !IsPawnStillThere(keyValuePair.Key))
-				{
-					removePawns.Add(keyValuePair.Key);
-				}
-			}
-
-			foreach (Pawn p in removePawns)
-			{
-				dic.Remove(p);
-			}
-		}
-
-		public void RemoveWrongPawnsFromDic(Dictionary<Pawn, Building_Bed> dic, TraitDef traitDef)
-		{
-			List<Pawn> removePawns = new List<Pawn>();
-			foreach (KeyValuePair<Pawn, Building_Bed> keyValuePair in dic)
-			{
-				if (!keyValuePair.Key.story.traits.HasTrait(traitDef) || !IsPawnStillThere(keyValuePair.Key))
+				if (!keyValuePair.Key.HasTrait(traitDef))
 				{
 					removePawns.Add(keyValuePair.Key);
 				}
@@ -491,55 +445,61 @@ namespace More_Traits
 		/// <param name="pawn"></param>
 		public void RemoveDestroyedPawnFromSets(Pawn pawn)
 		{
-			Narcoleptics.Remove(pawn);
-			Loves_Sleep.Remove(pawn);
+			NarcolepticPawns.Remove(pawn);
+			Loves_SleepPawns.Remove(pawn);
 			MetabolismPawns.Remove(pawn);
-			NyctophobesWhoCantSleep.Remove(pawn);
-
-			SleepyHeads.Remove(pawn);
-			Pyrophobics.Remove(pawn);
+			Nyctophobes.Remove(pawn);
+			SleepyHeadPawns.Remove(pawn);
+			PyrophobicPawns.Remove(pawn);
 		}
 
-		public Dictionary<Pawn, Building_Bed> GetNyctophobesWhoCantSleepDic()
+		public HashSet<Pawn> GetNyctophobes()
 		{
-			return NyctophobesWhoCantSleep;
+			return Nyctophobes;
 		}
 
 		public Dictionary<Pawn, float> GetLoves_SleepDic()
 		{
-			return Loves_Sleep;
+			return Loves_SleepPawns;
 		}
 
 		public HashSet<Pawn> GetSleepyHeadSet()
 		{
-			return SleepyHeads;
+			return SleepyHeadPawns;
+		}
+
+		private List<Thing> GetListOfDangers(Pawn pawn)
+		{
+			List<Thing> dangers = new List<Thing>();
+
+			List<Thing> fireList = pawn.Map.listerThings.ThingsOfDef(ThingDefOf.Fire);
+			if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia) && fireList.Count > 0)
+			{
+				dangers = fireList.ListFullCopy();
+			}
+
+			if (pawn.story.traits.HasTrait(BOTTraitDefOf.BOT_Entomophobia))
+			{
+				dangers.AddRange(pawn.Map.mapPawns.AllPawnsSpawned.Where(x => x.def.devNote == "insect" || x.def.race.FleshType == FleshTypeDefOf.Insectoid).Cast<IAttackTargetSearcher>().Cast<Thing>());
+			}
+
+			return dangers;
+		}
+
+		private float GetCandidateWeight(Pawn pawn, Pawn candidate)
+		{
+			float num = Mathf.Min(pawn.Position.DistanceTo(candidate.Position) / 40f, 1f);
+			return 1f - num + 0.01f;
 		}
 	}
 
-	[HarmonyPatch(typeof(TraitSet), "GainTrait")]
-	public static class GainTraitPatch
+	[StaticConstructorOnStartup]
+	class BOTInCodeDefEdits
 	{
-		public static void Postfix(Pawn ___pawn)
+		static BOTInCodeDefEdits()
 		{
-			Current.Game.GetComponent<BOTTraitsManager>().AddPawn(___pawn);
-		}
-	}
-
-	[HarmonyPatch(typeof(Pawn), "SpawnSetup")]
-	public static class SpawnSetupPatch
-	{
-		public static void Postfix(Pawn __instance)
-		{
-			Current.Game.GetComponent<BOTTraitsManager>().AddPawn(__instance);
-		}
-	}
-
-	[HarmonyPatch(typeof(Pawn), "Destroy")]
-	public static class DestroyPatch
-	{
-		public static void Prefix(Pawn __instance)
-		{
-			Current.Game.GetComponent<BOTTraitsManager>().RemoveDestroyedPawnFromSets(__instance);
+			BOTTraitDefOf.BOT_Apathetic.DataAtDegree(0).disallowedInspirations = DefDatabase<InspirationDef>.AllDefsListForReading;
+			BOTTraitDefOf.BOT_Apathetic.conflictingPassions = DefDatabase<SkillDef>.AllDefsListForReading;
 		}
 	}
 

@@ -154,4 +154,80 @@ namespace More_Traits
 			return false;
 		}
 	}
+
+	public class ThoughtWorker_GregariousCompany : ThoughtWorker
+	{
+		public override string PostProcessDescription(Pawn p, string description)
+		{
+			description = description.Formatted(BOTGregariousCompanyCounter.GetCountFor(p).Named("NUMBER"));
+			return base.PostProcessDescription(p, description);
+		}
+
+		protected override ThoughtState CurrentStateInternal(Pawn p)
+		{
+			int company = BOTGregariousCompanyCounter.GetCountFor(p);
+
+			return ThoughtState.ActiveAtStage(BOTUtils.StageOfTwenty(company));
+		}
+	}
+
+	public class BOT_ThoughtWorker_PluviophileLikesRain : ThoughtWorker
+	{
+		protected override ThoughtState CurrentStateInternal(Pawn p)
+		{
+			if (!p.Spawned) return false;
+
+			return p.Map.weatherManager.RainRate > 0.25 && p.Map.weatherManager.SnowRate < 0.25;
+		}
+	}
+
+	public class BOT_ThoughtWorker_ChionophileLikesSnow : ThoughtWorker
+	{
+		protected override ThoughtState CurrentStateInternal(Pawn p)
+		{
+			if (!p.Spawned) return false;
+
+			return p.Map.weatherManager.RainRate > 0.25 && p.Map.weatherManager.SnowRate > 0.25;
+		}
+	}
+
+	public class BOT_ThoughtWorker_MoodyModifier : ThoughtWorker
+	{
+        protected override ThoughtState CurrentStateInternal(Pawn p)
+        {
+            switch (p.needs.mood.CurLevelPercentage)
+			{
+				case float n when n > 0.8f:
+					return ThoughtState.ActiveAtStage(3);
+
+				case float n when n > 0.6f && n < 0.8f:
+					return ThoughtState.ActiveAtStage(2);
+
+				case float n when n > 0.2f && n < 0.4f:
+					return ThoughtState.ActiveAtStage(1);
+
+				case float n when n < 0.2f:
+					return ThoughtState.ActiveAtStage(0);
+			}
+
+			return false;
+        }
+    }
+
+	public class BOT_ThoughtWorker_EarlyBirdTimeThought : ThoughtWorker
+    {
+		protected override ThoughtState CurrentStateInternal(Pawn p)
+		{
+			if (p.Awake() && GenLocalDate.HourInteger(p) >= 6 && GenLocalDate.HourInteger(p) < 13)
+			{
+				return ThoughtState.ActiveAtStage(1);
+			}
+			if (p.Awake() && GenLocalDate.HourInteger(p) >= 17)
+			{
+				return ThoughtState.ActiveAtStage(0);
+			}
+
+			return false;
+		}
+	}
 }
