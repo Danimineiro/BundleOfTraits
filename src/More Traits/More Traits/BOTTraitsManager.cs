@@ -115,7 +115,7 @@ namespace More_Traits
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
 				Dictionary<Map, Dictionary<Thing, float>> MapDic = new Dictionary<Map, Dictionary<Thing, float>>();
-				foreach (Pawn pawn in hashSet)
+				foreach (Pawn pawn in hashSet.Where(x => x.Spawned))
 				{
 					if (underCondition)
 					{
@@ -174,7 +174,7 @@ namespace More_Traits
 		{
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
-				foreach (KeyValuePair<Pawn, int> keyValuePair in MetabolismPawns)
+				foreach (KeyValuePair<Pawn, int> keyValuePair in MetabolismPawns.Where(x => x.Key.Spawned))
 				{
 					//Get 25% more/less healing by running the healing part of the HealthTick function
 					Pawn p = keyValuePair.Key;
@@ -256,7 +256,7 @@ namespace More_Traits
 				//Narcoleptics
 				HashSet<Pawn> reset = new HashSet<Pawn>();
 				HashSet<Pawn> increment = new HashSet<Pawn>();
-				foreach (KeyValuePair<Pawn, int> keyValuePair in NarcolepticPawns)
+				foreach (KeyValuePair<Pawn, int> keyValuePair in NarcolepticPawns.Where(x => x.Key.Spawned))
 				{
 					if (!IsPawnStillThere(keyValuePair.Key)) return;
 					float baseSleepChance = 0.015625f;
@@ -316,7 +316,7 @@ namespace More_Traits
 			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
 			{
 				List<Pawn> toRemove = new List<Pawn>();
-				foreach(Pawn p in SleepyHeadPawns)
+				foreach(Pawn p in SleepyHeadPawns.Where(x => x.Spawned))
 				{
 					if (!IsPawnStillThere(p)) return;
 					if (Rand.Value > 0.1 && p.CurJobDef == JobDefOf.LayDown)
@@ -351,7 +351,7 @@ namespace More_Traits
 
 		public static bool IsPawnStillThere(Pawn pawn)
         {
-			bool flag = pawn != null && pawn.Spawned && pawn.story != null && pawn.story.traits != null;
+			bool flag = pawn != null && pawn.story != null && pawn.story.traits != null;
 
 			if (!flag)
 			{
