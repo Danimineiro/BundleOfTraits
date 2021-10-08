@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
-	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThoughtDef[defName="PrisonCell"]</xpath>
-		<value>
-			<nullifyingTraits>
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="PrisonCell"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="PrisonCell"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Communal</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="PrisonCell"]/nullifyingTraits</xpath>
+			<value>
 				<li>BOT_Communal</li>
-			</nullifyingTraits>
-		</value>
+			</value>
+		</match>
 	</Operation>
-	
-	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThoughtDef[defName="PrisonBarracks"]</xpath>
-		<value>
-			<nullifyingTraits>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="PrisonBarracks"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="PrisonBarracks"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Communal</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="PrisonBarracks"]/nullifyingTraits</xpath>
+			<value>
 				<li>BOT_Communal</li>
-			</nullifyingTraits>
-		</value>
+			</value>
+		</match>
 	</Operation>
 </Patch>

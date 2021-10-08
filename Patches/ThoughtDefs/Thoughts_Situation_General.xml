@@ -1,27 +1,56 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
-	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThoughtDef[defName="EnvironmentCold"]</xpath>
-		<value>
-			<nullifyingTraits>
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="EnvironmentCold"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="EnvironmentCold"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Temperature_Love</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="EnvironmentCold"]/nullifyingTraits</xpath>
+			<value>
 				<li>BOT_Temperature_Love</li>
-			</nullifyingTraits>
-		</value>
+			</value>
+		</match>
 	</Operation>
-	
-	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThoughtDef[defName="EnvironmentHot"]</xpath>
-		<value>
-			<nullifyingTraits>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="EnvironmentHot"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="EnvironmentHot"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Temperature_Love</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="EnvironmentHot"]/nullifyingTraits</xpath>
+			<value>
 				<li>BOT_Temperature_Love</li>
-			</nullifyingTraits>
-		</value>
+			</value>
+		</match>
 	</Operation>
-	
-	<Operation Class="PatchOperationAdd">
+
+	<Operation Class="PatchOperationConditional">
 		<xpath>/Defs/ThoughtDef[defName="EnvironmentDark"]/nullifyingTraits</xpath>
-		<value>
-			<li>BOT_Nyctophobia</li>
-		</value>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="EnvironmentDark"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Nyctophobia</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="EnvironmentDark"]/nullifyingTraits</xpath>
+			<value>
+				<li>BOT_Nyctophobia</li>
+			</value>
+		</match>
 	</Operation>
 </Patch>

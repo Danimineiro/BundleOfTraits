@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 	<!-- Vulgar getting insulted -->
-	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThoughtDef[defName="Insulted"]</xpath>
-		<value>
-			<nullifyingTraits>
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="Insulted"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="Insulted"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Vulgar</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="Insulted"]/nullifyingTraits</xpath>
+			<value>
 				<li>BOT_Vulgar</li>
-			</nullifyingTraits>
-		</value>
+			</value>
+		</match>
 	</Operation>
-	
-	<Operation Class="PatchOperationAdd">
-		<xpath>/Defs/ThoughtDef[defName="InsultedMood"]</xpath>
-		<value>
-			<nullifyingTraits>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="InsultedMood"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="InsultedMood"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Vulgar</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="InsultedMood"]/nullifyingTraits</xpath>
+			<value>
 				<li>BOT_Vulgar</li>
-			</nullifyingTraits>
-		</value>
+			</value>
+		</match>
 	</Operation>
 </Patch>
