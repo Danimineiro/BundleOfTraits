@@ -71,6 +71,7 @@
 			<li>Brawler</li>
 			<li>BOT_Sadist</li>
 			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Vengeful</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_MadSurgeon</li>
 		</conflictingTraits>
 	</TraitDef>
 	
