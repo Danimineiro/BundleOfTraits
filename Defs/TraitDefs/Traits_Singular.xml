@@ -308,6 +308,7 @@
 		</degreeDatas>
 		<conflictingTraits>
 			<li>Psychopath</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Anxious</li>
 		</conflictingTraits>
 	</TraitDef>
 
@@ -382,6 +383,7 @@
 		<conflictingTraits>
 			<li>Jealous</li>
 			<li>Greedy</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Anxious</li>
 		</conflictingTraits>
 	</TraitDef>
 	
