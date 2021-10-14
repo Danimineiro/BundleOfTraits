@@ -150,7 +150,15 @@ namespace More_Traits
 							{
 								if (closestDangerDistance < MinMaxFleeDistance.x)
 								{
-									pawn.MakeFlee(closestDanger, MinMaxFleeDistance, dangers.Keys.ToList());
+									BOTFleeParams param = new BOTFleeParams
+									{
+										Threat = closestDanger,
+										Distance = MinMaxFleeDistance,
+										Threats = dangers.Keys.ToList(),
+										StayWhenNowhereToGo = false
+									};
+
+									pawn.MakeFlee(param);
 									pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 1);
 								}
 							}

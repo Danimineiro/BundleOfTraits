@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BOTDefOf.cs" />
+    <Compile Include="BOTFleeParams.cs" />
     <Compile Include="BOTGregariousCompanyCounter.cs" />
     <Compile Include="BOTInteractionWorkers.cs" />
     <Compile Include="BOTJobPatch.cs" />
