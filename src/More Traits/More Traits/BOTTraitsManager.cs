@@ -91,8 +91,15 @@ namespace More_Traits
 		{
 			base.GameComponentTick();
 
-			ManageFleeing(fleeIntervallInTicks, PyrophobicPawns, PyrophobicPawns.Any(pawn => pawn.Map != null && pawn.Map.fireWatcher.FireDanger > 0));
-			ManageFleeing(fleeIntervallInTicks, EntomophobicPawns, EntomophobicPawns.Any(pawn => pawn.Map != null && pawn.Map.mapPawns.AllPawnsSpawned.Exists(x => x.def.devNote == "insect" || x.def.race.FleshType == FleshTypeDefOf.Insectoid)), true);
+			try
+			{
+				ManageFleeing(fleeIntervallInTicks, PyrophobicPawns, PyrophobicPawns.Any(pawn => pawn?.Map != null && (pawn?.Map?.fireWatcher?.FireDanger ?? 0f) > 0f));
+				ManageFleeing(fleeIntervallInTicks, EntomophobicPawns, EntomophobicPawns.Any(pawn => pawn?.Map?.mapPawns?.AllPawnsSpawned.Exists(x => x?.def?.devNote == "insect" || x?.def?.race?.FleshType == FleshTypeDefOf.Insectoid) ?? false), true);
+            }
+            catch
+            {
+				Log.ErrorOnce("Something went wrong and went null here: PyroPawns:" + (PyrophobicPawns == null) + " EntoPawns: " + (EntomophobicPawns == null) + " please report this to the BundleOfTraits steam page if you see this message!", 93827394);
+            }
 			ManageSleepyHeads(500);
 			ManageNarcoleptics(1000);
 			ManageMetabolism(2400);
