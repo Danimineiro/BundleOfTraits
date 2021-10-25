@@ -330,53 +330,48 @@ namespace More_Traits
 			return sleepChance;
 		}
 
+		private bool NarcolepticShouldFallAsleep(Pawn pawn)
+        {
+			return NarcolepticPawns[pawn] > 15000 && pawn.Spawned && Rand.Value < NarcolepticSleepChance(pawn) && (pawn.CurJob == null || pawn.CurJob.def != JobDefOf.LayDown);
+		}
+
+		private void MakeNarcolepticFallAsleep(Pawn pawn)
+		{
+			pawn.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, pawn.Position), JobCondition.InterruptForced, null, false, true, null, new JobTag?(JobTag.SatisfyingNeeds), false, false);
+			if (pawn.InMentalState && pawn.MentalStateDef.recoverFromCollapsingExhausted)
+			{
+				pawn.mindState.mentalStateHandler.CurState.RecoverFromState();
+			}
+			if (PawnUtility.ShouldSendNotificationAbout(pawn))
+			{
+				Messages.Message("BOTNarcolepticInvoluntarySleep".Translate(pawn.LabelShort, pawn), pawn, MessageTypeDefOf.NegativeEvent, true);
+			}
+		}
+
 		private void ManageNarcoleptics(int whenTicksDivisibleBy)
 		{
 			if (!GameTicksDivisibleBy(whenTicksDivisibleBy)) return;
 
 			//Narcoleptics
-			HashSet<Pawn> reset = new HashSet<Pawn>();
-			HashSet<Pawn> increment = new HashSet<Pawn>();
+			List<Pawn> reset = new List<Pawn>();
+			List<Pawn> increment = new List<Pawn>();
 			foreach (KeyValuePair<Pawn, int> keyValuePair in NarcolepticPawns.Where(x => x.Key.Spawned))
 			{
 				if (!IsPawnStillThere(keyValuePair.Key)) return;
 
-				float sleepChance = NarcolepticSleepChance(keyValuePair.Key);
-
-				if (NarcolepticPawns[keyValuePair.Key] > 15000 && keyValuePair.Key.Spawned)
+				if (NarcolepticShouldFallAsleep(keyValuePair.Key))
 				{
-					if (Rand.Value < sleepChance && (keyValuePair.Key.CurJob == null || keyValuePair.Key.CurJob.def != JobDefOf.LayDown))
-					{
-						keyValuePair.Key.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, keyValuePair.Key.Position), JobCondition.InterruptForced, null, false, true, null, new JobTag?(JobTag.SatisfyingNeeds), false, false);
-						if (keyValuePair.Key.InMentalState && keyValuePair.Key.MentalStateDef.recoverFromCollapsingExhausted)
-						{
-							keyValuePair.Key.mindState.mentalStateHandler.CurState.RecoverFromState();
-						}
-						if (PawnUtility.ShouldSendNotificationAbout(keyValuePair.Key))
-						{
-							Messages.Message("BOTNarcolepticInvoluntarySleep".Translate(keyValuePair.Key.LabelShort, keyValuePair.Key), keyValuePair.Key, MessageTypeDefOf.NegativeEvent, true);
-						}
-						reset.Add(keyValuePair.Key);
-					}
+					MakeNarcolepticFallAsleep(keyValuePair.Key);
+					reset.Add(keyValuePair.Key);
 				}
-				else
+				else if (!keyValuePair.Key.IsAsleep())
 				{
-					if (!keyValuePair.Key.IsAsleep())
-					{
-						increment.Add(keyValuePair.Key);
-					}
+					increment.Add(keyValuePair.Key);
 				}
 			}
 
-			foreach (Pawn p in reset)
-			{
-				NarcolepticPawns[p] = 0;
-			}
-
-			foreach (Pawn p in increment)
-			{
-				NarcolepticPawns[p] += 1000;
-			}
+			reset.ForEach(pawn => NarcolepticPawns[pawn] = 0);
+			increment.ForEach(pawn => NarcolepticPawns[pawn] += 1000);
 		}
 
 		private void ManageSleepyHeads(int whenTicksDivisibleBy)
