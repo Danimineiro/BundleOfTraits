@@ -200,10 +200,10 @@ namespace More_Traits
 			}
 		}
 
-		private float HealSpeedModifFor(Pawn pawn)
+		private float HealSpeedBaseFor(Pawn pawn)
         {
-			HediffSet hediffSet = pawn.health.hediffSet;
 			float num = 8f;
+
 			if (pawn.GetPosture() != PawnPosture.Standing)
 			{
 				num += 4f;
@@ -214,40 +214,53 @@ namespace More_Traits
 				}
 			}
 
-			foreach (Hediff hediff3 in hediffSet.hediffs)
+			return num;
+		}
+
+		private float HealSpeedBaseAfterHediffsFor(Pawn pawn)
+        {
+			float num = HealSpeedBaseFor(pawn);
+
+			HediffSet hediffSet = pawn.health.hediffSet;
+			foreach (Hediff hediff in hediffSet.hediffs)
 			{
-				HediffStage curStage = hediff3.CurStage;
+				HediffStage curStage = hediff.CurStage;
 				if (curStage != null && curStage.naturalHealingFactor != -1f)
 				{
 					num *= curStage.naturalHealingFactor;
 				}
 			}
-			return num;
-        }
 
-		private void MetabolismPawnExtraHealTick(Pawn pawn, out bool processedAny)
+			return num;
+		}
+
+		private void MetabolismHealOrHurtNaturallyHealingInjury(Pawn pawn, out bool processedAny)
+        {
+			processedAny = false;
+			HediffSet hediffSet = pawn.health.hediffSet;
+			if (!hediffSet.HasNaturallyHealingInjury()) return;
+
+			float amount = HealSpeedBaseAfterHediffsFor(pawn) * pawn.HealthScale * 0.01f * pawn.GetStatValue(StatDefOf.InjuryHealingFactor, true);
+
+			if (pawn.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
+			{
+				(from x in hediffSet.GetHediffs<Hediff_Injury>()
+				 where x.CanHealNaturally()
+				 select x).RandomElement().Heal(amount);
+				processedAny = true;
+			}
+			else
+			{
+				(from x in hediffSet.GetHediffs<Hediff_Injury>()
+				 where x.CanHealNaturally()
+				 select x).RandomElement().Injure(amount);
+			}
+		}
+
+		private void MetabolismHealOrHurtTendedAndHealingInjury(Pawn pawn, out bool processedAny)
 		{
 			processedAny = false;
 			HediffSet hediffSet = pawn.health.hediffSet;
-			if (hediffSet.HasNaturallyHealingInjury())
-			{
-				float amount = HealSpeedModifFor(pawn) * pawn.HealthScale * 0.01f * pawn.GetStatValue(StatDefOf.InjuryHealingFactor, true);
-
-				if (pawn.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
-				{
-					(from x in hediffSet.GetHediffs<Hediff_Injury>()
-					 where x.CanHealNaturally()
-					 select x).RandomElement().Heal(amount);
-					processedAny = true;
-				}
-				else
-				{
-					(from x in hediffSet.GetHediffs<Hediff_Injury>()
-					 where x.CanHealNaturally()
-					 select x).RandomElement().Injure(amount);
-				}
-			}
-
 			if (hediffSet.HasTendedAndHealingInjury() && !pawn.Starving())
 			{
 				Hediff_Injury hediff_Injury = (from x in hediffSet.GetHediffs<Hediff_Injury>()
@@ -267,6 +280,13 @@ namespace More_Traits
 					hediff_Injury.Injure(amount);
 				}
 			}
+		}
+
+		private void MetabolismPawnExtraHealTick(Pawn pawn, out bool processedAny)
+		{
+			MetabolismHealOrHurtNaturallyHealingInjury(pawn, out bool temp);
+			MetabolismHealOrHurtTendedAndHealingInjury(pawn, out bool temp2);
+			processedAny = temp || temp2;
 		}
 
 		private void ManageMetabolism(int whenTicksDivisibleBy)
@@ -290,65 +310,72 @@ namespace More_Traits
 			}
 		}
 
+		private float NarcolepticSleepChance(Pawn pawn)
+		{
+			float baseSleepChance = 0.015625f;
+			float sleepChance = baseSleepChance;
+			if (NarcolepticPawns[pawn] > 120000)
+			{
+				sleepChance *= 8f;
+			}
+			else if (NarcolepticPawns[pawn] > 60000)
+			{
+				sleepChance *= 4f;
+			}
+			else if (NarcolepticPawns[pawn] > 30000)
+			{
+				sleepChance *= 2f;
+			}
+
+			return sleepChance;
+		}
+
 		private void ManageNarcoleptics(int whenTicksDivisibleBy)
 		{
-			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
+			if (!GameTicksDivisibleBy(whenTicksDivisibleBy)) return;
+
+			//Narcoleptics
+			HashSet<Pawn> reset = new HashSet<Pawn>();
+			HashSet<Pawn> increment = new HashSet<Pawn>();
+			foreach (KeyValuePair<Pawn, int> keyValuePair in NarcolepticPawns.Where(x => x.Key.Spawned))
 			{
-				//Narcoleptics
-				HashSet<Pawn> reset = new HashSet<Pawn>();
-				HashSet<Pawn> increment = new HashSet<Pawn>();
-				foreach (KeyValuePair<Pawn, int> keyValuePair in NarcolepticPawns.Where(x => x.Key.Spawned))
-				{
-					if (!IsPawnStillThere(keyValuePair.Key)) return;
-					float baseSleepChance = 0.015625f;
-					float sleepChance = baseSleepChance;
-					if (NarcolepticPawns[keyValuePair.Key] > 120000)
-					{
-						sleepChance *= 8f;
-					}
-					else if (NarcolepticPawns[keyValuePair.Key] > 60000)
-					{
-						sleepChance *= 4f;
-					}
-					else if (NarcolepticPawns[keyValuePair.Key] > 30000)
-					{
-						sleepChance *= 2f;
-					}
+				if (!IsPawnStillThere(keyValuePair.Key)) return;
 
-					if (NarcolepticPawns[keyValuePair.Key] > 15000 && keyValuePair.Key.Spawned)
+				float sleepChance = NarcolepticSleepChance(keyValuePair.Key);
+
+				if (NarcolepticPawns[keyValuePair.Key] > 15000 && keyValuePair.Key.Spawned)
+				{
+					if (Rand.Value < sleepChance && (keyValuePair.Key.CurJob == null || keyValuePair.Key.CurJob.def != JobDefOf.LayDown))
 					{
-						if (Rand.Value < sleepChance && (keyValuePair.Key.CurJob == null || keyValuePair.Key.CurJob.def != JobDefOf.LayDown))
+						keyValuePair.Key.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, keyValuePair.Key.Position), JobCondition.InterruptForced, null, false, true, null, new JobTag?(JobTag.SatisfyingNeeds), false, false);
+						if (keyValuePair.Key.InMentalState && keyValuePair.Key.MentalStateDef.recoverFromCollapsingExhausted)
 						{
-							keyValuePair.Key.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, keyValuePair.Key.Position), JobCondition.InterruptForced, null, false, true, null, new JobTag?(JobTag.SatisfyingNeeds), false, false);
-							if (keyValuePair.Key.InMentalState && keyValuePair.Key.MentalStateDef.recoverFromCollapsingExhausted)
-							{
-								keyValuePair.Key.mindState.mentalStateHandler.CurState.RecoverFromState();
-							}
-							if (PawnUtility.ShouldSendNotificationAbout(keyValuePair.Key))
-							{
-								Messages.Message("BOTNarcolepticInvoluntarySleep".Translate(keyValuePair.Key.LabelShort, keyValuePair.Key), keyValuePair.Key, MessageTypeDefOf.NegativeEvent, true);
-							}
-							reset.Add(keyValuePair.Key);
+							keyValuePair.Key.mindState.mentalStateHandler.CurState.RecoverFromState();
 						}
-					}
-					else
-					{
-						if (!(keyValuePair.Key.jobs != null && keyValuePair.Key.jobs.curDriver != null && keyValuePair.Key.jobs.curDriver.asleep))
+						if (PawnUtility.ShouldSendNotificationAbout(keyValuePair.Key))
 						{
-							increment.Add(keyValuePair.Key);
+							Messages.Message("BOTNarcolepticInvoluntarySleep".Translate(keyValuePair.Key.LabelShort, keyValuePair.Key), keyValuePair.Key, MessageTypeDefOf.NegativeEvent, true);
 						}
+						reset.Add(keyValuePair.Key);
 					}
 				}
-
-				foreach (Pawn p in reset)
+				else
 				{
-					NarcolepticPawns[p] = 0;
+					if (!keyValuePair.Key.IsAsleep())
+					{
+						increment.Add(keyValuePair.Key);
+					}
 				}
+			}
 
-				foreach (Pawn p in increment)
-				{
-					NarcolepticPawns[p] += 1000;
-				}
+			foreach (Pawn p in reset)
+			{
+				NarcolepticPawns[p] = 0;
+			}
+
+			foreach (Pawn p in increment)
+			{
+				NarcolepticPawns[p] += 1000;
 			}
 		}
 
