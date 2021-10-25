@@ -92,7 +92,7 @@ namespace More_Traits
 			base.GameComponentTick();
 
 			ManageFleeing(fleeIntervallInTicks, PyrophobicPawns);
-			ManageFleeing(fleeIntervallInTicks, EntomophobicPawns, true);
+			ManageFleeing(fleeIntervallInTicks, EntomophobicPawns);
 			ManageSleepyHeads(500);
 			ManageNarcoleptics(1000);
 			ManageMetabolism(2400);
@@ -175,7 +175,7 @@ namespace More_Traits
 			return dangers;
 		}
 
-		private void ManageFleeing(int whenTicksDivisibleBy, HashSet<Pawn> hashSet, bool alsoWhenDrafted = false)
+		private void ManageFleeing(int whenTicksDivisibleBy, HashSet<Pawn> hashSet)
 		{
 			if (!GameTicksDivisibleBy(whenTicksDivisibleBy)) return;
 
@@ -189,13 +189,82 @@ namespace More_Traits
 
 				dangers = CreateDangersDicFor(pawn, flag ? new List<Thing>(dangers.Keys) : GetListOfDangers(pawn), out Thing closestDanger, out float closestDangerDistance);
 
-				if ((!pawn.Drafted || (alsoWhenDrafted && PawnScaredOfInsectsAndInsectsNearby(dangers, pawn))) && pawn.HasSightOfAnyIn(dangers.Keys.ToList()))
+				if ((!pawn.Drafted || PawnScaredOfInsectsAndInsectsNearby(dangers, pawn)) && pawn.HasSightOfAnyIn(dangers.Keys.ToList()))
 				{
 					ProcessFleeingPawns(pawn, closestDanger, closestDangerDistance, dangers);
 				}
 				else if (pawn.Drafted && pawn.HasSightOfAnyIn(dangers.Keys.ToList()))
 				{
 					ProcessDraftedPawnMemories(pawn, closestDangerDistance);
+				}
+			}
+		}
+
+		private float HealSpeedModifFor(Pawn pawn)
+        {
+			HediffSet hediffSet = pawn.health.hediffSet;
+			float num = 8f;
+			if (pawn.GetPosture() != PawnPosture.Standing)
+			{
+				num += 4f;
+				Building_Bed building_Bed = pawn.CurrentBed();
+				if (building_Bed != null)
+				{
+					num += building_Bed.def.building.bed_healPerDay;
+				}
+			}
+
+			foreach (Hediff hediff3 in hediffSet.hediffs)
+			{
+				HediffStage curStage = hediff3.CurStage;
+				if (curStage != null && curStage.naturalHealingFactor != -1f)
+				{
+					num *= curStage.naturalHealingFactor;
+				}
+			}
+			return num;
+        }
+
+		private void MetabolismPawnExtraHealTick(Pawn pawn, out bool processedAny)
+		{
+			processedAny = false;
+			HediffSet hediffSet = pawn.health.hediffSet;
+			if (hediffSet.HasNaturallyHealingInjury())
+			{
+				float amount = HealSpeedModifFor(pawn) * pawn.HealthScale * 0.01f * pawn.GetStatValue(StatDefOf.InjuryHealingFactor, true);
+
+				if (pawn.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
+				{
+					(from x in hediffSet.GetHediffs<Hediff_Injury>()
+					 where x.CanHealNaturally()
+					 select x).RandomElement().Heal(amount);
+					processedAny = true;
+				}
+				else
+				{
+					(from x in hediffSet.GetHediffs<Hediff_Injury>()
+					 where x.CanHealNaturally()
+					 select x).RandomElement().Injure(amount);
+				}
+			}
+
+			if (hediffSet.HasTendedAndHealingInjury() && !pawn.Starving())
+			{
+				Hediff_Injury hediff_Injury = (from x in hediffSet.GetHediffs<Hediff_Injury>()
+											   where x.CanHealFromTending()
+											   select x).RandomElement();
+
+				float tendQuality = hediff_Injury.TryGetComp<HediffComp_TendDuration>().tendQuality;
+				float amount = 8f * GenMath.LerpDouble(0f, 1f, 0.5f, 1.5f, Mathf.Clamp01(tendQuality)) * pawn.HealthScale * 0.01f * pawn.GetStatValue(StatDefOf.InjuryHealingFactor, true);
+
+				if (pawn.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
+				{
+					hediff_Injury.Heal(amount);
+					processedAny = true;
+				}
+				else
+				{
+					hediff_Injury.Injure(amount);
 				}
 			}
 		}
@@ -207,73 +276,16 @@ namespace More_Traits
 			foreach (KeyValuePair<Pawn, int> keyValuePair in MetabolismPawns.Where(x => x.Key.Spawned))
 			{
 				//Get 25% more/less healing by running the healing part of the HealthTick function
-				Pawn p = keyValuePair.Key;
-				if (!IsPawnStillThere(p)) return;
-				HediffSet hediffSet = p.health.hediffSet;
+				Pawn pawn = keyValuePair.Key;
+				if (!IsPawnStillThere(pawn) || pawn.RaceProps.IsFlesh && !pawn.Starving()) return;
+				HediffSet hediffSet = pawn.health.hediffSet;
 
 				//Heal fast Metabolism, damage flow by the same amount it was healed.
-				if (p.RaceProps.IsFlesh && (p.needs.food == null || !p.needs.food.Starving))
+				MetabolismPawnExtraHealTick(pawn, out bool processedAny);
+
+				if (processedAny && !pawn.health.HasHediffsNeedingTendByPlayer(false) && !HealthAIUtility.ShouldSeekMedicalRest(pawn) && !pawn.health.hediffSet.HasTendedAndHealingInjury() && PawnUtility.ShouldSendNotificationAbout(pawn))
 				{
-					bool flag2 = false;
-					if (hediffSet.HasNaturallyHealingInjury())
-					{
-						float num = 8f;
-						if (p.GetPosture() != PawnPosture.Standing)
-						{
-							num += 4f;
-							Building_Bed building_Bed = p.CurrentBed();
-							if (building_Bed != null)
-							{
-								num += building_Bed.def.building.bed_healPerDay;
-							}
-						}
-						foreach (Hediff hediff3 in hediffSet.hediffs)
-						{
-							HediffStage curStage = hediff3.CurStage;
-							if (curStage != null && curStage.naturalHealingFactor != -1f)
-							{
-								num *= curStage.naturalHealingFactor;
-							}
-						}
-
-						if (p.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
-						{
-							(from x in hediffSet.GetHediffs<Hediff_Injury>()
-							 where x.CanHealNaturally()
-							 select x).RandomElement<Hediff_Injury>().Heal(num * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
-							flag2 = true;
-						}
-						else
-						{
-							(from x in hediffSet.GetHediffs<Hediff_Injury>()
-							 where x.CanHealNaturally()
-							 select x).RandomElement<Hediff_Injury>().Injure(num * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
-
-						}
-					}
-
-					if (hediffSet.HasTendedAndHealingInjury() && (p.needs.food == null || !p.needs.food.Starving))
-					{
-						Hediff_Injury hediff_Injury = (from x in hediffSet.GetHediffs<Hediff_Injury>()
-													   where x.CanHealFromTending()
-													   select x).RandomElement<Hediff_Injury>();
-						float tendQuality = hediff_Injury.TryGetComp<HediffComp_TendDuration>().tendQuality;
-						float num2 = GenMath.LerpDouble(0f, 1f, 0.5f, 1.5f, Mathf.Clamp01(tendQuality));
-
-						if (p.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
-						{
-							hediff_Injury.Heal(8f * num2 * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
-							flag2 = true;
-						}
-						else
-						{
-							hediff_Injury.Injure(8f * num2 * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
-						}
-					}
-					if (flag2 && !p.health.HasHediffsNeedingTendByPlayer(false) && !HealthAIUtility.ShouldSeekMedicalRest(p) && !p.health.hediffSet.HasTendedAndHealingInjury() && PawnUtility.ShouldSendNotificationAbout(p))
-					{
-						Messages.Message("MessageFullyHealed".Translate(p.LabelCap, p), p, MessageTypeDefOf.PositiveEvent, true);
-					}
+					Messages.Message("MessageFullyHealed".Translate(pawn.LabelCap, pawn), pawn, MessageTypeDefOf.PositiveEvent, true);
 				}
 			}
 		}
