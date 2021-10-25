@@ -83,6 +83,12 @@ namespace More_Traits
 			return false;
         }
 
+		public static bool HasSightOfAnyIn(this Pawn pawn, List<Thing> dangers)
+		{
+			if (pawn?.Map == null || !pawn.Position.IsValid || dangers.Count == 0) return false;
+			return dangers.Any(danger => danger.Position.IsValid && GenSight.LineOfSight(pawn.Position, danger.Position, pawn.Map));
+        }
+
 		public static int StageOfTwenty(int n)
         {
 			if (n > 20) n = 20;

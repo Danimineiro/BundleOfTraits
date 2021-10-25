@@ -91,15 +91,8 @@ namespace More_Traits
 		{
 			base.GameComponentTick();
 
-			try
-			{
-				ManageFleeing(fleeIntervallInTicks, PyrophobicPawns, PyrophobicPawns.Any(pawn => pawn?.Map != null && (pawn?.Map?.fireWatcher?.FireDanger ?? 0f) > 0f));
-				ManageFleeing(fleeIntervallInTicks, EntomophobicPawns, EntomophobicPawns.Any(pawn => pawn?.Map?.mapPawns?.AllPawnsSpawned.Exists(x => x?.def?.devNote == "insect" || x?.def?.race?.FleshType == FleshTypeDefOf.Insectoid) ?? false), true);
-            }
-            catch
-            {
-				Log.ErrorOnce("Something went wrong and went null here: PyroPawns:" + (PyrophobicPawns == null) + " EntoPawns: " + (EntomophobicPawns == null) + " please report this to the BundleOfTraits steam page if you see this message!", 93827394);
-            }
+			ManageFleeing(fleeIntervallInTicks, PyrophobicPawns);
+			ManageFleeing(fleeIntervallInTicks, EntomophobicPawns, true);
 			ManageSleepyHeads(500);
 			ManageNarcoleptics(1000);
 			ManageMetabolism(2400);
@@ -117,148 +110,169 @@ namespace More_Traits
 			return (Find.TickManager.TicksGame % n == 0);
 		}
 
-		private void ManageFleeing(int whenTicksDivisibleBy, HashSet<Pawn> hashSet, bool underCondition, bool alsoWhenDrafted = false)
+		private bool PawnScaredOfInsectsAndInsectsNearby(Dictionary<Thing, float> dangers, Pawn pawn) => dangers.Any(entry => ((entry.Key.def.devNote != null && entry.Key.def.devNote == "insect") || (entry.Key.def.race != null && entry.Key.def.race.FleshType == FleshTypeDefOf.Insectoid)) && entry.Value < MinMaxFleeDistance.x && GenSight.LineOfSight(pawn.Position, entry.Key.Position, pawn.Map));
+
+		private void ProcessDraftedPawnMemories(Pawn pawn, float closestDangerDistance)
 		{
-			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
+			if (closestDangerDistance < MinMaxFleeDistance.x)
 			{
-				Dictionary<Map, Dictionary<Thing, float>> MapDic = new Dictionary<Map, Dictionary<Thing, float>>();
-				foreach (Pawn pawn in hashSet.Where(x => x.Spawned))
+				pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 0);
+			}
+		}
+
+		private void ProcessFleeingPawns(Pawn pawn, Thing closestDanger, float closestDangerDistance, Dictionary<Thing, float> dangers)
+        {
+			if (closestDangerDistance < MinMaxFleeDistance.x)
+			{
+				BOTFleeParams param = new BOTFleeParams
 				{
-					if (underCondition)
-					{
-						Dictionary<Thing, float> dangers = new Dictionary<Thing, float>();
-						Thing closestDanger = null;
-						float closestDangerDistance = float.MaxValue;
-						bool hasLOSofAnyDanger = false;
+					Threat = closestDanger,
+					Distance = MinMaxFleeDistance,
+					Threats = dangers.Keys.ToList(),
+					StayWhenNowhereToGo = false
+				};
 
-						if (MapDic.ContainsKey(pawn.Map))
-						{
-							dangers = MapDic[pawn.Map];
-						}
-						else
-						{
-							foreach (Thing danger in GetListOfDangers(pawn))
-							{
-								float dangerDistance = danger.Position.DistanceTo(pawn.Position);
-								dangers[danger] = dangerDistance;
-								hasLOSofAnyDanger = hasLOSofAnyDanger ? hasLOSofAnyDanger : GenSight.LineOfSight(pawn.Position, danger.Position, pawn.Map);
+				pawn.MakeFlee(param);
+				pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 1);
+			}
+		}
 
-								if (dangerDistance < closestDangerDistance)
-								{
-									closestDangerDistance = dangerDistance;
-									closestDanger = danger;
-								}
-							}
-						}
+		private bool ShouldSkipFleeingForPawn(Pawn pawn)
+        {
+			if (!pawn.Spawned) return true;
 
-						if ((!pawn.Drafted || (alsoWhenDrafted && dangers.Any(entry => ((entry.Key.def.devNote != null && entry.Key.def.devNote == "insect") || (entry.Key.def.race != null && entry.Key.def.race.FleshType == FleshTypeDefOf.Insectoid)) && entry.Value < MinMaxFleeDistance.x && GenSight.LineOfSight(pawn.Position, entry.Key.Position, pawn.Map)))) && hasLOSofAnyDanger)
-						{
-							if (dangers != null && dangers.Count != 0)
-							{
-								if (closestDangerDistance < MinMaxFleeDistance.x)
-								{
-									BOTFleeParams param = new BOTFleeParams
-									{
-										Threat = closestDanger,
-										Distance = MinMaxFleeDistance,
-										Threats = dangers.Keys.ToList(),
-										StayWhenNowhereToGo = false
-									};
+			if (PyrophobicPawns.Contains(pawn) && pawn?.Map != null && (pawn?.Map?.fireWatcher?.FireDanger ?? 0f) > 0f)
+            {
+				return false;
+            }
 
-									pawn.MakeFlee(param);
-									pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 1);
-								}
-							}
-						}
-						else if (pawn.Drafted && hasLOSofAnyDanger)
-						{
-							if (dangers != null && dangers.Count != 0)
-							{
-								if (closestDangerDistance < MinMaxFleeDistance.x)
-								{
-									pawn.TryGainMemory(BOTThoughtDefOf.BOT_PyrophobicNearFire, 0);
-								}
-							}
-						}
-					}
+			if (EntomophobicPawns.Contains(pawn) && (pawn?.Map?.mapPawns?.AllPawnsSpawned.Exists(x => x?.def?.devNote == "insect" || x?.def?.race?.FleshType == FleshTypeDefOf.Insectoid) ?? false))
+            {
+				return false;
+            }
+
+			return true;
+        }
+
+		private Dictionary<Thing, float> CreateDangersDicFor(Pawn pawn, List<Thing> dangersList, out Thing closestDanger, out float closestDangerDistance)
+        {
+			Dictionary<Thing, float> dangers = new Dictionary<Thing, float>();
+			closestDanger = new Thing();
+			closestDangerDistance = int.MaxValue;
+
+			foreach (Thing danger in dangersList)
+			{
+				float dangerDistance = danger.Position.DistanceTo(pawn.Position);
+				dangers[danger] = dangerDistance;
+
+				if (dangerDistance < closestDangerDistance)
+				{
+					closestDangerDistance = dangerDistance;
+					closestDanger = danger;
+				}
+			}
+
+			return dangers;
+		}
+
+		private void ManageFleeing(int whenTicksDivisibleBy, HashSet<Pawn> hashSet, bool alsoWhenDrafted = false)
+		{
+			if (!GameTicksDivisibleBy(whenTicksDivisibleBy)) return;
+
+			Dictionary<Map, Dictionary<Thing, float>> MapDic = new Dictionary<Map, Dictionary<Thing, float>>();
+			foreach (Pawn pawn in hashSet.Where(pawn => ShouldSkipFleeingForPawn(pawn)))
+			{
+				Dictionary<Thing, float> dangers = new Dictionary<Thing, float>();
+                bool flag = MapDic.ContainsKey(pawn.Map);
+
+				if (flag) dangers = MapDic[pawn.Map];
+
+				dangers = CreateDangersDicFor(pawn, flag ? new List<Thing>(dangers.Keys) : GetListOfDangers(pawn), out Thing closestDanger, out float closestDangerDistance);
+
+				if ((!pawn.Drafted || (alsoWhenDrafted && PawnScaredOfInsectsAndInsectsNearby(dangers, pawn))) && pawn.HasSightOfAnyIn(dangers.Keys.ToList()))
+				{
+					ProcessFleeingPawns(pawn, closestDanger, closestDangerDistance, dangers);
+				}
+				else if (pawn.Drafted && pawn.HasSightOfAnyIn(dangers.Keys.ToList()))
+				{
+					ProcessDraftedPawnMemories(pawn, closestDangerDistance);
 				}
 			}
 		}
 
 		private void ManageMetabolism(int whenTicksDivisibleBy)
 		{
-			if (GameTicksDivisibleBy(whenTicksDivisibleBy))
+			if (!GameTicksDivisibleBy(whenTicksDivisibleBy)) return;
+
+			foreach (KeyValuePair<Pawn, int> keyValuePair in MetabolismPawns.Where(x => x.Key.Spawned))
 			{
-				foreach (KeyValuePair<Pawn, int> keyValuePair in MetabolismPawns.Where(x => x.Key.Spawned))
+				//Get 25% more/less healing by running the healing part of the HealthTick function
+				Pawn p = keyValuePair.Key;
+				if (!IsPawnStillThere(p)) return;
+				HediffSet hediffSet = p.health.hediffSet;
+
+				//Heal fast Metabolism, damage flow by the same amount it was healed.
+				if (p.RaceProps.IsFlesh && (p.needs.food == null || !p.needs.food.Starving))
 				{
-					//Get 25% more/less healing by running the healing part of the HealthTick function
-					Pawn p = keyValuePair.Key;
-					if (!IsPawnStillThere(p)) return;
-					HediffSet hediffSet = p.health.hediffSet;
-
-					//Heal fast Metabolism, damage flow by the same amount it was healed.
-					if (p.RaceProps.IsFlesh && (p.needs.food == null || !p.needs.food.Starving))
+					bool flag2 = false;
+					if (hediffSet.HasNaturallyHealingInjury())
 					{
-						bool flag2 = false;
-						if (hediffSet.HasNaturallyHealingInjury())
+						float num = 8f;
+						if (p.GetPosture() != PawnPosture.Standing)
 						{
-							float num = 8f;
-							if (p.GetPosture() != PawnPosture.Standing)
+							num += 4f;
+							Building_Bed building_Bed = p.CurrentBed();
+							if (building_Bed != null)
 							{
-								num += 4f;
-								Building_Bed building_Bed = p.CurrentBed();
-								if (building_Bed != null)
-								{
-									num += building_Bed.def.building.bed_healPerDay;
-								}
+								num += building_Bed.def.building.bed_healPerDay;
 							}
-							foreach (Hediff hediff3 in hediffSet.hediffs)
+						}
+						foreach (Hediff hediff3 in hediffSet.hediffs)
+						{
+							HediffStage curStage = hediff3.CurStage;
+							if (curStage != null && curStage.naturalHealingFactor != -1f)
 							{
-								HediffStage curStage = hediff3.CurStage;
-								if (curStage != null && curStage.naturalHealingFactor != -1f)
-								{
-									num *= curStage.naturalHealingFactor;
-								}
-							}
-
-							if (p.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
-							{
-								(from x in hediffSet.GetHediffs<Hediff_Injury>()
-								 where x.CanHealNaturally()
-								 select x).RandomElement<Hediff_Injury>().Heal(num * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
-								flag2 = true;
-							}
-							else
-							{
-								(from x in hediffSet.GetHediffs<Hediff_Injury>()
-								 where x.CanHealNaturally()
-								 select x).RandomElement<Hediff_Injury>().Injure(num * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
-
+								num *= curStage.naturalHealingFactor;
 							}
 						}
 
-						if (hediffSet.HasTendedAndHealingInjury() && (p.needs.food == null || !p.needs.food.Starving))
+						if (p.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
 						{
-							Hediff_Injury hediff_Injury = (from x in hediffSet.GetHediffs<Hediff_Injury>()
-														   where x.CanHealFromTending()
-														   select x).RandomElement<Hediff_Injury>();
-							float tendQuality = hediff_Injury.TryGetComp<HediffComp_TendDuration>().tendQuality;
-							float num2 = GenMath.LerpDouble(0f, 1f, 0.5f, 1.5f, Mathf.Clamp01(tendQuality));
+							(from x in hediffSet.GetHediffs<Hediff_Injury>()
+							 where x.CanHealNaturally()
+							 select x).RandomElement<Hediff_Injury>().Heal(num * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
+							flag2 = true;
+						}
+						else
+						{
+							(from x in hediffSet.GetHediffs<Hediff_Injury>()
+							 where x.CanHealNaturally()
+							 select x).RandomElement<Hediff_Injury>().Injure(num * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
 
-							if (p.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
-							{
-								hediff_Injury.Heal(8f * num2 * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
-								flag2 = true;
-							}
-							else
-							{
-								hediff_Injury.Injure(8f * num2 * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
-							}
 						}
-						if (flag2 && !p.health.HasHediffsNeedingTendByPlayer(false) && !HealthAIUtility.ShouldSeekMedicalRest(p) && !p.health.hediffSet.HasTendedAndHealingInjury() && PawnUtility.ShouldSendNotificationAbout(p))
+					}
+
+					if (hediffSet.HasTendedAndHealingInjury() && (p.needs.food == null || !p.needs.food.Starving))
+					{
+						Hediff_Injury hediff_Injury = (from x in hediffSet.GetHediffs<Hediff_Injury>()
+													   where x.CanHealFromTending()
+													   select x).RandomElement<Hediff_Injury>();
+						float tendQuality = hediff_Injury.TryGetComp<HediffComp_TendDuration>().tendQuality;
+						float num2 = GenMath.LerpDouble(0f, 1f, 0.5f, 1.5f, Mathf.Clamp01(tendQuality));
+
+						if (p.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
 						{
-							Messages.Message("MessageFullyHealed".Translate(p.LabelCap, p), p, MessageTypeDefOf.PositiveEvent, true);
+							hediff_Injury.Heal(8f * num2 * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
+							flag2 = true;
 						}
+						else
+						{
+							hediff_Injury.Injure(8f * num2 * p.HealthScale * 0.01f * p.GetStatValue(StatDefOf.InjuryHealingFactor, true));
+						}
+					}
+					if (flag2 && !p.health.HasHediffsNeedingTendByPlayer(false) && !HealthAIUtility.ShouldSeekMedicalRest(p) && !p.health.hediffSet.HasTendedAndHealingInjury() && PawnUtility.ShouldSendNotificationAbout(p))
+					{
+						Messages.Message("MessageFullyHealed".Translate(p.LabelCap, p), p, MessageTypeDefOf.PositiveEvent, true);
 					}
 				}
 			}
@@ -347,7 +361,7 @@ namespace More_Traits
 						toRemove.Add(p);
 					}
 					else if (p.CurJobDef != JobDefOf.LayDown)
-                    {
+					{
 						toRemove.Add(p);
 					}
 					else
@@ -365,7 +379,7 @@ namespace More_Traits
 		}
 
 		public static bool IsPawnStillThere(Pawn pawn)
-        {
+		{
 			bool flag = pawn != null && pawn.story != null && pawn.story.traits != null;
 
 			if (!flag)
@@ -382,7 +396,7 @@ namespace More_Traits
 				}
 			}
 			return flag;
-        }
+		}
 
 		//This runs on game load when a pawn is spawned so PreInit should always get executed
 		/// <summary>
