@@ -73,6 +73,10 @@ namespace More_Traits
 			if (pawn.needs.mood != null) pawn.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(thoughtDef, forcedLevel));
 		}
 
+		public static bool IsFullyHealed(this Pawn pawn) => !pawn.health.HasHediffsNeedingTendByPlayer(false) && !HealthAIUtility.ShouldSeekMedicalRest(pawn) && !pawn.health.hediffSet.HasTendedAndHealingInjury();
+
+		public static bool IsAsleep(this Pawn pawn) => pawn.jobs?.curDriver?.asleep == false;
+
 		public static bool HasTrait(this Pawn pawn, TraitDef traitDef) => pawn?.story?.traits?.HasTrait(traitDef) ?? false;
 
 		public static bool HasSightOfAnyIn(this Pawn pawn, List<Thing> dangers)
