@@ -69,7 +69,6 @@ namespace More_Traits
 			if (Nyctophobes == null) Nyctophobes = new HashSet<Pawn>();
 			if (MetabolismPawns == null) MetabolismPawns = new Dictionary<Pawn, int>();
 			if (EntomophobicPawns == null) EntomophobicPawns = new HashSet<Pawn>();
-
 		}
 
 		public override void LoadedGame()
@@ -293,7 +292,7 @@ namespace More_Traits
 		{
 			if (!GameTicksDivisibleBy(whenTicksDivisibleBy)) return;
 
-			foreach (KeyValuePair<Pawn, int> keyValuePair in MetabolismPawns.Where(x => x.Key.Spawned))
+			foreach (KeyValuePair<Pawn, int> keyValuePair in MetabolismPawns.Where(pair => pair.Key.Spawned))
 			{
 				//Get 25% more/less healing by running the healing part of the HealthTick function
 				Pawn pawn = keyValuePair.Key;
@@ -303,7 +302,7 @@ namespace More_Traits
 				//Heal fast Metabolism, damage flow by the same amount it was healed.
 				MetabolismPawnExtraHealTick(pawn, out bool processedAny);
 
-				if (processedAny && !pawn.health.HasHediffsNeedingTendByPlayer(false) && !HealthAIUtility.ShouldSeekMedicalRest(pawn) && !pawn.health.hediffSet.HasTendedAndHealingInjury() && PawnUtility.ShouldSendNotificationAbout(pawn))
+				if (processedAny && pawn.IsFullyHealed() && PawnUtility.ShouldSendNotificationAbout(pawn))
 				{
 					Messages.Message("MessageFullyHealed".Translate(pawn.LabelCap, pawn), pawn, MessageTypeDefOf.PositiveEvent, true);
 				}
@@ -480,8 +479,8 @@ namespace More_Traits
 				RemoveWrongPawnsFromDic(Loves_SleepPawns, BOTTraitDefOf.BOT_Narcoleptic);
 				RemoveWrongPawnsFromDic(MetabolismPawns, BOTTraitDefOf.BOT_Metabolism);
 
-				PyrophobicPawns.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTTraitDefOf.BOT_Pyrophobia));
-				EntomophobicPawns.RemoveWhere((Pawn p) => !p.story.traits.HasTrait(BOTTraitDefOf.BOT_Entomophobia));
+				PyrophobicPawns.RemoveWhere((Pawn p) => !p.HasTrait(BOTTraitDefOf.BOT_Pyrophobia));
+				EntomophobicPawns.RemoveWhere((Pawn p) => !p.HasTrait(BOTTraitDefOf.BOT_Entomophobia));
 			}
 		}
 
