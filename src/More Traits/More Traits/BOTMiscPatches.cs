@@ -93,7 +93,7 @@ namespace More_Traits
 		}
 
 		[HarmonyPostfix, HarmonyPatch(typeof(Pawn_InteractionsTracker), "CheckSocialFightStart")]
-		public static bool CheckSocialFightStartPatch(Pawn_InteractionsTracker __instance, ref bool __result, InteractionDef interaction, Pawn initiator)
+		public static bool CheckSocialFightStartPatch(bool __result, Pawn_InteractionsTracker __instance,  InteractionDef interaction, Pawn initiator)
 		{
 			Pawn recipient = Traverse.Create(__instance).Field("pawn").GetValue() as Pawn;
 			if (recipient.HasTrait(BOTTraitDefOf.BOT_Vulgar) && interaction == InteractionDefOf.Insult)

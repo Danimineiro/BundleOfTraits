@@ -11,9 +11,9 @@ using RimWorld.Planet;
 namespace More_Traits
 {
 	[StaticConstructorOnStartup]
-	class BOTThoughtPatches
+	class BOTPatcher
 	{
-		static BOTThoughtPatches()
+		static BOTPatcher()
 		{
 			var harmony = new Harmony("dani.BOT.Patches");
 			harmony.PatchAll();
