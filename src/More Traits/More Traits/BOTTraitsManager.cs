@@ -179,7 +179,7 @@ namespace More_Traits
 			if (!GameTicksDivisibleBy(whenTicksDivisibleBy)) return;
 
 			Dictionary<Map, Dictionary<Thing, float>> MapDic = new Dictionary<Map, Dictionary<Thing, float>>();
-			foreach (Pawn pawn in hashSet.Where(pawn => ShouldSkipFleeingForPawn(pawn)))
+			foreach (Pawn pawn in hashSet.Where(pawn => ShouldSkipFleeingForPawn(pawn) && pawn?.Map != null))
 			{
 				Dictionary<Thing, float> dangers = new Dictionary<Thing, float>();
                 bool flag = MapDic.ContainsKey(pawn.Map);
