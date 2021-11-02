@@ -138,14 +138,14 @@ namespace More_Traits
 
 		private bool ShouldSkipFleeingForPawn(Pawn pawn)
         {
-			if (!pawn.Spawned) return true;
+			if (pawn?.Map == null || !pawn.Spawned) return true;
 
-			if (PyrophobicPawns.Contains(pawn) && pawn?.Map != null && (pawn?.Map?.fireWatcher?.FireDanger ?? 0f) > 0f)
+			if (PyrophobicPawns.Contains(pawn) && (pawn.Map.fireWatcher?.FireDanger ?? 0f) > 0f)
             {
 				return false;
             }
 
-			if (EntomophobicPawns.Contains(pawn) && (pawn?.Map?.mapPawns?.AllPawnsSpawned.Exists(x => x?.def?.devNote == "insect" || x?.def?.race?.FleshType == FleshTypeDefOf.Insectoid) ?? false))
+			if (EntomophobicPawns.Contains(pawn) && (pawn.Map.mapPawns?.AllPawnsSpawned.Exists(x => x?.def?.devNote == "insect" || x?.def?.race?.FleshType == FleshTypeDefOf.Insectoid) ?? false))
             {
 				return false;
             }
@@ -179,7 +179,7 @@ namespace More_Traits
 			if (!GameTicksDivisibleBy(whenTicksDivisibleBy)) return;
 
 			Dictionary<Map, Dictionary<Thing, float>> MapDic = new Dictionary<Map, Dictionary<Thing, float>>();
-			foreach (Pawn pawn in hashSet.Where(pawn => ShouldSkipFleeingForPawn(pawn) && pawn?.Map != null))
+			foreach (Pawn pawn in hashSet.Where(pawn => ShouldSkipFleeingForPawn(pawn)))
 			{
 				Dictionary<Thing, float> dangers = new Dictionary<Thing, float>();
                 bool flag = MapDic.ContainsKey(pawn.Map);
