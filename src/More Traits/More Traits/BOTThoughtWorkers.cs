@@ -33,12 +33,12 @@ namespace More_Traits
 	{
 		protected override ThoughtState CurrentStateInternal(Pawn p)
 		{
-			float num = p.AmbientTemperature - p.GetStatValue(StatDefOf.ComfyTemperatureMax, true);
+			float temperature = p.AmbientTemperature - p.GetStatValue(StatDefOf.ComfyTemperatureMax, true);
 
 			if (p.story.traits.DegreeOfTrait(BOTTraitDefOf.BOT_Temperature_Love) == -1)
 			{
 				//Loves the heat
-				if (p.AmbientTemperature > 25f && num < 10f)
+				if (p.AmbientTemperature > 25f && temperature < 10f)
 				{
 					return ThoughtState.ActiveAtStage(4);
 				}
@@ -50,34 +50,17 @@ namespace More_Traits
 			{
 				return false;
 			}
-			if (num <= 0f)
-			{
-				return ThoughtState.Inactive;
-			}
-			int num2;
-			if (num < 10f)
-			{
-				num2 = 0;
-			}
-			else if (num < 20f)
-			{
-				num2 = 1;
-			}
-			else if (num < 30f)
-			{
-				num2 = 2;
-			}
-			else
-			{
-				num2 = 3;
-			}
+
+			if (temperature <= 0f) return ThoughtState.Inactive;
+
+			int thoughtstage = Math.Min(3, ((int) temperature) / 10);
 			if (ModsConfig.IdeologyActive && p.Ideo.HasPrecept(PreceptDefOf.Temperature_Tough))
 			{
-				num2 -= 2;
+				thoughtstage -= 2;
 			}
-			if (num2 >= 0)
+			if (thoughtstage >= 0)
 			{
-				return ThoughtState.ActiveAtStage(num2);
+				return ThoughtState.ActiveAtStage(thoughtstage);
 			}
 			return ThoughtState.Inactive;
 		}
@@ -87,7 +70,7 @@ namespace More_Traits
 	{
 		protected override ThoughtState CurrentStateInternal(Pawn p)
 		{
-			float num = p.GetStatValue(StatDefOf.ComfyTemperatureMin, true) - p.AmbientTemperature;
+			float temperature = p.GetStatValue(StatDefOf.ComfyTemperatureMin, true) - p.AmbientTemperature;
 
 			if (p.story.traits.DegreeOfTrait(BOTTraitDefOf.BOT_Temperature_Love) == -1)
 			{
@@ -96,7 +79,7 @@ namespace More_Traits
 			else if (p.story.traits.DegreeOfTrait(BOTTraitDefOf.BOT_Temperature_Love) == 1)
 			{
 				//Loves the cold
-				if (p.AmbientTemperature < 5f && num < 10f)
+				if (p.AmbientTemperature < 5f && temperature < 10f)
 				{
 					return ThoughtState.ActiveAtStage(4);
 				}
@@ -106,34 +89,17 @@ namespace More_Traits
 			{
 				return false;
 			}
-			if (num <= 0f)
-			{
-				return ThoughtState.Inactive;
-			}
-			int num2;
-			if (num < 10f)
-			{
-				num2 = 0;
-			}
-			else if (num < 20f)
-			{
-				num2 = 1;
-			}
-			else if (num < 30f)
-			{
-				num2 = 2;
-			}
-			else
-			{
-				num2 = 3;
-			}
+
+			if (temperature <= 0f) return ThoughtState.Inactive;
+
+			int thoughtStage = Math.Min(3, ((int) temperature) / 10);
 			if (ModsConfig.IdeologyActive && p.Ideo.HasPrecept(PreceptDefOf.Temperature_Tough))
 			{
-				num2 -= 2;
+				thoughtStage -= 2;
 			}
-			if (num2 >= 0)
+			if (thoughtStage >= 0)
 			{
-				return ThoughtState.ActiveAtStage(num2);
+				return ThoughtState.ActiveAtStage(thoughtStage);
 			}
 			return ThoughtState.Inactive;
 		}
