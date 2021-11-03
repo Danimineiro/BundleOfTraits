@@ -99,17 +99,14 @@ namespace More_Traits
 			RemoveWrongPawnsFromSets(2000);
 		}
 
-		/// <summary>
-		///		Determines if the current game tick is divisible by n
-		/// </summary>
-		/// <param name="n">the divisor</param>
-		/// <returns>true if the game tick is divisible by n, false otherwise</returns>
-		private bool GameTicksDivisibleBy(int n)
-		{
-			return (Find.TickManager.TicksGame % n == 0);
-		}
+        /// <summary>
+        ///		Determines if the current game tick is divisible by n
+        /// </summary>
+        /// <param name="n">the divisor</param>
+        /// <returns>true if the game tick is divisible by n, false otherwise</returns>
+        private bool GameTicksDivisibleBy(int n) => Find.TickManager.TicksGame % n == 0;
 
-		private bool PawnScaredOfInsectsAndInsectsNearby(Dictionary<Thing, float> dangers, Pawn pawn) => dangers.Any(entry => ((entry.Key.def.devNote != null && entry.Key.def.devNote == "insect") || (entry.Key.def.race != null && entry.Key.def.race.FleshType == FleshTypeDefOf.Insectoid)) && entry.Value < MinMaxFleeDistance.x && GenSight.LineOfSight(pawn.Position, entry.Key.Position, pawn.Map));
+        private bool PawnScaredOfInsectsAndInsectsNearby(Dictionary<Thing, float> dangers, Pawn pawn) => dangers.Any(entry => ((entry.Key.def.devNote != null && entry.Key.def.devNote == "insect") || (entry.Key.def.race != null && entry.Key.def.race.FleshType == FleshTypeDefOf.Insectoid)) && entry.Value < MinMaxFleeDistance.x && GenSight.LineOfSight(pawn.Position, entry.Key.Position, pawn.Map));
 
 		private void ProcessDraftedPawnMemories(Pawn pawn, float closestDangerDistance)
 		{
@@ -179,7 +176,7 @@ namespace More_Traits
 			if (!GameTicksDivisibleBy(whenTicksDivisibleBy)) return;
 
 			Dictionary<Map, Dictionary<Thing, float>> MapDic = new Dictionary<Map, Dictionary<Thing, float>>();
-			foreach (Pawn pawn in hashSet.Where(pawn => ShouldSkipFleeingForPawn(pawn)))
+			foreach (Pawn pawn in hashSet.Where(pawn => !ShouldSkipFleeingForPawn(pawn)))
 			{
 				Dictionary<Thing, float> dangers = new Dictionary<Thing, float>();
                 bool flag = MapDic.ContainsKey(pawn.Map);
