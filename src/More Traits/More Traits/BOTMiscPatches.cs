@@ -98,11 +98,10 @@ namespace More_Traits
 			Pawn recipient = Traverse.Create(__instance).Field("pawn").GetValue() as Pawn;
 			if (recipient.HasTrait(BOTTraitDefOf.BOT_Vulgar) && interaction == InteractionDefOf.Insult)
             {
-				__result = false;
 				return false;
             }
 
-			return true;
+			return __result;
 		}
 
 		[HarmonyPostfix, HarmonyPatch(typeof(InteractionWorker_Insult), "RandomSelectionWeight")]
