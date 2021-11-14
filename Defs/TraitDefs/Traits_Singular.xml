@@ -81,7 +81,7 @@
 		<degreeDatas>
 			<li>
 				<label>narcoleptic</label>
-				<description>{PAWN_nameDef} suffers from a neurologcal disorder that makes {PAWN_pronoun} prone to randomly fall alseep anywhere.</description>
+				<description>{PAWN_nameDef} suffers from a neurological disorder that makes {PAWN_object} prone to randomly fall alseep anywhere.</description>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -111,7 +111,7 @@
 		<degreeDatas>
 			<li>
 				<label>nyctophobia</label>
-				<description>{PAWN_nameDef} is afraid of the dark. {PAWN_objective} will be extra unhappy when in darkness and has trouble sleeping without light.</description>
+				<description>{PAWN_nameDef} is afraid of the dark. They'll will be extra unhappy when in darkness and has trouble sleeping without light.</description>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -142,7 +142,7 @@
 		<degreeDatas>
 			<li>
 				<label>loves sleeping</label>
-				<description>{PAWN_nameDef} always feel good after a good night's sleep.</description>
+				<description>{PAWN_nameDef} always feels good after a good night's sleep.</description>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -332,7 +332,7 @@
 		<degreeDatas>
 			<li>
 				<label>chionophile</label>
-				<description>There's nothing {PAWN_nameDef} loves more than snow! No amount of snow are is going to slow them down.</description>
+				<description>There's nothing {PAWN_nameDef} loves more than snow! No amount of snow is going to slow them down.</description>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -347,7 +347,7 @@
 		<degreeDatas>
 			<li>
 				<label>moody</label>
-				<description>It doesn't take much to make {PAWN_nameDef} either really excited or to bring {PAWN_objective} mood completely down.</description>
+				<description>It doesn't take much to make {PAWN_nameDef} either really excited or to bring {PAWN_possessive} mood completely down.</description>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -408,7 +408,7 @@
 		<degreeDatas>
 			<li>
 				<label>vulgar</label>
-				<description>For whatever purpose, {PAWN_nameDef} has taught himself every swear word in the dictionary and uses his profane knowledge unconsciously in {PAWN_objective} day-to-day.</description>
+				<description>For whatever purpose, {PAWN_nameDef} has taught {PAWN_objective}self every swear word in the dictionary and uses this profane knowledge unconsciously in {PAWN_possessive} day-to-day life.</description>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
