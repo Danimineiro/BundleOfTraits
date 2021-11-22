@@ -27,6 +27,7 @@
 		<conflictingTraits>
 			<li>Gourmand</li>
 			<li>BOT_Eclectic_Palate</li>
+			<li>BOT_Entomophagous</li>
 			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_RefinedPalate</li>
 			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Gastronomist</li>
 		</conflictingTraits>
@@ -130,7 +131,6 @@
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
-			<li>BOT_Loves_Sleeping</li>
 			<li>QuickSleeper</li>
 			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Insomniac</li>
 		</conflictingTraits>
@@ -294,6 +294,7 @@
 		</degreeDatas>
 		<conflictingTraits>
 			<li>Cannibal</li>
+			<li>BOT_Dysgeusia</li>
 		</conflictingTraits>
 	</TraitDef>
 
