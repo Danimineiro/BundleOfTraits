@@ -24,7 +24,7 @@
 		<commonality>0.8</commonality>
 		<degreeDatas>
 			<li>
-				<label>loves the heat</label>
+				<label>thermophile</label>
 				<description>{PAWN_nameDef} just loves the heat and won't suffer any negative thoughts related to being warm. {PAWN_pronoun} despises being cold, though.</description>
 				<degree>-1</degree>
 				<statOffsets>
@@ -32,7 +32,7 @@
 				</statOffsets>
 			</li>
 			<li>
-				<label>loves the cold</label>
+				<label>cryophile</label>
 				<description>{PAWN_nameDef} just loves the cold and won't suffer any negative thoughts related to being cold. {PAWN_pronoun} despises being warm, though.</description>
 				<degree>1</degree>
 				<statOffsets>
