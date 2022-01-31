@@ -433,4 +433,15 @@
 			<li>Abrasive</li>
 		</conflictingTraits>
 	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Claustrophibic</defName>
+		<commonality>0.4</commonality>
+		<degreeDatas>
+			<li>
+				<label>Claustrophobic</label>
+				<description>{PAWN_nameDef} hates being in confined spaces.</description>
+			</li>
+		</degreeDatas>
+	</TraitDef>
 </Defs>
