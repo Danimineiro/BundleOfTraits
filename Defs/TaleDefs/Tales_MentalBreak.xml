@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<TaleDef>
+		<defName>BOT_ClaustrophobicTale</defName>
+		<label>claustrophobic panic attack</label>
+		<taleClass>Tale_SinglePawn</taleClass>
+		<type>Volatile</type>
+		<baseInterest>4</baseInterest>
+		<rulePack>
+			<rulesStrings>
+				<li>tale_noun->[PAWN_nameDef] going into a panic attack</li>
+				<li>image->[PAWN_nameFull] suddenly collapsing [circumstance_group]</li>
+				<li>image->[PAWN_nameFull] looking seemingly confused [circumstance_group]</li>
+				<li>image->[PAWN_nameFull] panicking [circumstance_group]</li>
+				<li>circumstance_phrase->while the walls seem to get closer</li>
+				<li>circumstance_phrase->in an increasingly tight space</li>
+				<li>circumstance_phrase->while friends rush towards them</li>
+				<li>circumstance_phrase->and in distress</li>
+				<li>circumstance_phrase->for no apparent reason</li>
+				<li>circumstance_phrase->as irrational thoughts rush [PAWN_possessive] brain</li>
+				<li>desc_sentence->[PAWN_pronoun] is visibly sweating.</li>
+				<li>desc_sentence->[PAWN_pronoun] is visibly trembling.</li>
+				<li>desc_sentence->[PAWN_possessive] heart is beating rapidly.</li>
+				<li>desc_sentence->[PAWN_pronoun] is about to pass out.</li>
+				<li>desc_sentence->[PAWN_possessive] chest is hurting painfully.</li>
+				<li>desc_sentence->[PAWN_pronoun] looks severly confused.</li>
+				<li>desc_sentence->[PAWN_pronoun] covers in the fetal position.</li>
+				<li>desc_sentence->[PAWN_pronoun] stumbles around the room.</li>
+				<li>desc_sentence->Others see that [PAWN_pronoun] is visibly afraid of dying.</li>
+			</rulesStrings>
+		</rulePack>
+	</TaleDef>
+</Defs>

@@ -153,4 +153,18 @@ namespace More_Traits
 
 		public static JoyKindDef BOT_LovesSleepSleeping;
 	}
+
+	/// <summary>
+	///		Class <c>BOTJoyKindDefOf</c> defines <c>HediffDef</c>s
+	/// </summary>
+	[DefOf]
+	public static class BOTHediffDefOf
+	{
+		static BOTHediffDefOf()
+		{
+			DefOfHelper.EnsureInitializedInCtor(typeof(BOTHediffDefOf));
+		}
+
+		public static HediffDef BOT_ClaustrophobicBreakdown;
+	}
 }
