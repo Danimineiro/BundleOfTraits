@@ -216,17 +216,17 @@
 
 	<ThoughtDef>
 		<defName>BOT_HatesConfinedSpace</defName>
-		<workerClass></workerClass>
+		<workerClass>More_Traits.BOT_ThoughtWorker_Claustrophobic</workerClass>
 		<stages>
-			<li>
-				<label>rather tight</label>
-				<description>There really isn't enough space in here, it feels as if the walls are closing in.</description>
-				<baseMoodEffect>-8</baseMoodEffect>
-			</li>
 			<li>
 				<label>cramped space</label>
 				<description>I need to get out of here! I can't breathe..! The walls..</description>
 				<baseMoodEffect>-15</baseMoodEffect>
+			</li>
+			<li>
+				<label>rather tight</label>
+				<description>There really isn't enough space in here, it feels as if the walls are closing in.</description>
+				<baseMoodEffect>-8</baseMoodEffect>
 			</li>
 		</stages>
 		<requiredTraits>
