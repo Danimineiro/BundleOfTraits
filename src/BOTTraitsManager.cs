@@ -48,13 +48,13 @@ namespace More_Traits
 		public override void ExposeData()
 		{
 			base.ExposeData();
-			Scribe_Collections.Look<Pawn, int>(ref NarcolepticPawns, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
-			Scribe_Collections.Look<Pawn, float>(ref Loves_SleepPawns, "Loves_Sleep", LookMode.Reference, LookMode.Value, ref Loves_SleepPawnKeys, ref Loves_SleepInitialRestPercentage);
-			Scribe_Collections.Look<Pawn>(ref PyrophobicPawns, "Pyrophobics", LookMode.Reference);
-			Scribe_Collections.Look<Pawn>(ref SleepyHeadPawns, "SleepyHeads", LookMode.Reference);
-			Scribe_Collections.Look<Pawn>(ref EntomophobicPawns, "Entomophobics", LookMode.Reference);
-			Scribe_Collections.Look<Pawn, int>(ref MetabolismPawns, "MetabolismPawns", LookMode.Reference, LookMode.Value, ref MetabolismPawnKeys, ref MetabolismPawnInts);
-			Scribe_Collections.Look<Pawn>(ref Nyctophobes, "Nyctophobes", LookMode.Reference);
+			Scribe_Collections.Look(ref NarcolepticPawns, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
+			Scribe_Collections.Look(ref Loves_SleepPawns, "Loves_Sleep", LookMode.Reference, LookMode.Value, ref Loves_SleepPawnKeys, ref Loves_SleepInitialRestPercentage);
+			Scribe_Collections.Look(ref PyrophobicPawns, "Pyrophobics", LookMode.Reference);
+			Scribe_Collections.Look(ref SleepyHeadPawns, "SleepyHeads", LookMode.Reference);
+			Scribe_Collections.Look(ref EntomophobicPawns, "Entomophobics", LookMode.Reference);
+			Scribe_Collections.Look(ref MetabolismPawns, "MetabolismPawns", LookMode.Reference, LookMode.Value, ref MetabolismPawnKeys, ref MetabolismPawnInts);
+			Scribe_Collections.Look(ref Nyctophobes, "Nyctophobes", LookMode.Reference);
 		}
 
 		/// <summary>
