@@ -435,7 +435,7 @@
 	</TraitDef>
 
 	<TraitDef>
-		<defName>BOT_Claustrophibic</defName>
+		<defName>BOT_Claustrophobic</defName>
 		<commonality>0.4</commonality>
 		<degreeDatas>
 			<li>
