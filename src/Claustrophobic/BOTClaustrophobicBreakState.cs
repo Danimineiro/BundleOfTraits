@@ -33,12 +33,12 @@ namespace More_Traits
                     pawn.health.RemoveHediff(hediff);
                 else
                 {
-                    Log.Error($"[Bundle of Traits] An error occured trying to remove the Claustrophobic panic attack hediff from Pawn {pawn.Name}! The hediff was missing?");
+                    Log.Error($"[Bundle of Traits] An error occured trying to remove the Claustrophobic panic attack hediff from Pawn <color=orange>{pawn.Name}</color>! The hediff was missing?");
                 }
             }
             catch (Exception e)
             {
-                Log.Error($"[Bundle of Traits] An error occured trying to remove the Claustrophobic panic attack hediff from Pawn {pawn.Name}! Please check if the pawn still has the hediff and report this error: {e}");
+                Log.Error($"[Bundle of Traits] An error occured trying to remove the Claustrophobic panic attack hediff from Pawn <color=orange>{pawn.Name}</color>! Please check if the pawn still has the hediff and report this error: {e}");
             }
             base.PostEnd();
         }
