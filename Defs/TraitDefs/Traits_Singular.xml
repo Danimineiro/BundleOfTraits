@@ -439,9 +439,28 @@
 		<commonality>0.4</commonality>
 		<degreeDatas>
 			<li>
-				<label>Claustrophobic</label>
+				<label>claustrophobic</label>
 				<description>{PAWN_nameDef} hates being in confined spaces.</description>
 			</li>
 		</degreeDatas>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_CongenitalAnalgesia</defName>
+		<commonality>0.6</commonality>
+		<degreeDatas>
+			<li>
+				<label>congenital analgesia</label>
+				<description>{PAWN_nameDef} was born without the ability to feel pain. {PAWN_pronoun} is unable to experience psychic phenomena as a side effect.</description>
+				<statOffsets>
+					<PainShockThreshold>+2.00</PainShockThreshold>
+				</statOffsets>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Wimp</li>
+			<li>Masochist</li>
+			<li>PsychicSensitivity</li>
+		</conflictingTraits>
 	</TraitDef>
 </Defs>

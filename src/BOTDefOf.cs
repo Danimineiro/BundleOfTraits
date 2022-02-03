@@ -9,12 +9,9 @@ namespace More_Traits
 	[DefOf]
 	public static class BOTTraitDefOf
 	{
-		static BOTTraitDefOf()
-		{
-			DefOfHelper.EnsureInitializedInCtor(typeof(TraitDefOf));
-		}
+        static BOTTraitDefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(TraitDefOf));
 
-		public static TraitDef BOT_Misanthrope;
+        public static TraitDef BOT_Misanthrope;
 
 		public static TraitDef BOT_Dysgeusia;
 
@@ -57,6 +54,8 @@ namespace More_Traits
 		public static TraitDef BOT_Vulgar;
 
 		public static TraitDef BOT_Comedian;
+
+		public static TraitDef BOT_CongenitalAnalgesia;
 
 		public static TraitDef Immunity;
 	}
@@ -166,5 +165,7 @@ namespace More_Traits
 		}
 
 		public static HediffDef BOT_ClaustrophobicBreakdown;
+
+		public static HediffDef BOT_CongenitalAnalgesiaPainReducer;
 	}
 }
