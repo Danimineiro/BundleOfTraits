@@ -12,6 +12,8 @@ namespace More_Traits
 	/// <summary>
 	///		This class is used to store information regarding traits added by this mod and to manage trait behaviour.
 	///		A lot of what is seen here is based on Vanilla Traits expanded code
+	///		
+	///		Should be refactored at some point
 	/// </summary>
 	class BOTTraitsManager : GameComponent
 	{
@@ -552,12 +554,6 @@ namespace More_Traits
 			}
 
 			return dangers;
-		}
-
-		private float GetCandidateWeight(Pawn pawn, Pawn candidate)
-		{
-			float num = Mathf.Min(pawn.Position.DistanceTo(candidate.Position) / 40f, 1f);
-			return 1f - num + 0.01f;
 		}
 	}
 
