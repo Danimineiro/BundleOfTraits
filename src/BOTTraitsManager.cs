@@ -434,18 +434,27 @@ namespace More_Traits
 		/// </summary>
 		/// <param name="pawn">the pawn to be added</param>
 		public void AddPawn(Pawn pawn)
-		{
-			PreInit();
-			if (pawn.story != null && pawn.story.traits != null)
-			{
-				AddPawnToHashSetIfPawnHasTrait(pawn, PyrophobicPawns, BOTTraitDefOf.BOT_Pyrophobia);
-				AddPawnToHashSetIfPawnHasTrait(pawn, EntomophobicPawns, BOTTraitDefOf.BOT_Entomophobia);
-				AddPawnToDicIfPawnHasTrait(pawn, MetabolismPawns, BOTTraitDefOf.BOT_Metabolism, 0);
-				AddPawnToDicIfPawnHasTrait(pawn, NarcolepticPawns, BOTTraitDefOf.BOT_Narcoleptic, 0);
-			}
-		}
+        {
+            PreInit();
+            if (pawn.story == null || pawn.story.traits == null) return;
 
-		private void AddPawnToHashSetIfPawnHasTrait(Pawn pawn, HashSet<Pawn> set, TraitDef traitDef)
+            AddPawnToHashSetIfPawnHasTrait(pawn, PyrophobicPawns, BOTTraitDefOf.BOT_Pyrophobia);
+            AddPawnToHashSetIfPawnHasTrait(pawn, EntomophobicPawns, BOTTraitDefOf.BOT_Entomophobia);
+            AddPawnToDicIfPawnHasTrait(pawn, MetabolismPawns, BOTTraitDefOf.BOT_Metabolism, 0);
+            AddPawnToDicIfPawnHasTrait(pawn, NarcolepticPawns, BOTTraitDefOf.BOT_Narcoleptic, 0);
+
+            AddCongenitalAnalgesiaTrait(pawn);
+        }
+
+        private static void AddCongenitalAnalgesiaTrait(Pawn pawn)
+        {
+            if (pawn.HasTrait(BOTTraitDefOf.BOT_CongenitalAnalgesia) && !pawn.health.hediffSet.HasHediff(BOTHediffDefOf.BOT_CongenitalAnalgesiaPainReducer))
+            {
+                pawn.health.AddHediff(BOTHediffDefOf.BOT_CongenitalAnalgesiaPainReducer);
+            }
+        }
+
+        private void AddPawnToHashSetIfPawnHasTrait(Pawn pawn, HashSet<Pawn> set, TraitDef traitDef)
 		{
 			if (pawn.story.traits.HasTrait(traitDef))
 			{

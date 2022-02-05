@@ -13,7 +13,7 @@ namespace More_Traits
 		}
 	}
 
-	public class ThoughtWorker_IsCarryingWeapon : ThoughtWorker
+	public class BOT_ThoughtWorker_IsCarryingWeapon : ThoughtWorker
 	{
 		protected override ThoughtState CurrentStateInternal(Pawn p)
 		{
@@ -196,4 +196,24 @@ namespace More_Traits
 			return false;
 		}
 	}
+
+	public class BOT_ThoughtWorker_Claustrophobic : ThoughtWorker
+    {
+        protected override ThoughtState CurrentStateInternal(Pawn p)
+        {
+            if (p.Awake() && p.GetRoom() is Room room && room != null)
+            {
+				RoomStatDef spaceDef = RoomStatDefOf.Space;
+				float space = room.GetStat(spaceDef);
+
+				int score = spaceDef.GetScoreStageIndex(space);
+
+				if (score > 1) return false;
+
+				return ThoughtState.ActiveAtStage(score);
+            }
+
+			return false;
+        }
+    }
 }

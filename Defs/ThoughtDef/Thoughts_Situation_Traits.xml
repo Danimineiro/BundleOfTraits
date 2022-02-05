@@ -3,7 +3,7 @@
 	<!-- Pacifist Thoughts -->
 	<ThoughtDef>
 		<defName>BOT_Pacifist_HoldingWeapon</defName>
-		<workerClass>More_Traits.ThoughtWorker_IsCarryingWeapon</workerClass>
+		<workerClass>More_Traits.BOT_ThoughtWorker_IsCarryingWeapon</workerClass>
 		<validWhileDespawned>true</validWhileDespawned>
 		<requiredTraits>
 			<li>BOT_Pacifist</li>
