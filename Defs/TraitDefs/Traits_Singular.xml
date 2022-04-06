@@ -433,4 +433,60 @@
 			<li>Abrasive</li>
 		</conflictingTraits>
 	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Claustrophobic</defName>
+		<commonality>0.4</commonality>
+		<degreeDatas>
+			<li>
+				<label>claustrophobic</label>
+				<description>{PAWN_nameDef} hates being in confined spaces.</description>
+			</li>
+		</degreeDatas>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_CongenitalAnalgesia</defName>
+		<commonality>0.6</commonality>
+		<degreeDatas>
+			<li>
+				<label>congenital analgesia</label>
+				<description>{PAWN_nameDef} was born without the ability to feel pain. {PAWN_pronoun} is unable to experience psychic phenomena as a side effect.</description>
+				<statFactors>
+					<PsychicSensitivity>-1</PsychicSensitivity>
+				</statFactors>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Wimp</li>
+			<li>Masochist</li>
+			<li>PsychicSensitivity</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_GunCrazy</defName>
+		<commonality>0.6</commonality>
+		<forcedPassions>
+			<li>Shooting</li>
+		</forcedPassions>
+		<conflictingPassions>
+			<li>Melee</li>
+		</conflictingPassions>
+		<degreeDatas>
+			<li>
+				<label>gun crazy</label>
+				<description>{PAWN_nameDef} loves guns! Especially shooting them. If {PAWN_pronoun} hits or not isn't important.</description>
+				<statOffsets>
+					<ShootingAccuracyPawn>-12</ShootingAccuracyPawn>
+					<AimingDelayFactor>-0.8</AimingDelayFactor>
+				</statOffsets>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Brawler</li>
+			<li>ShootingAccuracy</li>
+			<li MayRequire="Fuglypump.FalloutTraits">FT_AimOffset</li>
+		</conflictingTraits>
+	</TraitDef>
 </Defs>

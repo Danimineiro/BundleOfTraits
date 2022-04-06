@@ -12,6 +12,8 @@ namespace More_Traits
 	/// <summary>
 	///		This class is used to store information regarding traits added by this mod and to manage trait behaviour.
 	///		A lot of what is seen here is based on Vanilla Traits expanded code
+	///		
+	///		Should be refactored at some point
 	/// </summary>
 	class BOTTraitsManager : GameComponent
 	{
@@ -48,13 +50,13 @@ namespace More_Traits
 		public override void ExposeData()
 		{
 			base.ExposeData();
-			Scribe_Collections.Look<Pawn, int>(ref NarcolepticPawns, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
-			Scribe_Collections.Look<Pawn, float>(ref Loves_SleepPawns, "Loves_Sleep", LookMode.Reference, LookMode.Value, ref Loves_SleepPawnKeys, ref Loves_SleepInitialRestPercentage);
-			Scribe_Collections.Look<Pawn>(ref PyrophobicPawns, "Pyrophobics", LookMode.Reference);
-			Scribe_Collections.Look<Pawn>(ref SleepyHeadPawns, "SleepyHeads", LookMode.Reference);
-			Scribe_Collections.Look<Pawn>(ref EntomophobicPawns, "Entomophobics", LookMode.Reference);
-			Scribe_Collections.Look<Pawn, int>(ref MetabolismPawns, "MetabolismPawns", LookMode.Reference, LookMode.Value, ref MetabolismPawnKeys, ref MetabolismPawnInts);
-			Scribe_Collections.Look<Pawn>(ref Nyctophobes, "Nyctophobes", LookMode.Reference);
+			Scribe_Collections.Look(ref NarcolepticPawns, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
+			Scribe_Collections.Look(ref Loves_SleepPawns, "Loves_Sleep", LookMode.Reference, LookMode.Value, ref Loves_SleepPawnKeys, ref Loves_SleepInitialRestPercentage);
+			Scribe_Collections.Look(ref PyrophobicPawns, "Pyrophobics", LookMode.Reference);
+			Scribe_Collections.Look(ref SleepyHeadPawns, "SleepyHeads", LookMode.Reference);
+			Scribe_Collections.Look(ref EntomophobicPawns, "Entomophobics", LookMode.Reference);
+			Scribe_Collections.Look(ref MetabolismPawns, "MetabolismPawns", LookMode.Reference, LookMode.Value, ref MetabolismPawnKeys, ref MetabolismPawnInts);
+			Scribe_Collections.Look(ref Nyctophobes, "Nyctophobes", LookMode.Reference);
 		}
 
 		/// <summary>
@@ -434,18 +436,27 @@ namespace More_Traits
 		/// </summary>
 		/// <param name="pawn">the pawn to be added</param>
 		public void AddPawn(Pawn pawn)
-		{
-			PreInit();
-			if (pawn.story != null && pawn.story.traits != null)
-			{
-				AddPawnToHashSetIfPawnHasTrait(pawn, PyrophobicPawns, BOTTraitDefOf.BOT_Pyrophobia);
-				AddPawnToHashSetIfPawnHasTrait(pawn, EntomophobicPawns, BOTTraitDefOf.BOT_Entomophobia);
-				AddPawnToDicIfPawnHasTrait(pawn, MetabolismPawns, BOTTraitDefOf.BOT_Metabolism, 0);
-				AddPawnToDicIfPawnHasTrait(pawn, NarcolepticPawns, BOTTraitDefOf.BOT_Narcoleptic, 0);
-			}
-		}
+        {
+            PreInit();
+            if (pawn.story == null || pawn.story.traits == null) return;
 
-		private void AddPawnToHashSetIfPawnHasTrait(Pawn pawn, HashSet<Pawn> set, TraitDef traitDef)
+            AddPawnToHashSetIfPawnHasTrait(pawn, PyrophobicPawns, BOTTraitDefOf.BOT_Pyrophobia);
+            AddPawnToHashSetIfPawnHasTrait(pawn, EntomophobicPawns, BOTTraitDefOf.BOT_Entomophobia);
+            AddPawnToDicIfPawnHasTrait(pawn, MetabolismPawns, BOTTraitDefOf.BOT_Metabolism, 0);
+            AddPawnToDicIfPawnHasTrait(pawn, NarcolepticPawns, BOTTraitDefOf.BOT_Narcoleptic, 0);
+
+            AddCongenitalAnalgesiaTrait(pawn);
+        }
+
+        private static void AddCongenitalAnalgesiaTrait(Pawn pawn)
+        {
+            if (pawn.HasTrait(BOTTraitDefOf.BOT_CongenitalAnalgesia) && !pawn.health.hediffSet.HasHediff(BOTHediffDefOf.BOT_CongenitalAnalgesiaPainReducer))
+            {
+                pawn.health.AddHediff(BOTHediffDefOf.BOT_CongenitalAnalgesiaPainReducer);
+            }
+        }
+
+        private void AddPawnToHashSetIfPawnHasTrait(Pawn pawn, HashSet<Pawn> set, TraitDef traitDef)
 		{
 			if (pawn.story.traits.HasTrait(traitDef))
 			{
@@ -543,12 +554,6 @@ namespace More_Traits
 			}
 
 			return dangers;
-		}
-
-		private float GetCandidateWeight(Pawn pawn, Pawn candidate)
-		{
-			float num = Mathf.Min(pawn.Position.DistanceTo(candidate.Position) / 40f, 1f);
-			return 1f - num + 0.01f;
 		}
 	}
 

@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -58,6 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Claustrophobic\BOTClaustrophobicBreakState.cs" />
+    <Compile Include="Claustrophobic\BOTClaustrophobicPanicWorker.cs" />
     <Compile Include="BOTDefOf.cs" />
     <Compile Include="BOTFleeParams.cs" />
     <Compile Include="BOTGregariousCompanyCounter.cs" />
