@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<MentalBreakDef>
+		<defName>BOT_ClaustrophobicBreak</defName>
+		<mentalState>BOT_ClaustrophobicBreak</mentalState>
+		<baseCommonality>12</baseCommonality>
+		<intensity>Extreme</intensity>
+		<requiredTrait>BOT_Claustrophobic</requiredTrait>
+		<workerClass>More_Traits.BOTClaustrophobicPanicWorker</workerClass>
+	</MentalBreakDef>
+</Defs>

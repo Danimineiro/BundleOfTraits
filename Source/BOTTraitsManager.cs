@@ -50,12 +50,14 @@ namespace More_Traits
 		public override void ExposeData()
 		{
 			base.ExposeData();
+		
 			Scribe_Collections.Look(ref NarcolepticPawns, "Narcoleptics", LookMode.Reference, LookMode.Value, ref NarcolepticPawnKeys, ref NarcolepticPawnInts);
 			Scribe_Collections.Look(ref Loves_SleepPawns, "Loves_Sleep", LookMode.Reference, LookMode.Value, ref Loves_SleepPawnKeys, ref Loves_SleepInitialRestPercentage);
-			Scribe_Collections.Look(ref PyrophobicPawns, "Pyrophobics", LookMode.Reference);
+            Scribe_Collections.Look(ref MetabolismPawns, "MetabolismPawns", LookMode.Reference, LookMode.Value, ref MetabolismPawnKeys, ref MetabolismPawnInts);
+
+            Scribe_Collections.Look(ref PyrophobicPawns, "Pyrophobics", LookMode.Reference);
 			Scribe_Collections.Look(ref SleepyHeadPawns, "SleepyHeads", LookMode.Reference);
 			Scribe_Collections.Look(ref EntomophobicPawns, "Entomophobics", LookMode.Reference);
-			Scribe_Collections.Look(ref MetabolismPawns, "MetabolismPawns", LookMode.Reference, LookMode.Value, ref MetabolismPawnKeys, ref MetabolismPawnInts);
 			Scribe_Collections.Look(ref Nyctophobes, "Nyctophobes", LookMode.Reference);
 		}
 
@@ -240,18 +242,19 @@ namespace More_Traits
 
 			float amount = HealSpeedBaseAfterHediffsFor(pawn) * pawn.HealthScale * 0.01f * pawn.GetStatValue(StatDefOf.InjuryHealingFactor, true);
 
-			if (pawn.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
+			List<Hediff_Injury> injuries = new List<Hediff_Injury>();
+            hediffSet.GetHediffs(ref injuries, x => x.CanHealNaturally());
+            //1.3: injuries.AddRange(hediffSet.GetHediffs<Hediff_Injury>().Where(x => x.CanHealNaturally()));
+            Hediff_Injury hediff_Injury = injuries.RandomElement();
+
+            if (pawn.story.traits.GetTrait(BOTTraitDefOf.BOT_Metabolism).Degree == -1)
 			{
-				(from x in hediffSet.GetHediffs<Hediff_Injury>()
-				 where x.CanHealNaturally()
-				 select x).RandomElement().Heal(amount);
+                hediff_Injury.Heal(amount);
 				processedAny = true;
 			}
 			else
 			{
-				(from x in hediffSet.GetHediffs<Hediff_Injury>()
-				 where x.CanHealNaturally()
-				 select x).RandomElement().Injure(amount);
+                hediff_Injury.Injure(amount);
 			}
 		}
 
@@ -261,9 +264,10 @@ namespace More_Traits
 			HediffSet hediffSet = pawn.health.hediffSet;
 			if (hediffSet.HasTendedAndHealingInjury() && !pawn.Starving())
 			{
-				Hediff_Injury hediff_Injury = (from x in hediffSet.GetHediffs<Hediff_Injury>()
-											   where x.CanHealFromTending()
-											   select x).RandomElement();
+                List<Hediff_Injury> injuries = new List<Hediff_Injury>(); 
+				hediffSet.GetHediffs(ref injuries, x => x.CanHealNaturally());
+                //1.3: injuries.AddRange(hediffSet.GetHediffs<Hediff_Injury>().Where(x => x.CanHealNaturally()));
+                Hediff_Injury hediff_Injury = injuries.RandomElement();
 
 				float tendQuality = hediff_Injury.TryGetComp<HediffComp_TendDuration>().tendQuality;
 				float amount = 8f * GenMath.LerpDouble(0f, 1f, 0.5f, 1.5f, Mathf.Clamp01(tendQuality)) * pawn.HealthScale * 0.01f * pawn.GetStatValue(StatDefOf.InjuryHealingFactor, true);

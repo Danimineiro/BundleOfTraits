@@ -2,7 +2,7 @@
 <Defs>
 	<TraitDef>
 		<defName>BOT_Misanthrope</defName>
-		<commonality>0.2</commonality>
+		<commonality>0.3</commonality>
 		<degreeDatas>
 			<li>
 				<label>misanthrope</label>
@@ -17,7 +17,7 @@
 	
 	<TraitDef>
 		<defName>BOT_Dysgeusia</defName>
-		<commonality>0.4</commonality>
+		<commonality>0.1</commonality>
 		<degreeDatas>
 			<li>
 				<label>dysgeuisia</label>
@@ -35,11 +35,17 @@
 	
 	<TraitDef>
 		<defName>BOT_Eclectic_Palate</defName>
-		<commonality>0.5</commonality>
+		<commonality>0.2</commonality>
 		<degreeDatas>
 			<li>
 				<label>eclectic palate</label>
 				<description>{PAWN_nameDef} loves to eat food with a variety of ingredients but will be upset over bland food.</description>
+				<skillGains>
+					<li>
+						<key>Cooking</key>
+						<value>2</value>
+					</li>
+				</skillGains>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -50,7 +56,7 @@
 	
 	<TraitDef>
 		<defName>BOT_Pacifist</defName>
-		<commonality>0.6</commonality>
+		<commonality>0.4</commonality>
 		<degreeDatas>
 			<li>
 				<label>pacifist</label>
@@ -78,11 +84,11 @@
 	
 	<TraitDef>
 		<defName>BOT_Narcoleptic</defName>
-		<commonality>0.2</commonality>
+		<commonality>0.1</commonality>
 		<degreeDatas>
 			<li>
 				<label>narcoleptic</label>
-				<description>{PAWN_nameDef} suffers from a neurological disorder that makes {PAWN_object} prone to randomly fall alseep anywhere.</description>
+				<description>{PAWN_nameDef} suffers from a neurological disorder that makes {PAWN_pronoun} prone to randomly fall alseep anywhere.</description>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -93,7 +99,7 @@
 	
 	<TraitDef>
 		<defName>BOT_Pyrophobia</defName>
-		<commonality>0.8</commonality>
+		<commonality>0.1</commonality>
 		<disabledWorkTags>Firefighting</disabledWorkTags>
 		<degreeDatas>
 			<li>
@@ -108,7 +114,7 @@
 	
 	<TraitDef>
 		<defName>BOT_Nyctophobia</defName>
-		<commonality>0.4</commonality>
+		<commonality>0.1</commonality>
 		<degreeDatas>
 			<li>
 				<label>nyctophobia</label>
@@ -123,7 +129,7 @@
 	
 	<TraitDef>
 		<defName>BOT_Sleepyhead</defName>
-		<commonality>0.5</commonality>
+		<commonality>0.2</commonality>
 		<degreeDatas>
 			<li>
 				<label>sleepyhead</label>
@@ -138,7 +144,7 @@
 	
 	<TraitDef>
 		<defName>BOT_Loves_Sleeping</defName>
-		<commonality>0.5</commonality>
+		<commonality>0.3</commonality>
 		<degreeDatas>
 			<li>
 				<label>loves sleeping</label>
@@ -153,10 +159,10 @@
 	
 	<TraitDef>
 		<defName>BOT_StrongBody</defName>
-		<commonality>0.6</commonality>
+		<commonality>0.4</commonality>
 		<degreeDatas>
 			<li>
-				<label>strong Body</label>
+				<label>good Constitution</label>
 				<description>{PAWN_nameDef} was born with a strong, healthy body. They can carry more, mine faster, deal more damage in melee combat and take reduced damage from attacks.</description>
 				<degree>-1</degree>
 				<statFactors>
@@ -166,8 +172,18 @@
 					<CarryingCapacity>25.0</CarryingCapacity>
 					<IncomingDamageFactor>-0.15</IncomingDamageFactor>
 					<ImmunityGainSpeed>0.15</ImmunityGainSpeed>
-					<MeleeHitChance>4</MeleeHitChance>
+					<PainShockThreshold>0.20</PainShockThreshold>
 				</statOffsets>
+				<skillGains>
+					<li>
+						<key>Melee</key>
+						<value>2</value>
+					</li>
+					<li>
+						<key>Mining</key>
+						<value>2</value>
+					</li>
+				</skillGains>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -179,10 +195,10 @@
 	
 	<TraitDef>
 		<defName>BOT_WeakBody</defName>
-		<commonality>0.6</commonality>
+		<commonality>0.4</commonality>
 		<degreeDatas>
 			<li>
-				<label>weak body</label>
+				<label>poor Constitution</label>
 				<description>{PAWN_nameDef} was unfortunately born with a weak, feeble body. They cannot carry as much as everyone else, mine slower, deal less damage in melee and take increased damage from attacks.</description>
 				<degree>1</degree>
 				<statFactors>
@@ -191,8 +207,19 @@
 				<statOffsets>
 					<CarryingCapacity>-25.0</CarryingCapacity>
 					<IncomingDamageFactor>0.15</IncomingDamageFactor>
-					<MeleeHitChance>-4</MeleeHitChance>
+					<ImmunityGainSpeed>-0.15</ImmunityGainSpeed>
+					<PainShockThreshold>-0.20</PainShockThreshold>
 				</statOffsets>
+				<skillGains>
+					<li>
+						<key>Melee</key>
+						<value>-2</value>
+					</li>
+					<li>
+						<key>Mining</key>
+						<value>-2</value>
+					</li>
+				</skillGains>
 			</li>   
 		</degreeDatas>
 		<conflictingTraits>
@@ -204,7 +231,7 @@
 
 	<TraitDef>
 		<defName>BOT_Apathetic</defName>
-		<commonality>0.6</commonality>
+		<commonality>0.1</commonality>
 		<degreeDatas>
 			<li>
 				<label>apathetic</label>
@@ -253,7 +280,7 @@
 
 	<TraitDef>
 		<defName>BOT_Entomophobia</defName>
-		<commonality>0.4</commonality>
+		<commonality>0.1</commonality>
 		<degreeDatas>
 			<li>
 				<label>entomophobia</label>
@@ -264,7 +291,7 @@
 
 	<TraitDef>
 		<defName>BOT_Entomophagous</defName>
-		<commonality>0.4</commonality>
+		<commonality>0.25</commonality>
 		<degreeDatas>
 			<li>
 				<label>entomophagous</label>
@@ -300,7 +327,7 @@
 
 	<TraitDef>
 		<defName>BOT_Gregarious</defName>
-		<commonality>0.6</commonality>
+		<commonality>0.3</commonality>
 		<degreeDatas>
 			<li>
 				<label>gregarious</label>
@@ -360,7 +387,7 @@
 
 	<TraitDef>
 		<defName>BOT_EarlyBird</defName>
-		<commonality>1.3</commonality>
+		<commonality>1</commonality>
 		<degreeDatas>
 			<li>
 				<label>early bird</label>
@@ -374,7 +401,7 @@
 
 	<TraitDef>
 		<defName>BOT_Communal</defName>
-		<commonality>0.8</commonality>
+		<commonality>0.7</commonality>
 		<degreeDatas>
 			<li>
 				<label>communal</label>
@@ -390,11 +417,21 @@
 	
 	<TraitDef>
 		<defName>BOT_Sadist</defName>
-		<commonality>0.4</commonality>
+		<commonality>0.2</commonality>
 		<degreeDatas>
 			<li>
 				<label>sadist</label>
 				<description>{PAWN_nameDef} likes seeing other pawns suffer and gets excited from causing damage.</description>
+				<skillGains>
+					<li>
+						<key>Melee</key>
+						<value>1</value>
+					</li>
+					<li>
+						<key>Shooting</key>
+						<value>1</value>
+					</li>
+				</skillGains>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -410,6 +447,12 @@
 			<li>
 				<label>vulgar</label>
 				<description>For whatever purpose, {PAWN_nameDef} has taught {PAWN_objective}self every swear word in the dictionary and uses this profane knowledge unconsciously in {PAWN_possessive} day-to-day life.</description>
+				<skillGains>
+					<li>
+						<key>Social</key>
+						<value>-2</value>
+					</li>
+				</skillGains>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -421,11 +464,17 @@
 	
 	<TraitDef>
 		<defName>BOT_Comedian</defName>
-		<commonality>0.8</commonality>
+		<commonality>0.7</commonality>
 		<degreeDatas>
 			<li>
 				<label>comedian</label>
 				<description>{PAWN_nameDef} always tries to raise their fellow pawns' mood by telling jokes. Or try to, at least.</description>
+				<skillGains>
+					<li>
+						<key>Social</key>
+						<value>2</value>
+					</li>
+				</skillGains>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -436,7 +485,7 @@
 
 	<TraitDef>
 		<defName>BOT_Claustrophobic</defName>
-		<commonality>0.4</commonality>
+		<commonality>0.3</commonality>
 		<degreeDatas>
 			<li>
 				<label>claustrophobic</label>

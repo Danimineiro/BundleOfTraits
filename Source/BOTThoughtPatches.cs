@@ -28,10 +28,11 @@ namespace More_Traits
 	{
 		public static void Postfix(Pawn victim, DamageInfo? dinfo, PawnDiedOrDownedThoughtsKind thoughtsKind, List<IndividualThoughtToAdd> outIndividualThoughts, List<ThoughtToAddToAll> outAllColonistsThoughts)
 		{
-			bool flag = dinfo != null && dinfo.Value.Def.execution;
-			if (thoughtsKind == PawnDiedOrDownedThoughtsKind.Died && !flag)
-			{
-				foreach (Pawn pawn2 in PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive)
+			bool flag = dinfo.HasValue && dinfo?.Def.execution == true;
+
+            if (thoughtsKind == PawnDiedOrDownedThoughtsKind.Died && !flag)
+            {
+                foreach (Pawn pawn2 in PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive)
 				{
 					if (pawn2 != victim && pawn2.needs != null && pawn2.needs.mood != null && (pawn2.MentalStateDef != MentalStateDefOf.SocialFighting || ((MentalState_SocialFighting)pawn2.MentalState).otherPawn != victim))
 					{
@@ -41,11 +42,11 @@ namespace More_Traits
 							{
 								outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_WittnessedDeathPacifist, pawn2, null));
 
-								if (pawn2 == (Pawn)dinfo.Value.Instigator)
+                                if (pawn2 == (Pawn)dinfo?.Instigator)
 								{
 									outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_Pacifist_KilledHuman, pawn2, null));
-								}
-							}
+                                }
+                            }
 						}
 					}
 				}
@@ -65,7 +66,8 @@ namespace More_Traits
 			{
 				if (dinfo.Value.Instigator is Pawn pawn2 && pawn2 != victim && victim.needs != null && !pawn2.RaceProps.Animal)
 				{
-					if (pawn2.story.traits.HasTrait(BOTTraitDefOf.BOT_Pacifist) && victim.RaceProps.Animal)
+					//Adding null checks to avoid Mechanoids from processing any further - they don't have these fields afaik
+					if (pawn2.story?.traits?.HasTrait(BOTTraitDefOf.BOT_Pacifist) == true && victim.RaceProps.Animal)
 					{
 						outIndividualThoughts.Add(new IndividualThoughtToAdd(BOTThoughtDefOf.BOT_Pacifist_KilledAnimal, pawn2, null));
 					}
