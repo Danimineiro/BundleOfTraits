@@ -23,7 +23,8 @@ namespace More_Traits
 
 			foreach (Pawn pawn in allAliveOrDead)
 			{
-				if (pawn.def.race.Humanlike && pawn.HasTrait(BOTTraitDefOf.BOT_Gregarious) && !pawn.Dead && pawn.Faction == Faction.OfPlayer)
+				//If the player faction is not generated yet (null) and the generated pawn has a null faction, this would pass through without the extra null check
+				if (pawn.def.race.Humanlike && pawn.HasTrait(BOTTraitDefOf.BOT_Gregarious) && !pawn.Dead && pawn.Faction != null && pawn.Faction == Faction.OfPlayerSilentFail)
 				{
 					//Create a list of company if not present
 					if (!gregariousCompany.ContainsKey(pawn))
@@ -33,7 +34,7 @@ namespace More_Traits
 
 					if (pawn.Map != null && !pawn.IsPrisoner)
 					{
-						gregariousCompany[pawn] = pawn.Map.mapPawns.AllPawnsSpawned.FindAll(x => x.Faction == Faction.OfPlayer && !x.IsPrisoner).Count - 1;
+						gregariousCompany[pawn] = pawn.Map.mapPawns.AllPawnsSpawned.FindAll(x => x.Faction == Faction.OfPlayerSilentFail && !x.IsPrisoner).Count - 1;
 					} 
 					else if (pawn.IsCaravanMember())
 					{
