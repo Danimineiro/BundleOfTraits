@@ -38,6 +38,7 @@ namespace More_Traits
 		private List<float> Loves_SleepInitialRestPercentage = new List<float>();
 
 		private readonly int fleeIntervallInTicks = 200;
+		private static string componentVersionNumber = "1.1.0.4";
 
 		//I don't actually know if these constructors are requiered, but they don't really do harm being here anyways
 		static BOTTraitsManager()
@@ -59,6 +60,8 @@ namespace More_Traits
 			Scribe_Collections.Look(ref SleepyHeadPawns, "SleepyHeads", LookMode.Reference);
 			Scribe_Collections.Look(ref EntomophobicPawns, "Entomophobics", LookMode.Reference);
 			Scribe_Collections.Look(ref Nyctophobes, "Nyctophobes", LookMode.Reference);
+
+			Scribe_Values.Look(ref componentVersionNumber, nameof(componentVersionNumber));
 		}
 
 		/// <summary>
