@@ -16,5 +16,11 @@ namespace More_Traits.DefOfs
         }
 
         public static ThoughtDef BOT_EclecticPalateAte;
+
+        public static ThoughtDef BOT_WittnessedDeathPacifist;
+
+        public static ThoughtDef BOT_Pacifist_KilledHuman;
+
+        public static ThoughtDef BOT_Pacifist_KilledAnimal;
     }
 }

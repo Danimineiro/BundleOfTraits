@@ -13,7 +13,7 @@ namespace More_Traits.HarmonyPatching.Patches
 {
     public class EclecticPalate_FinalizeIngestPatch
     {
-        public static void EclecticPalate_Postfix(Pawn ingester, TargetIndex ingestibleInd, ref Toil __result)
+        public static void Postfix(Pawn ingester, TargetIndex ingestibleInd, ref Toil __result)
         {
             if (!(ingester.CurJob.GetTarget(ingestibleInd).Thing is Thing food)) return;
             if (!food.def.ingestible.IsMeal) return;

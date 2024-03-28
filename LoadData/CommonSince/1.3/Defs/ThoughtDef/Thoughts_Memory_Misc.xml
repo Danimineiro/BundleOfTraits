@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<ThoughtDef>
-		<defName>BOT_WittnessedDeathPacifist</defName>
-		<icon>Things/Mote/ThoughtSymbol/Skull</icon>
-		<showBubble>true</showBubble>
-		<durationDays>4</durationDays>
-		<stackLimit>5</stackLimit>
-		<requiredTraits>
-			<li>BOT_Pacifist</li>
-		</requiredTraits>
-		<stages>
-			<li>
-				<label>witnessed death as pacifist</label>
-				<description>Another senseless death.</description>
-				<baseMoodEffect>-3</baseMoodEffect>
-			</li>
-		</stages>
-	</ThoughtDef>
-
 	<!-- Sadist Thoughts -->
 	<ThoughtDef>
 		<defName>BOT_WitnessedDamageSadist</defName>
