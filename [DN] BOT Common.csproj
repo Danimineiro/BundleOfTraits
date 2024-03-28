@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<RootNamespace>_DN__BOT</RootNamespace>
+		<AssemblyVersion>1.1.0.2</AssemblyVersion>
+		<FileVersion>1.1.0.2</FileVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Source\**" />
+	  <EmbeddedResource Remove="Source\**" />
+	  <None Remove="Source\**" />
+	</ItemGroup>
+	
+</Project>
