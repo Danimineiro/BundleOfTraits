@@ -11,7 +11,7 @@ namespace More_Traits
 	{
         static BOTTraitDefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(TraitDefOf));
 
-        public static TraitDef BOT_Misanthrope;
+        public static TraitDef BOT_Misanthrope;		//Implemented with XML via ThoughtDefs + ThoughtWorker
 
 		public static TraitDef BOT_Dysgeusia;
 
