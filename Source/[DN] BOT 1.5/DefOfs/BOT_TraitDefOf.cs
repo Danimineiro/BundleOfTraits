@@ -16,5 +16,7 @@ namespace More_Traits.DefOfs
         }
 
         public static TraitDef BOT_Pacifist;
+
+        public static TraitDef BOT_Nyctophobia;
     }
 }

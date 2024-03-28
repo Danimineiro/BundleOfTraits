@@ -98,23 +98,6 @@
 		</stages>
 	</ThoughtDef>
 	
-	<!-- Nyctophobia -->
-	<ThoughtDef>
-		<defName>BOT_NyctophobiaCantSleep</defName>
-		<validWhileDespawned>true</validWhileDespawned>
-		<durationDays>0.25</durationDays>
-		<requiredTraits>
-			<li>BOT_Nyctophobia</li>
-		</requiredTraits>
-		<stages>
-			<li>
-				<label>nyctophobic can't sleep</label>
-				<description>It's too dark in here. I can't sleep like this.</description>
-				<baseMoodEffect>-1</baseMoodEffect>
-			</li>
-		</stages>
-	</ThoughtDef>
-	
 	<!-- Sleepyhead -->
 	<ThoughtDef>
 		<defName>BOT_SleepyHeadContinuesSleeping</defName>
