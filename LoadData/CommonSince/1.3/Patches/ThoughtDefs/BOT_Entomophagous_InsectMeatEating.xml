@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="AteInsectMeatDirect"]/nullifyingTraits</xpath>
+		<value>
+			<li>BOT_Entomophagous</li>
+		</value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThoughtDef[defName="AteInsectMeatAsIngredient"]/nullifyingTraits</xpath>
+		<value>
+			<li>BOT_Entomophagous</li>
+		</value>
+	</Operation>
+</Patch>

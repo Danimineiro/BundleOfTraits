@@ -13,7 +13,7 @@ namespace More_Traits
 
         public static TraitDef BOT_Misanthrope;		//Implemented with XML via ThoughtDefs + ThoughtWorker
 
-		public static TraitDef BOT_Dysgeusia;
+		public static TraitDef BOT_Dysgeusia;       //Implemented with XML via ThoughtDefPatches
 
 		public static TraitDef BOT_Eclectic_Palate;
 
