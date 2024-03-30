@@ -2,7 +2,7 @@
 <Defs>
 	<ThoughtDef>
 		<defName>BOT_Pacifist_HoldingWeapon</defName>
-		<workerClass>More_Traits.ThoughtWorkers.BOT_ThoughtWorker_PacifistIsCarryingWeapon</workerClass>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_PacifistIsCarryingWeapon</workerClass>
 		<validWhileDespawned>true</validWhileDespawned>
 		<requiredTraits>
 			<li>BOT_Pacifist</li>

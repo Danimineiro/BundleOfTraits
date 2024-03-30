@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_SleepyHeadContinuesSleeping</defName>
+		<validWhileDespawned>true</validWhileDespawned>
+		<durationDays>0.0083</durationDays>
+		<requiredTraits>
+			<li>BOT_Sleepyhead</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>sleepyhead continues sleeping</label>
+				<description>I think I'm just gonna sleep a little longer. It doesn't hurt to do so, right?</description>
+				<baseMoodEffect>2</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_SleepyHeadForcefullyWokenUp</defName>
+		<validWhileDespawned>true</validWhileDespawned>
+		<durationDays>0.5</durationDays>
+		<requiredTraits>
+			<li>BOT_Sleepyhead</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>sleepyhead forced out of bed</label>
+				<description>Really? I wanted to sleep a little longer..</description>
+				<baseMoodEffect>-6</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_SleepyHeadStopsSleeping</defName>
+		<validWhileDespawned>true</validWhileDespawned>
+		<durationDays>0.25</durationDays>
+		<requiredTraits>
+			<li>BOT_Sleepyhead</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>sleepyhead got up himself</label>
+				<description>I feel great after getting to sleep some more!</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>
