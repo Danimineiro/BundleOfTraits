@@ -24,7 +24,7 @@ namespace More_Traits.Extensions
         {
             foreach (Trait trait in pawn.story.traits.allTraits)
             {
-                if (!(trait.def.GetModExtension<TraitHediffLink>() is TraitHediffLink link)) continue;
+                if (!(trait.def.GetModExtension<BOT_TraitExtension>() is BOT_TraitExtension link)) continue;
                 pawn.health.GetOrAddHediff(link.hediffDef);
             }
         }

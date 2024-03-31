@@ -7,7 +7,7 @@ using Verse;
 
 namespace More_Traits.TraitDefModExtension
 {
-    public class TraitHediffLink : DefModExtension
+    public class BOT_TraitExtension : DefModExtension
     {
         public HediffDef hediffDef;
 
