@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using More_Traits.TraitDefModExtension;
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,16 @@ namespace More_Traits.Extensions
         }
 
         public static bool HasTrait(this Pawn pawn, TraitDef traitDef) => pawn?.story?.traits?.HasTrait(traitDef) ?? false;
+
+        public static bool CanHandlePawn(this Pawn pawn) => !pawn.Dead && pawn.story?.traits != null;
+
+        public static void AddTraitHediffs(this Pawn pawn)
+        {
+            foreach (Trait trait in pawn.story.traits.allTraits)
+            {
+                if (!(trait.def.GetModExtension<TraitHediffLink>() is TraitHediffLink link)) continue;
+                pawn.health.GetOrAddHediff(link.hediffDef);
+            }
+        }
     }
 }

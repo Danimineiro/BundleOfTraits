@@ -19,7 +19,7 @@ namespace More_Traits.HarmonyPatching.Patches
             if (!(__result.actor is Pawn pawn)) return;
             if (!pawn.HasTrait(BOT_TraitDefOf.BOT_Nyctophobia)) return;
 
-            Saving savingComp = Saving.Current;
+            BOT_WorldComponent savingComp = BOT_WorldComponent.Instance;
 
             bool newFailCondition()
             {
