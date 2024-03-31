@@ -86,6 +86,8 @@
 			<li>
 				<label>narcoleptic</label>
 				<description>{PAWN_nameDef} suffers from a neurological disorder that makes {PAWN_pronoun} prone to randomly fall alseep anywhere.</description>
+				<forcedMentalState>BOT_NarcolepticAsleep</forcedMentalState>
+				<forcedMentalStateMtbDays>0.4</forcedMentalStateMtbDays>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
