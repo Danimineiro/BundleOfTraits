@@ -16,7 +16,7 @@ namespace More_Traits.HarmonyPatching.Patches
         public static void Postfix(Pawn ingester, TargetIndex ingestibleInd, ref Toil __result)
         {
             if (!(ingester.CurJob.GetTarget(ingestibleInd).Thing is Thing food)) return;
-            if (!food.def.ingestible.IsMeal) return;
+            if (!(food.def.IsNutritionGivingIngestible && food.def.ingestible.IsMeal)) return;
 
             void action()
             {
