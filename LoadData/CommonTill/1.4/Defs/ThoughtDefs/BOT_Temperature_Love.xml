@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<!-- Love temperature Thoughts -->
 	<ThoughtDef>
 		<defName>BOT_EnvironmentCold</defName>
 		<workerClass>More_Traits.BOT_ThoughtWorker_Cold</workerClass>
