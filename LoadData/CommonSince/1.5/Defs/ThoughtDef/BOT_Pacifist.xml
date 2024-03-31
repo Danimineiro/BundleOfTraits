@@ -1,6 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<ThoughtDef>
+		<defName>BOT_Pacifist_HoldingWeapon</defName>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_PacifistIsCarryingWeapon</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<requiredTraits>
+			<li>BOT_Pacifist</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>pacifist has weapon</label>
+				<description>I dislike having to carry a weapon.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
 		<defName>BOT_WittnessedDeathPacifist</defName>
 		<icon>Things/Mote/ThoughtSymbol/Skull</icon>
 		<showBubble>true</showBubble>

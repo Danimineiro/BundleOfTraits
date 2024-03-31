@@ -15,4 +15,56 @@
 			</li>
 		</stages>
 	</ThoughtDef>
+	
+	<ThoughtDef>
+		<defName>BOT_WittnessedDeathPacifist</defName>
+		<icon>Things/Mote/ThoughtSymbol/Skull</icon>
+		<showBubble>true</showBubble>
+		<durationDays>4</durationDays>
+		<stackLimit>5</stackLimit>
+		<requiredTraits>
+			<li>BOT_Pacifist</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>witnessed death as pacifist</label>
+				<description>Another senseless death.</description>
+				<baseMoodEffect>-3</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_Pacifist_KilledAnimal</defName>
+		<durationDays>6</durationDays>
+		<stackLimit>5</stackLimit>
+		<validWhileDespawned>true</validWhileDespawned>
+		<requiredTraits>
+			<li>BOT_Pacifist</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>pacifist killed animal</label>
+				<description>I killed an animal. I could have probably avoided that.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_Pacifist_KilledHuman</defName>
+		<durationDays>6</durationDays>
+		<stackLimit>5</stackLimit>
+		<validWhileDespawned>true</validWhileDespawned>
+		<requiredTraits>
+			<li>BOT_Pacifist</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>pacifist killed humanlike</label>
+				<description>I killed another person, while I advocate for peace and compassion.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
 </Defs>

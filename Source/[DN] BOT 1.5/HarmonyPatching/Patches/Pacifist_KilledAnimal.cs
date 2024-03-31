@@ -12,7 +12,7 @@ namespace More_Traits.HarmonyPatching.Patches
 {
     public class Pacifist_KilledAnimal
     {
-        public static void Postfix(Pawn victim, DamageInfo? dinfo, PawnDiedOrDownedThoughtsKind thoughtsKind, List<IndividualThoughtToAdd> outIndividualThoughts, List<ThoughtToAddToAll> _)
+        public static void Postfix(Pawn victim, DamageInfo? dinfo, PawnDiedOrDownedThoughtsKind thoughtsKind, List<IndividualThoughtToAdd> outIndividualThoughts)
         {
             if (!(dinfo is DamageInfo damageInfo)) return;
             if (thoughtsKind != PawnDiedOrDownedThoughtsKind.Died) return;
