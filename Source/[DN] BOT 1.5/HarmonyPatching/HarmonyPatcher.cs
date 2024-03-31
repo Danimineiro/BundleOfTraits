@@ -20,6 +20,8 @@ namespace More_Traits.HarmonyPatching
             harmony.Patch(AccessTools.Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_ForHumanlike"), postfix: new HarmonyMethod(typeof(Pacifist_WittnessDeath), nameof(Pacifist_WittnessDeath.Postfix)));
             harmony.Patch(AccessTools.Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_Relations"), postfix: new HarmonyMethod(typeof(Pacifist_KilledAnimal), nameof(Pacifist_KilledAnimal.Postfix)));
             harmony.Patch(AccessTools.Method(typeof(Toils_LayDown), nameof(Toils_LayDown.LayDown)), postfix: new HarmonyMethod(typeof(Nyctophobe_CanNotSleep), nameof(Nyctophobe_CanNotSleep.Postfix)));
+            harmony.Patch(AccessTools.Method(typeof(Toils_LayDown), nameof(Toils_LayDown.LayDown)), postfix: new HarmonyMethod(typeof(Loves_Sleeping_LayDown), nameof(Loves_Sleeping_LayDown.Postfix)));
+            harmony.Patch(AccessTools.PropertyGetter(typeof(Need), "IsFrozen"), postfix: new HarmonyMethod(typeof(Loves_Sleeping_IsFrozen), nameof(Loves_Sleeping_IsFrozen.Postfix)));
 
             harmony.Patch(AccessTools.Method(typeof(TraitSet), nameof(TraitSet.GainTrait)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.GainTrait)));
             harmony.Patch(AccessTools.Method(typeof(Pawn), nameof(Pawn.SpawnSetup)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.SpawnSetup)));

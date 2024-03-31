@@ -14,7 +14,7 @@ namespace More_Traits.HarmonyPatching.Patches
 {
     public class Nyctophobe_CanNotSleep
     {
-        public static void Postfix(Toil __result, TargetIndex bedOrRestSpotIndex, bool hasBed, bool lookForOtherJobs, bool canSleep = true, bool gainRestAndHealth = true, PawnPosture noBedLayingPosture = PawnPosture.LayingOnGroundNormal)
+        public static void Postfix(Toil __result)
         {
             if (!(__result.actor is Pawn pawn)) return;
             if (!pawn.HasTrait(BOT_TraitDefOf.BOT_Nyctophobia)) return;

@@ -20,5 +20,7 @@ namespace More_Traits.DefOfs
         public static TraitDef BOT_Nyctophobia;
 
         public static TraitDef BOT_Temperature_Love;
+
+        public static TraitDef BOT_Loves_Sleeping;
     }
 }

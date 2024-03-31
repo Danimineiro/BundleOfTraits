@@ -26,5 +26,7 @@ namespace More_Traits.DefOfs
         public static ThoughtDef BOT_NyctophobiaCantSleep;
 
         public static ThoughtDef BOT_Narcoleptic_Awake;
+
+        public static ThoughtDef BOT_LovesSleepWellRested;
     }
 }

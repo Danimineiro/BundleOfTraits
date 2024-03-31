@@ -16,7 +16,10 @@ namespace More_Traits.Extensions
             pawn.needs.mood?.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(thoughtDef, forcedLevel));
         }
 
-        public static bool HasTrait(this Pawn pawn, TraitDef traitDef) => pawn?.story?.traits?.HasTrait(traitDef) ?? false;
+        public static bool HasTrait(this Pawn pawn, TraitDef traitDef)
+        {
+            return pawn.story?.traits.HasTrait(traitDef) == true;
+        }
 
         public static bool CanHandlePawn(this Pawn pawn) => !pawn.Dead && pawn.story?.traits != null;
 
