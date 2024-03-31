@@ -16,13 +16,13 @@ namespace More_Traits.HarmonyPatching
         static HarmonyPatcher()
         {
             Harmony harmony = new Harmony("BOT_Patcher");
-            harmony.Patch(typeof(Toils_Ingest).GetMethod(nameof(Toils_Ingest.FinalizeIngest)), postfix: new HarmonyMethod(typeof(EclecticPalate_FinalizeIngestPatch), nameof(EclecticPalate_FinalizeIngestPatch.Postfix)));
-            harmony.Patch(typeof(PawnDiedOrDownedThoughtsUtility).GetMethod("AppendThoughts_ForHumanlike"), postfix: new HarmonyMethod(typeof(Pacifist_WittnessDeath), nameof(Pacifist_WittnessDeath.Postfix)));
-            harmony.Patch(typeof(PawnDiedOrDownedThoughtsUtility).GetMethod("AppendThoughts_Relations"), postfix: new HarmonyMethod(typeof(Pacifist_KilledAnimal), nameof(Pacifist_KilledAnimal.Postfix)));
-            harmony.Patch(typeof(Toils_LayDown).GetMethod(nameof(Toils_LayDown.LayDown)), postfix: new HarmonyMethod(typeof(Nyctophobe_CanNotSleep), nameof(Nyctophobe_CanNotSleep.Postfix)));
+            harmony.Patch(AccessTools.Method(typeof(Toils_Ingest), nameof(Toils_Ingest.FinalizeIngest)), postfix: new HarmonyMethod(typeof(EclecticPalate_FinalizeIngestPatch), nameof(EclecticPalate_FinalizeIngestPatch.Postfix)));
+            harmony.Patch(AccessTools.Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_ForHumanlike"), postfix: new HarmonyMethod(typeof(Pacifist_WittnessDeath), nameof(Pacifist_WittnessDeath.Postfix)));
+            harmony.Patch(AccessTools.Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_Relations"), postfix: new HarmonyMethod(typeof(Pacifist_KilledAnimal), nameof(Pacifist_KilledAnimal.Postfix)));
+            harmony.Patch(AccessTools.Method(typeof(Toils_LayDown), nameof(Toils_LayDown.LayDown)), postfix: new HarmonyMethod(typeof(Nyctophobe_CanNotSleep), nameof(Nyctophobe_CanNotSleep.Postfix)));
 
-            harmony.Patch(typeof(Pawn).GetMethod(nameof(Pawn.SpawnSetup)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.SpawnSetup)));
-            harmony.Patch(typeof(TraitSet).GetMethod(nameof(TraitSet.GainTrait)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.GainTrait)));
+            harmony.Patch(AccessTools.Method(typeof(TraitSet), nameof(TraitSet.GainTrait)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.GainTrait)));
+            harmony.Patch(AccessTools.Method(typeof(Pawn), nameof(Pawn.SpawnSetup)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.SpawnSetup)));
         }
     }
 }
