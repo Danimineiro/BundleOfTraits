@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<InteractionDef>
+	<!--<InteractionDef>
 		<defName>BOT_ComedianJoke</defName>
 		<label>joke</label>
 		<workerClass>More_Traits.BOTJoyInteractionWorker</workerClass>
@@ -51,5 +51,5 @@
 				<li>turnInto->a zucchini</li>
 			</rulesStrings>
 		</logRulesInitiator>
-	</InteractionDef>
+	</InteractionDef>-->
 </Defs>

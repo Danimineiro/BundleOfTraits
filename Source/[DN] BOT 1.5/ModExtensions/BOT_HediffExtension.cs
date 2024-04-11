@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,15 +8,15 @@ using Verse;
 
 namespace More_Traits.ModExtensions
 {
-    public class BOT_TraitExtension : DefModExtension
+    public class BOT_HediffExtension : DefModExtension
     {
-        public HediffDef hediffDef;
+        public TraitDef traitDef;
 
         public override IEnumerable<string> ConfigErrors()
         {
             foreach (string error in base.ConfigErrors()) yield return error;
 
-            if (hediffDef is null ) yield return $"{nameof(hediffDef)} can't be null!";
+            if (traitDef is null) yield return $"{nameof(traitDef)} can't be null!";
         }
     }
 }

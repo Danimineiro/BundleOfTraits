@@ -300,7 +300,6 @@ namespace More_Traits
 				//Get 25% more/less healing by running the healing part of the HealthTick function
 				Pawn pawn = keyValuePair.Key;
 				if (!IsPawnStillThere(pawn) || pawn.RaceProps.IsFlesh && !pawn.Starving()) return;
-				HediffSet hediffSet = pawn.health.hediffSet;
 
 				//Heal fast Metabolism, damage flow by the same amount it was healed.
 				MetabolismPawnExtraHealTick(pawn, out bool processedAny);

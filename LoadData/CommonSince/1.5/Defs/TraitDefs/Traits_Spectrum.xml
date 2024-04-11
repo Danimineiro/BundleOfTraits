@@ -6,9 +6,9 @@
 		<degreeDatas>
 			<li>
 				<label>fast metabolism</label>
-				<description>{PAWN_nameDef}'s body works at a faster rate than a normal person, letting them heal faster at the cost of getting hungry quicker. </description>
+				<description>{PAWN_nameDef}'s body works at a faster rate than a normal person, letting them heal faster at the cost of getting hungry quicker.</description>
 				<hungerRateFactor>1.25</hungerRateFactor>
-				<degree>-1</degree>
+				<degree>0</degree>
 			</li>
 			<li>
 				<label>slow metabolism</label>
@@ -17,6 +17,11 @@
 				<degree>1</degree>
 			</li>   
 		</degreeDatas>
+		<modExtensions>
+			<li Class="More_Traits.ModExtensions.BOT_TraitExtension">
+				<hediffDef>BOT_Metabolism</hediffDef>
+			</li>
+		</modExtensions>
 	</TraitDef>
   
 	<TraitDef>

@@ -1,4 +1,4 @@
-﻿using More_Traits.TraitDefModExtension;
+﻿using More_Traits.ModExtensions;
 using RimWorld;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,4 @@
 ﻿using More_Traits.Extensions;
-using More_Traits.TraitDefModExtension;
 using RimWorld;
 using RimWorld.Planet;
 using System;
