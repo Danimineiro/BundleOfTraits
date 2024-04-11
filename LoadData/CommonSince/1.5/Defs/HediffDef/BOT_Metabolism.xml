@@ -16,13 +16,13 @@
 		<stages>
 			<li>
 				<naturalHealingFactor>1.25</naturalHealingFactor>
-				<becomeVisible>false</becomeVisible>
+				<becomeVisible>true</becomeVisible>
 				<lifeThreatening>false</lifeThreatening>
 				<minSeverity>0</minSeverity>
 			</li>
 			<li>
 				<naturalHealingFactor>0.75</naturalHealingFactor>
-				<becomeVisible>false</becomeVisible>
+				<becomeVisible>true</becomeVisible>
 				<lifeThreatening>false</lifeThreatening>
 				<minSeverity>1</minSeverity>
 			</li>
@@ -30,6 +30,10 @@
 		<modExtensions>
 			<li Class="More_Traits.ModExtensions.BOT_HediffExtension">
 				<traitDef>BOT_Metabolism</traitDef>
+				<stageColors>
+					<li>(86, 93, 76)</li>
+					<li>(132, 84, 72)</li>
+				</stageColors>
 			</li>
 		</modExtensions>
 	</HediffDef>
