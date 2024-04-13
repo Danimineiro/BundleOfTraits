@@ -9,7 +9,7 @@ using Verse;
 using More_Traits.DefOfs;
 using More_Traits.Extensions;
 
-namespace More_Traits.HarmonyPatching.Patches
+namespace More_Traits.HarmonyPatching.Patches.Eclectic
 {
     public class EclecticPalate_FinalizeIngestPatch
     {

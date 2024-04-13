@@ -24,5 +24,7 @@ namespace More_Traits.DefOfs
         public static TraitDef BOT_Loves_Sleeping;
 
         public static TraitDef BOT_Metabolism;
+
+        public static TraitDef BOT_Sleepyhead;
     }
 }

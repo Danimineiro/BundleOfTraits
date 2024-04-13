@@ -1,5 +1,9 @@
 ﻿using HarmonyLib;
 using More_Traits.HarmonyPatching.Patches;
+using More_Traits.HarmonyPatching.Patches.Eclectic;
+using More_Traits.HarmonyPatching.Patches.LovesSleeping;
+using More_Traits.HarmonyPatching.Patches.Nyctophobe;
+using More_Traits.HarmonyPatching.Patches.Pacifist;
 using RimWorld;
 using System;
 using System.Collections.Generic;

@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 
-namespace More_Traits.HarmonyPatching.Patches
+namespace More_Traits.HarmonyPatching.Patches.LovesSleeping
 {
     public static class Loves_Sleeping_IsFrozen
     {

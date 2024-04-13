@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 
-namespace More_Traits.HarmonyPatching.Patches
+namespace More_Traits.HarmonyPatching.Patches.Pacifist
 {
     public class Pacifist_KilledAnimal
     {

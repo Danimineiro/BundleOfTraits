@@ -9,7 +9,7 @@ using Verse.AI;
 using Verse;
 using More_Traits.Extensions;
 
-namespace More_Traits.HarmonyPatching.Patches
+namespace More_Traits.HarmonyPatching.Patches.LovesSleeping
 {
     public class Loves_Sleeping_LayDown
     {

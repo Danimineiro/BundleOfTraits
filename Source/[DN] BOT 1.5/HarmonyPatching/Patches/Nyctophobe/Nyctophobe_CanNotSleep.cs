@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Verse;
 using Verse.AI;
 
-namespace More_Traits.HarmonyPatching.Patches
+namespace More_Traits.HarmonyPatching.Patches.Nyctophobe
 {
     public class Nyctophobe_CanNotSleep
     {
