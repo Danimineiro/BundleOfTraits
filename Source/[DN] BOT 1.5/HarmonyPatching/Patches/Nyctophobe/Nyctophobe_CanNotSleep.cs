@@ -5,6 +5,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Verse;
@@ -12,50 +13,82 @@ using Verse.AI;
 
 namespace More_Traits.HarmonyPatching.Patches.Nyctophobe
 {
-    public class Nyctophobe_CanNotSleep
+    internal class Nyctophobe_CanNotSleep
     {
-        public static void Postfix(Toil __result)
+        internal static Toil NoSleepToil(JobDriver_LayDown jobDriver)
         {
-            if (!(__result.actor is Pawn pawn)) return;
-            if (!pawn.HasTrait(BOT_TraitDefOf.BOT_Nyctophobia)) return;
+            if (!jobDriver.CanRest) return null;
+            if (!jobDriver.CanSleep) return null;
+            if (jobDriver.Bed == null) return null;
 
-            BOT_WorldComponent savingComp = BOT_WorldComponent.Instance;
+            Pawn pawn = jobDriver.pawn;
+            if (!pawn.HasTrait(BOT_TraitDefOf.BOT_Nyctophobia)) return null;
 
-            bool newFailCondition()
+            Toil toil = ToilMaker.MakeToil(nameof(NoSleepToil));
+            toil.defaultCompleteMode = ToilCompleteMode.Never;
+            toil.FailOnBedNoLongerUsable(TargetIndex.A);
+
+            void initAction()
             {
-                //Determine if a Nyctophobic person can sleep
-                Map map = pawn.Map;
+                Pawn actor = toil.actor;
+                Job curJob = actor.CurJob;
+                JobDriver_LayDown driver = actor.jobs.curDriver as JobDriver_LayDown;
+                Building_Bed bed = actor.CurJob.GetTarget(TargetIndex.A).Thing as Building_Bed;
 
-                if (pawn.Position.InBounds(map) && map.glowGrid.GroundGlowAt(pawn.Position) < 0.3f && pawn.needs.rest.CurCategory != RestCategory.Exhausted && pawn.CurJobDef == JobDefOf.LayDown && !savingComp.NotifiedNyctoPawnSet.Contains(pawn))
+                if (!bed.OccupiedRect().Contains(actor.Position))
                 {
-                    pawn.TryGainMemory(BOT_ThoughtDefOf.BOT_NyctophobiaCantSleep, 0);
-                    Messages.Message("BOTNyctophobeCantSleep".Translate(pawn.LabelShort, pawn), pawn, MessageTypeDefOf.NegativeEvent);
-
-                    pawn.jobs.StartJob(new Job(JobDefOf.LayDownAwake, pawn.jobs.curJob.targetA), JobCondition.InterruptForced);
-                    savingComp.NotifiedNyctoPawnSet.Add(pawn);
-
-                    return true;
+                    Log.Error($"Can't start {nameof(NoSleepToil)} because pawn is not in the bed. pawn: {actor}");
+                    actor.jobs.EndCurrentJob(JobCondition.Errored);
+                    return;
                 }
 
-                if (pawn.needs.rest.CurCategory == RestCategory.Exhausted && savingComp.NotifiedNyctoPawnSet.Contains(pawn) && pawn.CurJobDef == JobDefOf.LayDownAwake)
+                actor.pather.StopDead();
+
+                if (!TooDarkFor(actor) || actor.needs.rest.CurCategory >= RestCategory.VeryTired)
                 {
-                    pawn.jobs.StartJob(new Job(JobDefOf.LayDown, pawn.jobs.curJob.targetA), JobCondition.InterruptForced);
-
-                    return true;
+                    driver.ReadyForNextToil();
+                    return;
                 }
-                return false;
+
+                driver.asleep = false;
+                curJob.forceSleep = true;
+                actor.jobs.posture = PawnPosture.LayingInBedFaceUp;
+                PortraitsCache.SetDirty(actor);
+                actor.TryGainMemory(BOT_ThoughtDefOf.BOT_NyctophobiaCantSleep, 0);
+                Messages.Message("BOTNyctophobeCantSleep".Translate(actor.LabelShort, actor), actor, MessageTypeDefOf.NegativeEvent);
             }
 
-            void newAct()
+            void tickAction()
             {
-                pawn.needs.mood.thoughts.memories.RemoveMemoriesOfDef(BOT_ThoughtDefOf.BOT_NyctophobiaCantSleep);
+                Pawn actor = toil.actor;
+                JobDriver_LayDown driver = actor.jobs.curDriver as JobDriver_LayDown;
+                Building_Bed bed = actor.CurJob.GetTarget(TargetIndex.A).Thing as Building_Bed;
 
-                if (pawn.needs.rest.CurCategory == RestCategory.Exhausted) return;
-                savingComp.NotifiedNyctoPawnSet.Remove(pawn);
+                Type boolType = typeof(bool);
+                MethodInfo ApplyBedEffects = typeof(Toils_LayDown).GetMethod("ApplyBedRelatedEffects", BindingFlags.Static | BindingFlags.NonPublic /*new Type[] { typeof(Pawn), typeof(Building_Bed), boolType, boolType, boolType }*/);
+                ApplyBedEffects.Invoke(null, new object[] { actor, bed, false, true, false });
+
+                if (!TooDarkFor(actor) || actor.needs.rest.CurCategory >= RestCategory.VeryTired)
+                {
+                    driver.ReadyForNextToil();
+                }
             }
 
-            __result.AddFailCondition(newFailCondition);
-            __result.AddFinishAction(newAct);
+            void finishAction()
+            {
+                toil.actor.needs.mood.thoughts.memories.RemoveMemoriesOfDef(BOT_ThoughtDefOf.BOT_NyctophobiaCantSleep);
+            }
+
+            toil.initAction = initAction;
+            toil.tickAction = tickAction;
+            toil.AddFinishAction(finishAction);
+
+            return toil;
+        }
+
+        private static bool TooDarkFor(Pawn actor)
+        {
+            return actor.Position.InBounds(actor.Map) && actor.Map.glowGrid.GroundGlowAt(actor.Position) < 0.3f;
         }
     }
 }
