@@ -65,7 +65,7 @@ namespace More_Traits.HarmonyPatching.Patches.Nyctophobe
                 Building_Bed bed = actor.CurJob.GetTarget(TargetIndex.A).Thing as Building_Bed;
 
                 Type boolType = typeof(bool);
-                MethodInfo ApplyBedEffects = typeof(Toils_LayDown).GetMethod("ApplyBedRelatedEffects", BindingFlags.Static | BindingFlags.NonPublic /*new Type[] { typeof(Pawn), typeof(Building_Bed), boolType, boolType, boolType }*/);
+                MethodInfo ApplyBedEffects = typeof(Toils_LayDown).GetMethod("ApplyBedRelatedEffects", BindingFlags.Static | BindingFlags.NonPublic);
                 ApplyBedEffects.Invoke(null, new object[] { actor, bed, false, true, false });
 
                 if (!TooDarkFor(actor) || actor.needs.rest.CurCategory >= RestCategory.VeryTired)

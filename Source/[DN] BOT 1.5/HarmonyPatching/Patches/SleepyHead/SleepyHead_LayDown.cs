@@ -53,13 +53,8 @@ namespace More_Traits.HarmonyPatching.Patches.SleepyHead
                 Building_Bed bed = actor.CurJob.GetTarget(TargetIndex.A).Thing as Building_Bed;
 
                 Type boolType = typeof(bool);
-                MethodInfo ApplyBedEffects = typeof(Toils_LayDown).GetMethod("ApplyBedRelatedEffects", new Type[] { typeof(Pawn), typeof(Building_Bed), boolType, boolType, boolType });
+                MethodInfo ApplyBedEffects = typeof(Toils_LayDown).GetMethod("ApplyBedRelatedEffects", BindingFlags.Static | BindingFlags.NonPublic);
                 ApplyBedEffects.Invoke(null, new object[] { actor, bed, true, true, false });
-
-                if (driver.LookForOtherJobs && actor.IsHashIntervalTick(211))
-                {
-                    actor.jobs.CheckForJobOverride(0f);
-                }
             }
 
             void finishAction()
@@ -70,7 +65,37 @@ namespace More_Traits.HarmonyPatching.Patches.SleepyHead
             toil.initAction = initAction;
             toil.tickAction = tickAction;
             toil.AddFinishAction(finishAction);
-            return null;
+            return toil;
+        }
+
+        public static void LookForOtherJobs_Postfix(JobDriver_LayDown __instance, ref bool __result)
+        {
+            if (!(__instance is JobDriver_LayDown)) return;
+            if (!__instance.pawn?.HasTrait(BOT_TraitDefOf.BOT_Sleepyhead) == true) return;
+
+            __result = false;
+        }
+
+        internal static void AddPreTick(Toil toil, JobDriver_LayDown jobDriver)
+        {
+            if (!jobDriver.CanRest) return;
+            if (!jobDriver.CanSleep) return;
+            if (jobDriver.Bed == null) return;
+            if (!jobDriver.pawn.HasTrait(BOT_TraitDefOf.BOT_Sleepyhead)) return;
+
+            void preTickAction()
+            {
+                Pawn actor = toil.actor;
+                Job curJob = actor.CurJob;
+                JobDriver_LayDown driver = actor.jobs.curDriver as JobDriver_LayDown;
+
+                if (!driver.asleep && driver.CanSleep)
+                {
+                    driver.ReadyForNextToil();
+                }
+            }
+
+            toil.AddPreTickAction(preTickAction);
         }
     }
 }
