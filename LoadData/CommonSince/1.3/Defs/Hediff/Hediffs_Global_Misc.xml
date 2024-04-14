@@ -47,23 +47,4 @@
 			</li>
 		</stages>
 	</HediffDef>
-
-	<HediffDef>
-		<defName>BOT_CongenitalAnalgesiaPainReducer</defName>
-		<label>can't feel pain</label>
-		<labelNoun>a claustrophobic breakdown</labelNoun>
-		<description>alagesia can't feel pain</description>
-		<isBad>false</isBad>
-		<makesSickThought>false</makesSickThought>
-		<tendable>false</tendable>
-		<makesAlert>false</makesAlert>
-		<chronic>true</chronic>
-		<stages>
-			<li>
-				<becomeVisible>false</becomeVisible>
-				<lifeThreatening>false</lifeThreatening>
-				<painFactor>0</painFactor>
-			</li>
-		</stages>
-	</HediffDef>
 </Defs>
