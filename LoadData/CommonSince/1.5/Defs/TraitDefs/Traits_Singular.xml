@@ -170,7 +170,6 @@
 		</conflictingTraits>
 	</TraitDef>
 	
-	
 	<TraitDef>
 		<defName>BOT_WeakBody</defName>
 		<commonality>0.4</commonality>
@@ -456,7 +455,7 @@
 
 	<TraitDef>
 		<defName>BOT_CongenitalAnalgesia</defName>
-		<commonality>0.6</commonality>
+		<commonality>0.4</commonality>
 		<degreeDatas>
 			<li>
 				<label>congenital analgesia</label>
@@ -464,12 +463,14 @@
 				<statFactors>
 					<PsychicSensitivity>-1</PsychicSensitivity>
 				</statFactors>
+				<painFactor>0</painFactor>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
 			<li>Wimp</li>
 			<li>Masochist</li>
 			<li>PsychicSensitivity</li>
+			<li>BOT_Hyperalgesia</li>
 		</conflictingTraits>
 	</TraitDef>
 
@@ -496,6 +497,23 @@
 			<li>Brawler</li>
 			<li>ShootingAccuracy</li>
 			<li MayRequire="Fuglypump.FalloutTraits">FT_AimOffset</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Hyperalgesia</defName>
+		<commonality>0.6</commonality>
+		<degreeDatas>
+			<li>
+				<label>hyperalgesia</label>
+				<description>{PAWN_nameDef} has a rare disorder that makes {PAWN_pronoun} extremely sensitive to pain, making anything painful so much worse.</description>
+				<statFactors>
+					<PsychicSensitivity>2</PsychicSensitivity>
+				</statFactors>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>BOT_CongenitalAnalgesia</li>
 		</conflictingTraits>
 	</TraitDef>
 </Defs>
