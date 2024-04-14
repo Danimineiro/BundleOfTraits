@@ -27,4 +27,6 @@ Bundle Of Traits is a mod that adds 15 new traits designed with special mechanic
 
 Read More on GitHub: https://github.com/Danimineiro/BucketOfTraits#readme
 	</description>
+	<url>https://github.com/Danimineiro/BucketOfTraits</url>
+	<modVersion IgnoreIfNoMatchingField="True">3.0.0</modVersion>
 </ModMetaData>
