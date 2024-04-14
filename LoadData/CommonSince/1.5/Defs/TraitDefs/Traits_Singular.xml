@@ -127,21 +127,6 @@
 	</TraitDef>
 	
 	<TraitDef>
-		<defName>BOT_Sleepyhead</defName>
-		<commonality>0.2</commonality>
-		<degreeDatas>
-			<li>
-				<label>sleepyhead</label>
-				<description>{PAWN_nameDef} loves to sleep in and will gladly ignore their schedule if it means they can lie in bed and sleep some more. </description>
-			</li>
-		</degreeDatas>
-		<conflictingTraits>
-			<li>QuickSleeper</li>
-			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Insomniac</li>
-		</conflictingTraits>
-	</TraitDef>
-	
-	<TraitDef>
 		<defName>BOT_Loves_Sleeping</defName>
 		<commonality>0.3</commonality>
 		<degreeDatas>

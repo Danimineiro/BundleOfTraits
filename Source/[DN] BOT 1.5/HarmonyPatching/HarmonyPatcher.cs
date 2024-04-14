@@ -1,14 +1,11 @@
-﻿using HarmonyLib;
+﻿using static HarmonyLib.AccessTools;
 using More_Traits.HarmonyPatching.Patches;
+using More_Traits.HarmonyPatching.Patches.Pacifist;
 using More_Traits.HarmonyPatching.Patches.Eclectic;
 using More_Traits.HarmonyPatching.Patches.LovesSleeping;
-using More_Traits.HarmonyPatching.Patches.Nyctophobe;
-using More_Traits.HarmonyPatching.Patches.Pacifist;
+using HarmonyLib;
 using RimWorld;
-
-using static HarmonyLib.AccessTools;
 using Verse;
-using More_Traits.HarmonyPatching.Patches.SleepyHead;
 
 namespace More_Traits.HarmonyPatching
 {
@@ -18,7 +15,6 @@ namespace More_Traits.HarmonyPatching
         static HarmonyPatcher()
         {
             Harmony harmony = new Harmony("BOT_Patcher");
-            harmony.Patch(PropertyGetter(typeof(JobDriver_LayDown), nameof(JobDriver_LayDown.LookForOtherJobs)), postfix: new HarmonyMethod(typeof(SleepyHead_LayDown), nameof(SleepyHead_LayDown.LookForOtherJobs_Postfix)));
             harmony.Patch(Method(typeof(Toils_Ingest), nameof(Toils_Ingest.FinalizeIngest)), postfix: new HarmonyMethod(typeof(EclecticPalate_FinalizeIngestPatch), nameof(EclecticPalate_FinalizeIngestPatch.Postfix)));
             harmony.Patch(Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_ForHumanlike"), postfix: new HarmonyMethod(typeof(Pacifist_WittnessDeath), nameof(Pacifist_WittnessDeath.Postfix)));
             harmony.Patch(Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_Relations"), postfix: new HarmonyMethod(typeof(Pacifist_KilledAnimal), nameof(Pacifist_KilledAnimal.Postfix)));

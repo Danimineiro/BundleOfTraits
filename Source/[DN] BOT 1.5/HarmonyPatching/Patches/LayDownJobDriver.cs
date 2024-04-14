@@ -11,7 +11,6 @@ using Verse;
 using HarmonyLib;
 using System.Reflection;
 using More_Traits.HarmonyPatching.Patches.LovesSleeping;
-using More_Traits.HarmonyPatching.Patches.SleepyHead;
 using More_Traits.HarmonyPatching.Patches.Nyctophobe;
 
 namespace More_Traits.HarmonyPatching.Patches
@@ -27,14 +26,10 @@ namespace More_Traits.HarmonyPatching.Patches
                 if (toil.debugName == "LayDown")
                 {
                     Loves_Sleeping_LayDown.AddLoves_SleepingActions(toil, __instance);
-                    SleepyHead_LayDown.AddPreTick(toil, __instance);
-
                     if (Nyctophobe_CanNotSleep.NoSleepToil(__instance) is Toil noSleepToil) yield return noSleepToil;
                 }
                 yield return toil;
             }
-
-            if (SleepyHead_LayDown.SleepyHeadToil(__instance) is Toil sleepyToil) yield return sleepyToil;
 
             yield break;
         }
