@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThinkTreeDef>
+		<defName>Bot_FleeingBehaviour</defName>
+		<modExtensions>
+		</modExtensions>
+		<thinkRoot Class="More_Traits.ThinkNodes.BOT_JobGiverFleeing" />
+	</ThinkTreeDef>
+</Defs>
