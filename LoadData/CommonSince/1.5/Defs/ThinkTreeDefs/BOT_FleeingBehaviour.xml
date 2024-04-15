@@ -3,6 +3,14 @@
 	<ThinkTreeDef>
 		<defName>Bot_FleeingBehaviour</defName>
 		<modExtensions>
+			<li Class="More_Traits.ModExtensions.BOT_ThinkTreeExtension">
+				<traitContainers>
+					<li>
+						<traitDef>BOT_Pyrophobia</traitDef>
+						<thingDef>Fire</thingDef>
+					</li>
+				</traitContainers>
+			</li>
 		</modExtensions>
 		<thinkRoot Class="More_Traits.ThinkNodes.BOT_JobGiverFleeing" />
 	</ThinkTreeDef>
