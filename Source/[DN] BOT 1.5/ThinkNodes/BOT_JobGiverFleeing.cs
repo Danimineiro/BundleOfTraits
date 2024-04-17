@@ -15,6 +15,7 @@ namespace More_Traits.ThinkNodes
     {
         private static Dictionary<TraitDef, TraitContainer> traitContainers;
         private static BOT_ThinkTreeExtension extension;
+        const float MAX_DISTANCE = 20f;
 
         public static BOT_ThinkTreeExtension Extension => extension ?? (extension = BOT_ThinkTreeDefOf.Bot_FleeingBehaviour.GetModExtension<BOT_ThinkTreeExtension>());
 
@@ -42,11 +43,9 @@ namespace More_Traits.ThinkNodes
             if (pawn.Drafted && !ignoreDrafted) return null;
 
             List<Thing> objectDangers = GetDangers(pawn, fleeTraits, out Thing closest);
-            Log.Message("3");
             if (objectDangers.Count == 0) return null;
             
             IntVec3 destination = CellFinderLoose.GetFleeDestToolUser(pawn, objectDangers);
-            Log.Message("4");
             if (destination == pawn.Position) return null;
 
             Job job = JobMaker.MakeJob(JobDefOf.FleeAndCower, destination, closest);
@@ -88,7 +87,6 @@ namespace More_Traits.ThinkNodes
             for (int i = 0; i < count; i++)
             {
                 Trait trait = pawn.story.traits.allTraits[i];
-                Log.Message($"Trait of Def{trait.def}, has variable: {TraitContainers.TryGetValue(trait.def, out _ )}");
                 if (!TraitContainers.TryGetValue(trait.def, out TraitContainer traitContainer)) continue;
 
                 fleeTraits.Add(traitContainer.traitDef);
@@ -107,24 +105,21 @@ namespace More_Traits.ThinkNodes
             foreach (Thing thing in livingDangers)
             {
                 pawnDangerDefs.Remove(thing.def);
-                CheckDistances(pawn, ref closestItem, ref closestDistance, thing);
-
-                result.Add(thing);
+                if (CheckDistances(pawn, ref closestItem, ref closestDistance, thing)) result.Add(thing);
             }
 
             foreach (ThingDef dangerDef in pawnDangerDefs)
             {
                 foreach (Thing thing in lister.ThingsOfDef(dangerDef))
                 {
-                    CheckDistances(pawn, ref closestItem, ref closestDistance, thing);
-                    result.Add(thing);
+                    if (CheckDistances(pawn, ref closestItem, ref closestDistance, thing)) result.Add(thing);
                 }
             }
 
             return result;
         }
 
-        private static void CheckDistances(Pawn pawn, ref Thing closestItem, ref float closestDistance, Thing thing)
+        private static bool CheckDistances(Pawn pawn, ref Thing closestItem, ref float closestDistance, Thing thing)
         {
             float thingDistance = thing.Position.DistanceTo(pawn.Position);
 
@@ -133,6 +128,8 @@ namespace More_Traits.ThinkNodes
                 closestDistance = thingDistance;
                 closestItem = thing;
             }
+
+            return thingDistance <= MAX_DISTANCE && pawn.CanSee(thing);
         }
     }
 }

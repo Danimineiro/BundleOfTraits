@@ -109,6 +109,11 @@
 		<conflictingTraits>
 			<li>Pyromaniac</li>
 		</conflictingTraits>
+		<modExtensions>
+			<li Class="More_Traits.ModExtensions.BOT_TraitExtension">
+				<hediffDef>BOT_Fleeing</hediffDef>
+			</li>
+		</modExtensions>
 	</TraitDef>
 	
 	<TraitDef>
@@ -258,6 +263,11 @@
 				<description>{PAWN_nameDef} has an intense fear of insects and will not hesitate to run away upon spotting one.</description>
 			</li>
 		</degreeDatas>
+		<modExtensions>
+			<li Class="More_Traits.ModExtensions.BOT_TraitExtension">
+				<hediffDef>BOT_Fleeing</hediffDef>
+			</li>
+		</modExtensions>
 	</TraitDef>
 
 	<TraitDef>
