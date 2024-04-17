@@ -13,50 +13,106 @@ namespace More_Traits.ThinkNodes
 {
     public class BOT_JobGiverFleeing : ThinkNode_JobGiver
     {
+        private static Dictionary<TraitDef, TraitContainer> traitContainers;
         private static BOT_ThinkTreeExtension extension;
 
         public static BOT_ThinkTreeExtension Extension => extension ?? (extension = BOT_ThinkTreeDefOf.Bot_FleeingBehaviour.GetModExtension<BOT_ThinkTreeExtension>());
 
-        protected override Job TryGiveJob(Pawn pawn)
+        public static Dictionary<TraitDef, TraitContainer> TraitContainers => traitContainers ?? (traitContainers = BuildTraitContainers());
+
+        private static Dictionary<TraitDef, TraitContainer> BuildTraitContainers()
         {
-            if (pawn.Drafted) return null;
+            Dictionary<TraitDef, TraitContainer> containers = new Dictionary<TraitDef, TraitContainer>();
 
-            IEnumerable<TraitDef> pawnTraitDefs = pawn.story.traits.allTraits.Select(trait => trait.def);
-            List<ThingDef> pawnDangerDefs = Extension.traitContainers.Where(container => pawnTraitDefs.Contains(container.traitDef)).Select(container => container.thingDef).ToList();
+            for (int i = 0; i < Extension.traitContainers.Count; i++)
+            {
+                TraitContainer container = Extension.traitContainers[i];
+                containers.Add(container.traitDef, container);
+            }
 
-            if (pawnDangerDefs.Count == 0) return null;
-
-            Map map = pawn.Map;
-            ListerThings lister = map.listerThings;
-            IEnumerable<Thing> livingDangers = map.mapPawns.AllPawnsSpawned.Where(spawned => pawnDangerDefs.Contains(spawned.def));
-            List<Thing> objectDangers = ObjectDangers(lister, pawnDangerDefs, livingDangers, pawn, out Thing closest);
-
-            if (objectDangers.Count == 0) return null;
-
-            IntVec3 destination = CellFinderLoose.GetFleeDestToolUser(pawn, objectDangers);
-
-            if (destination == pawn.Position) return null;
-
-            return JobMaker.MakeJob(JobDefOf.Flee, destination, closest);
+            return containers;
         }
 
-        private List<Thing> ObjectDangers(ListerThings lister, List<ThingDef> pawnDangerDefs, IEnumerable<Thing> livingDangers, Pawn pawn, out Thing closestItem)
+        protected override Job TryGiveJob(Pawn pawn)
         {
-            List<ThingDef> dangerDefsLivingRemoved = new List<ThingDef>(pawnDangerDefs.Count);
+            List<TraitDef> fleeTraits = GetTraits(pawn, out bool ignoreDrafted);
+            int traitCount = fleeTraits.Count;
+
+            if (traitCount == 0) return null;
+            if (pawn.Drafted && !ignoreDrafted) return null;
+
+            List<Thing> objectDangers = GetDangers(pawn, fleeTraits, out Thing closest);
+            Log.Message("3");
+            if (objectDangers.Count == 0) return null;
+            
+            IntVec3 destination = CellFinderLoose.GetFleeDestToolUser(pawn, objectDangers);
+            Log.Message("4");
+            if (destination == pawn.Position) return null;
+
+            Job job = JobMaker.MakeJob(JobDefOf.FleeAndCower, destination, closest);
+            job.checkOverrideOnExpire = true;
+            job.expiryInterval = 65;
+
+            return job;
+        }
+
+        private List<Thing> GetDangers(Pawn pawn, List<TraitDef> fleeTraits, out Thing closest)
+        {
+            Map map = pawn.Map;
+            ListerThings lister = map.listerThings;
+
+            IReadOnlyList<Pawn> allPawnsSpawned = map.mapPawns.AllPawnsSpawned;
+            HashSet<ThingDef> dangerDefs = new HashSet<ThingDef>();
+            HashSet<string> dangerNotes = new HashSet<string>();
+
+            int fleeTraitCount = fleeTraits.Count;
+            for (int i = 0; i < fleeTraitCount; i++)
+            {
+                TraitDef traitDef = fleeTraits[i];
+                TraitContainer container = TraitContainers[traitDef];
+
+                foreach(ThingDef thingDef in container.thingDefs) dangerDefs.Add(thingDef);
+                foreach(string devNote in container.devNotes) dangerNotes.Add(devNote);
+            }
+
+            List<Pawn> livingDangers = allPawnsSpawned.Where(spawned => dangerDefs.Contains(spawned.def) || (spawned.def.devNote is string note && dangerNotes.Contains(note))).ToList();
+            return ObjectDangers(lister, dangerDefs, livingDangers, pawn, out closest);
+        }
+
+        private List<TraitDef> GetTraits(Pawn pawn, out bool ignoreDrafted)
+        {
+            int count = pawn.story.traits.allTraits.Count;
+            List<TraitDef> fleeTraits = new List<TraitDef>();
+            ignoreDrafted = false;
+
+            for (int i = 0; i < count; i++)
+            {
+                Trait trait = pawn.story.traits.allTraits[i];
+                Log.Message($"Trait of Def{trait.def}, has variable: {TraitContainers.TryGetValue(trait.def, out _ )}");
+                if (!TraitContainers.TryGetValue(trait.def, out TraitContainer traitContainer)) continue;
+
+                fleeTraits.Add(traitContainer.traitDef);
+                ignoreDrafted |= traitContainer.ignoreDraft;
+            }
+
+            return fleeTraits;
+        }
+
+        private List<Thing> ObjectDangers(ListerThings lister, HashSet<ThingDef> pawnDangerDefs, List<Pawn> livingDangers, Pawn pawn, out Thing closestItem)
+        {
             List<Thing> result = new List<Thing>();
             float closestDistance = float.MaxValue;
             closestItem = null;
 
-
             foreach (Thing thing in livingDangers)
             {
-                dangerDefsLivingRemoved.Add(thing.def);
+                pawnDangerDefs.Remove(thing.def);
                 CheckDistances(pawn, ref closestItem, ref closestDistance, thing);
 
                 result.Add(thing);
             }
 
-            foreach (ThingDef dangerDef in pawnDangerDefs.Where(dangerDef => !dangerDefsLivingRemoved.Contains(dangerDef)))
+            foreach (ThingDef dangerDef in pawnDangerDefs)
             {
                 foreach (Thing thing in lister.ThingsOfDef(dangerDef))
                 {

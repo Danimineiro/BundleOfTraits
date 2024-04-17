@@ -5,10 +5,17 @@
 		<modExtensions>
 			<li Class="More_Traits.ModExtensions.BOT_ThinkTreeExtension">
 				<traitContainers>
-					<li>
-						<traitDef>BOT_Pyrophobia</traitDef>
-						<thingDef>Fire</thingDef>
-					</li>
+					<BOT_Pyrophobia>
+						<thingDefs>
+							<li>Fire</li>
+						</thingDefs>
+					</BOT_Pyrophobia>
+					<BOT_Entomophobia>
+						<devNotes>
+							<li>insect</li>
+						</devNotes>
+						<ignoreDraft>true</ignoreDraft>
+					</BOT_Entomophobia>
 				</traitContainers>
 			</li>
 		</modExtensions>
