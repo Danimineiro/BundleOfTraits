@@ -215,7 +215,7 @@
 				<statOffsets>
 					<MentalBreakThreshold>-0.24</MentalBreakThreshold>
 				</statOffsets>
-				<!-- Inspirations are dissabled at BOTTraitsPatcher.BOTTraitsPatcher()
+				<!-- Inspirations are dissabled at More_Traits.TraitEdits.StartupTraitEditor
 				<disallowedInspirations>
 					<li>Frenzy_Work</li>
 					<li>Frenzy_Go</li>
