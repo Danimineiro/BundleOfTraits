@@ -7,6 +7,7 @@ using HarmonyLib;
 using RimWorld;
 using Verse;
 using More_Traits.HarmonyPatching.Patches.Hyperalgesia;
+using More_Traits.HarmonyPatching.ModCompatibility;
 
 namespace More_Traits.HarmonyPatching
 {
@@ -24,6 +25,14 @@ namespace More_Traits.HarmonyPatching
             harmony.Patch(Method(typeof(TraitSet), nameof(TraitSet.GainTrait)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.GainTrait)));
             harmony.Patch(PropertyGetter(typeof(Need), "IsFrozen"), postfix: new HarmonyMethod(typeof(Loves_Sleeping_IsFrozen), nameof(Loves_Sleeping_IsFrozen.Postfix)));
             harmony.Patch(Method(typeof(Pawn), nameof(Pawn.SpawnSetup)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.SpawnSetup)));
+
+            VSEPatches(harmony);
+        }
+
+        private static void VSEPatches(Harmony harmony)
+        {
+            if (!ModLister.HasActiveModWithName("Vanilla Skills Expanded")) return;
+            harmony.Patch(Method(TypeByName("VSE.Passions.PassionPatches"), "GenerateSkills_Prefix"), prefix: new HarmonyMethod(typeof(VSE), nameof(VSE.SkipGenerateSkill_PrefixPatch))); 
         }
     }
 }
