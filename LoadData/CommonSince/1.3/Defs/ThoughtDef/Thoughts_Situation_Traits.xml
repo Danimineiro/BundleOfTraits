@@ -120,28 +120,6 @@
 		</requiredTraits>
 	</ThoughtDef>
 	
-	<!-- Early Bird Thoughts -->
-
-	<ThoughtDef>
-		<defName>BOT_EarlyBirdTimeThought</defName>
-		<workerClass>More_Traits.BOT_ThoughtWorker_EarlyBirdTimeThought</workerClass>
-		<stages>
-			<li>
-				<label>early bird is up early</label>
-				<description>The early hours are the best part of the day!</description>
-				<baseMoodEffect>16</baseMoodEffect>
-			</li>
-			<li>
-				<label>early bird is up late</label>
-				<description>I don't like working late.</description>
-				<baseMoodEffect>-10</baseMoodEffect>
-			</li>
-		</stages>
-		<requiredTraits>
-			<li>BOT_EarlyBird</li>
-		</requiredTraits>
-	</ThoughtDef>
-	
 	<!-- Communal Thoughts -->
 	<ThoughtDef>
 		<defName>BOT_CommunalSharing</defName>
