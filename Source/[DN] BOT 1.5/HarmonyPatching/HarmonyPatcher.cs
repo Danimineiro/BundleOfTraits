@@ -8,6 +8,7 @@ using RimWorld;
 using Verse;
 using More_Traits.HarmonyPatching.Patches.Hyperalgesia;
 using More_Traits.HarmonyPatching.ModCompatibility;
+using More_Traits.HarmonyPatching.Patches.Vulgar;
 
 namespace More_Traits.HarmonyPatching
 {
@@ -27,6 +28,8 @@ namespace More_Traits.HarmonyPatching
             harmony.Patch(Method(typeof(Pawn), nameof(Pawn.SpawnSetup)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.SpawnSetup)));
 
             VSEPatches(harmony);
+
+            harmony.Patch(Method(typeof(Pawn_InteractionsTracker), "CheckSocialFightStart"), postfix: new HarmonyMethod(typeof(Vulgar_SocialFightStart), nameof(Vulgar_SocialFightStart.Postfix)));
         }
 
         private static void VSEPatches(Harmony harmony)

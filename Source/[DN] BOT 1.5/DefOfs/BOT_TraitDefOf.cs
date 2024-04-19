@@ -28,5 +28,7 @@ namespace More_Traits.DefOfs
         public static TraitDef BOT_Hyperalgesia;
 
         public static TraitDef BOT_Apathetic;
+
+        public static TraitDef BOT_Vulgar;
     }
 }
