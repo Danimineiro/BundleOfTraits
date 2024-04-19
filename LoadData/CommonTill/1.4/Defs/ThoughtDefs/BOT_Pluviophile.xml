@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_PluviophileLikesRain</defName>
+		<workerClass>More_Traits.BOT_ThoughtWorker_PluviophileLikesRain</workerClass>
+		<stages>
+			<li>
+				<label>pluviophile enjoying the rain</label>
+				<description>I love the calm and peaceful nature of rain.</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_Pluviophile</li>
+		</requiredTraits>
+	</ThoughtDef>
+</Defs>
