@@ -30,5 +30,7 @@ namespace More_Traits.DefOfs
         public static TraitDef BOT_Apathetic;
 
         public static TraitDef BOT_Vulgar;
+
+        public static TraitDef BOT_Communal;
     }
 }

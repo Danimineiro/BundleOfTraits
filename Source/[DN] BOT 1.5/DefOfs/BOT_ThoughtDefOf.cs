@@ -28,5 +28,11 @@ namespace More_Traits.DefOfs
         public static ThoughtDef BOT_Narcoleptic_Awake;
 
         public static ThoughtDef BOT_LovesSleepWellRested;
+
+        public static ThoughtDef BOT_Communal_SleptInBarracks;
+
+        public static ThoughtDef BOT_Communal_SleptInBedroom;
+
+        public static ThoughtDef BOT_Communal_Sharing;
     }
 }

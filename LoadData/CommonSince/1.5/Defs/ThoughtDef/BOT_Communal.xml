@@ -213,24 +213,76 @@
 			<li>BOT_Communal</li>
 		</requiredTraits>
 	</ThoughtDef>
-
+	
 	<ThoughtDef>
-		<defName>BOT_HatesConfinedSpace</defName>
-		<workerClass>More_Traits.BOT_ThoughtWorker_Claustrophobic</workerClass>
+		<defName>BOT_Communal_Sharing</defName>
+		<durationDays>1</durationDays>
+		<stackLimit>1</stackLimit>
 		<stages>
 			<li>
-				<label>cramped space</label>
-				<description>I need to get out of here! I can't breathe..! The walls..</description>
-				<baseMoodEffect>-15</baseMoodEffect>
+				<label>communal slept all alone</label>
+				<description>I wish I could share my room with someone..</description>
+				<baseMoodEffect>-3</baseMoodEffect>
 			</li>
 			<li>
-				<label>rather tight</label>
-				<description>There really isn't enough space in here, it feels as if the walls are closing in.</description>
-				<baseMoodEffect>-8</baseMoodEffect>
+				<label>communal didn't sleep alone</label>
+				<description>I like being able to share my room.</description>
+				<baseMoodEffect>1</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with a few people</label>
+				<description>It's neat being able to share my room.</description>
+				<baseMoodEffect>2</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with others</label>
+				<description>I like sharing my room with others.</description>
+				<baseMoodEffect>4</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>It's cool being able to share my room with many others!</description>
+				<baseMoodEffect>6</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>It's really cool having many others sleep in my room with me!</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>There are so many nice people sleeping inside my room with me!</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>More and more and more and more!</description>
+				<baseMoodEffect>12</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>The number of others sleeping in my room with me is making me so happy!</description>
+				<baseMoodEffect>14</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>Sharing my room with so many other people is the greatest thing ever!</description>
+				<baseMoodEffect>16</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>With so many other people in my room, I don't ever have to feel alone at night.</description>
+				<baseMoodEffect>18</baseMoodEffect>
+			</li>
+			<li>
+				<label>communal slept with many others</label>
+				<description>It's so great! We get to sleep together in this room!</description>
+				<baseMoodEffect>20</baseMoodEffect>
 			</li>
 		</stages>
 		<requiredTraits>
-			<li>BOT_Claustrophobic</li>
+			<li>BOT_Communal</li>
 		</requiredTraits>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
 	</ThoughtDef>
 </Defs>
