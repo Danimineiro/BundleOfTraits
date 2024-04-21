@@ -38,5 +38,7 @@ namespace More_Traits.DefOfs
         public static TraitDef BOT_Sadist;
 
         public static TraitDef BOT_Chionophile;
+
+        public static TraitDef BOT_Gregarious;
     }
 }
