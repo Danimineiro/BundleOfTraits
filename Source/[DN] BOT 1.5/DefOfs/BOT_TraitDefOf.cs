@@ -32,5 +32,7 @@ namespace More_Traits.DefOfs
         public static TraitDef BOT_Vulgar;
 
         public static TraitDef BOT_Communal;
+
+        public static TraitDef BOT_Comedian;
     }
 }

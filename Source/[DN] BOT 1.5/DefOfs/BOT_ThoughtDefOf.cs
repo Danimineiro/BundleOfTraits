@@ -34,5 +34,17 @@ namespace More_Traits.DefOfs
         public static ThoughtDef BOT_Communal_SleptInBedroom;
 
         public static ThoughtDef BOT_Communal_Sharing;
+
+        public static ThoughtDef BOT_ComedianBadJokeMood;
+
+        public static ThoughtDef BOT_ComedianGoodJokeMood;
+
+        public static ThoughtDef BOT_ComedianBadJokeOpinion;
+
+        public static ThoughtDef BOT_ComedianGoodJokeOpinion;
+
+        public static ThoughtDef BOT_ComedianBadJokeOpinionSelf;
+
+        public static ThoughtDef BOT_ComedianGoodJokeOpinionSelf;
     }
 }
