@@ -10,7 +10,7 @@ using Verse;
 
 namespace More_Traits.MentalStates.MentalStates
 {
-    public class MentalState_ClaustrophobicBreak : MentalState
+    public class MentalState_ClaustrophobicState : MentalState
     {
         public new bool AllowRestingInBed => false;
 

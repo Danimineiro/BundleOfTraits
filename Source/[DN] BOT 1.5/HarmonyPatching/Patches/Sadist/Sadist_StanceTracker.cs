@@ -15,10 +15,10 @@ namespace More_Traits.HarmonyPatching.Patches.Sadist
         public static void NotifyDamageTaken(Pawn_StanceTracker __instance, DamageInfo dinfo)
         {
             Pawn victim = __instance.pawn;
-            Pawn instigator = dinfo.Instigator as Pawn;
 
             if (dinfo.Def == DamageDefOf.SurgicalCut) return;
             if (dinfo.Def == DamageDefOf.ExecutionCut) return;
+            if (!(dinfo.Instigator is Pawn instigator)) return;
 
             if (instigator.HasTrait(BOT_TraitDefOf.BOT_Sadist))
             {

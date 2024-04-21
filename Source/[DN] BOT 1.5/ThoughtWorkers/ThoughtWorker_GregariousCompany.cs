@@ -33,7 +33,7 @@ namespace More_Traits.ThoughtWorkers
 
         private static int GetCountFor(Pawn pawn)
         {
-            if (!pawn.IsHashIntervalTick(600) && cachedCountDic.ContainsKey(pawn)) return cachedCountDic[pawn];
+            if (!pawn.IsHashIntervalTick(3000) && cachedCountDic.ContainsKey(pawn)) return cachedCountDic[pawn];
             if (!cachedCountDic.ContainsKey(pawn)) cachedCountDic[pawn] = 0;
 
             if (pawn.Map != null && !pawn.IsPrisoner)

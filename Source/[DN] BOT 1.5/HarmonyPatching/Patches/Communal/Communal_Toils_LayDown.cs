@@ -39,7 +39,7 @@ namespace More_Traits.HarmonyPatching.Patches.Communal
             actor.needs.mood.thoughts.memories.RemoveMemoriesOfDef(BOT_ThoughtDefOf.BOT_Communal_SleptInBarracks);
             actor.needs.mood.thoughts.memories.RemoveMemoriesOfDef(BOT_ThoughtDefOf.BOT_Communal_SleptInBedroom);
 
-            if (building_Bed != null) return;
+            if (building_Bed == null) return;
             if (building_Bed.ForPrisoners) return;
             if (building_Bed != actor.ownership.OwnedBed) return;
             if (building_Bed.CostListAdjusted().Count == 0) return;

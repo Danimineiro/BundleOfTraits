@@ -19,4 +19,19 @@
 			<li>BOT_Claustrophobic</li>
 		</requiredTraits>
 	</ThoughtDef>
+	
+	<ThoughtDef>
+		<defName>BOT_ClaustrophobicBreakRecovered</defName>
+		<durationDays>1</durationDays>
+		<stages>
+			<li>
+				<label>It's finally over</label>
+				<description>I thought it was never going to end..</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_Claustrophobic</li>
+		</requiredTraits>
+	</ThoughtDef>
 </Defs>

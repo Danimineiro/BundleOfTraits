@@ -10,7 +10,7 @@ using Verse;
 
 namespace More_Traits.MentalStates.MentalStateWorkers
 {
-    internal class MentalStateWorker_ClaustrophobicPanic : MentalBreakWorker
+    public class MentalStateWorker_ClaustrophobicPanic : MentalBreakWorker
     {
         public override bool BreakCanOccur(Pawn pawn)
         {

@@ -51,7 +51,6 @@ namespace More_Traits.HarmonyPatching.Patches.Nyctophobe
                 }
 
                 driver.asleep = false;
-                curJob.forceSleep = true;
                 actor.jobs.posture = PawnPosture.LayingInBedFaceUp;
                 PortraitsCache.SetDirty(actor);
                 actor.TryGainMemory(BOT_ThoughtDefOf.BOT_NyctophobiaCantSleep, 0);

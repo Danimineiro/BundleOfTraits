@@ -18,6 +18,7 @@ namespace More_Traits.HarmonyPatching.Patches.Pacifist
             if (thoughtsKind != PawnDiedOrDownedThoughtsKind.Died) return;
             if (!(damageInfo.Instigator is Pawn instigator)) return;
             if (instigator == victim) return;
+            if (victim.RaceProps.Animal) return;
             if (!instigator.HasTrait(BOT_TraitDefOf.BOT_Pacifist)) return;
 
             outIndividualThoughts.Add(new IndividualThoughtToAdd(BOT_ThoughtDefOf.BOT_Pacifist_KilledAnimal, instigator, null));

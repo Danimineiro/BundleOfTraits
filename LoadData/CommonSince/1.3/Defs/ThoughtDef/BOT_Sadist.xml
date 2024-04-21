@@ -42,7 +42,7 @@
 			<li>
 				<label>sadist organ harvested</label>
 				<description>A little bit of this, a little bit of that.. Isn't it great making them into something more valueable?</description>
-				<baseMoodEffect>4</baseMoodEffect>
+				<baseMoodEffect>8</baseMoodEffect>
 			</li>
 		</stages>
 	</ThoughtDef>

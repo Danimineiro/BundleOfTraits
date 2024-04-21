@@ -11,13 +11,14 @@ namespace More_Traits.InteractionWorkers
 {
     public class ComedianInteractionWorker : InteractionWorker
     {
+        private const float BaseSelectionWeight = 0.1f;
+
         public override float RandomSelectionWeight(Pawn initiator, Pawn recipient)
         {
             if (!initiator.story.traits.HasTrait(BOT_TraitDefOf.BOT_Comedian)) return 0f;
 
             return BaseSelectionWeight * compatibilityFactorCurve.Evaluate(initiator.relations.CompatibilityWith(recipient));
         }
-        private const float BaseSelectionWeight = 0.1f;
 
         private readonly SimpleCurve compatibilityFactorCurve = new SimpleCurve
         {

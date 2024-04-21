@@ -6,6 +6,6 @@
 		<baseCommonality>12</baseCommonality>
 		<intensity>Extreme</intensity>
 		<requiredTrait>BOT_Claustrophobic</requiredTrait>
-		<workerClass>More_Traits.MentalStates.MentalStateWorkers.MentalStateWorker_Claustrophobic</workerClass>
+		<workerClass>More_Traits.MentalStates.MentalStateWorkers.MentalStateWorker_ClaustrophobicPanic</workerClass>
 	</MentalBreakDef>
 </Defs>

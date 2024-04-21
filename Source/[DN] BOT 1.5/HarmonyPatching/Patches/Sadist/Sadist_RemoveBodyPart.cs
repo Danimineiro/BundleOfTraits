@@ -12,7 +12,7 @@ namespace More_Traits.HarmonyPatching.Patches.Sadist
 {
     public static class Sadist_RemoveBodyPart
     {
-        public static void ApplyThoughtsPatch(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
+        public static void ApplyThoughtsPatch(Pawn pawn, Pawn billDoer)
         {
             if (billDoer.needs.mood == null) return;
             if (!billDoer.HasTrait(BOT_TraitDefOf.BOT_Sadist)) return;

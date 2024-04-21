@@ -14,11 +14,11 @@ namespace More_Traits.ThoughtWorkers
     {
         protected override ThoughtState CurrentStateInternal(Pawn pawn)
         {
-            if (IsColdLover(pawn)) return ThoughtState.Inactive;
+            //if (IsColdLover(pawn)) return ThoughtState.Inactive;
 
             float comfTempDiff = pawn.AmbientTemperature - pawn.GetStatValue(StatDefOf.ComfyTemperatureMax, true);
+            if (pawn.AmbientTemperature > 25f && comfTempDiff < 10f && !IsColdLover(pawn)) return ThoughtState.ActiveAtStage(4);
             if (comfTempDiff <= 0f) return ThoughtState.Inactive; //Temperatur is higher than comfy levels
-            if (pawn.AmbientTemperature < 5f && comfTempDiff < 10f) return ThoughtState.ActiveAtStage(4);
 
             int thoughtStage = Math.Min(3, ((int)comfTempDiff) / 10);
             if (ModsConfig.IdeologyActive && pawn.Ideo.HasPrecept(PreceptDefOf.Temperature_Tough))
