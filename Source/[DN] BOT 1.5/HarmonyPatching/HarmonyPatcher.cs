@@ -13,6 +13,7 @@ using More_Traits.HarmonyPatching.Patches.Apathetic;
 using System;
 using More_Traits.HarmonyPatching.Patches.Communal;
 using More_Traits.HarmonyPatching.Patches.Sadist;
+using More_Traits.HarmonyPatching.Patches.Chinophile;
 
 namespace More_Traits.HarmonyPatching
 {
@@ -44,6 +45,7 @@ namespace More_Traits.HarmonyPatching
             harmony.Patch(Method(typeof(ThoughtWorker), nameof(ThoughtWorker.MoodMultiplier)), postfix: new HarmonyMethod(typeof(Hyperalgesia_Thoughts), nameof(Hyperalgesia_Thoughts.MoodMultiplier_Post)));
             harmony.Patch(Method(typeof(TraitSet), nameof(TraitSet.GainTrait)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.GainTrait)));
             harmony.Patch(Method(typeof(Pawn), nameof(Pawn.SpawnSetup)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.SpawnSetup)));
+            harmony.Patch(Method(typeof(Pawn), "TicksPerMove"), postfix: new HarmonyMethod(typeof(Chinophile_Pawn), nameof(Chinophile_Pawn.TicksPerMove)));
 
             VSEPatches(harmony);
             MadSkillsPatches(harmony);

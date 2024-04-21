@@ -73,22 +73,6 @@
 		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
 	</ThoughtDef>
 
-	<!-- Chionophile Thoughts -->
-	<ThoughtDef>
-		<defName>BOT_ChionophileLikesSnow</defName>
-		<workerClass>More_Traits.BOT_ThoughtWorker_ChionophileLikesSnow</workerClass>
-		<stages>
-			<li>
-				<label>chionophile enjoying the weather</label>
-				<description>It's so beautiful when it's snowing. I could watch it all day.</description>
-				<baseMoodEffect>8</baseMoodEffect>
-			</li>
-		</stages>
-		<requiredTraits>
-			<li>BOT_Chionophile</li>
-		</requiredTraits>
-	</ThoughtDef>
-
 	<ThoughtDef>
 		<defName>BOT_GunCrazyHoldingMelee</defName>
 		<workerClass>More_Traits.BOT_ThoughtWorker_IsCarryingMeleeWeapon</workerClass>
