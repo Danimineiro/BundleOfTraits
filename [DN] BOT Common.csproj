@@ -16,5 +16,9 @@
 	  <EmbeddedResource Remove="Source\**" />
 	  <None Remove="Source\**" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="LoadData\CommonSince\1.4\Defs\" />
+	</ItemGroup>
 	
 </Project>

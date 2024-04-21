@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 	<ThingDef ParentName="MoteBase">
-		<defName>BOT_Mote_Claustrophobic</defName>
+		<defName>BOT_Claustrophobic_Mote</defName>
 		<graphicData>
 			<texPath>Things/Mote/IncapIcon</texPath>
 		</graphicData>

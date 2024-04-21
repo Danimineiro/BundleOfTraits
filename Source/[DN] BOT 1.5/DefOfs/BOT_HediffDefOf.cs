@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace More_Traits.DefOfs
         static BOT_HediffDefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(HediffDefOf));
 
         public static HediffDef Burn;
+
+        public static HediffDef BOT_ClaustrophobicBreakdown;
     }
 }
