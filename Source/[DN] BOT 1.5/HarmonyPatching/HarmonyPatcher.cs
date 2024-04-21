@@ -11,6 +11,7 @@ using More_Traits.HarmonyPatching.ModCompatibility;
 using More_Traits.HarmonyPatching.Patches.Vulgar;
 using More_Traits.HarmonyPatching.Patches.Apathetic;
 using System;
+using More_Traits.HarmonyPatching.Patches.Communal;
 
 namespace More_Traits.HarmonyPatching
 {
@@ -32,6 +33,7 @@ namespace More_Traits.HarmonyPatching
             harmony.Patch(Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_ForHumanlike"), postfix: new HarmonyMethod(typeof(Pacifist_WittnessDeath), nameof(Pacifist_WittnessDeath.Postfix)));
             harmony.Patch(Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_Relations"), postfix: new HarmonyMethod(typeof(Pacifist_KilledAnimal), nameof(Pacifist_KilledAnimal.Postfix)));
             harmony.Patch(Method(typeof(Pawn_InteractionsTracker), "CheckSocialFightStart"), postfix: new HarmonyMethod(typeof(Vulgar_SocialFightStart), nameof(Vulgar_SocialFightStart.Postfix)));
+            harmony.Patch(Method(typeof(ThoughtUtility), "RemovePositiveBedroomThoughts"), postfix: new HarmonyMethod(typeof(Communal_RemoveThoughts), nameof(Communal_RemoveThoughts.Postfix)));
             harmony.Patch(Method(typeof(JobDriver_LayDown), "MakeNewToils"), postfix: new HarmonyMethod(typeof(LayDownJobDriver), nameof(LayDownJobDriver.MakeNewToils_PostFix)));
             harmony.Patch(PropertyGetter(typeof(Need), "IsFrozen"), postfix: new HarmonyMethod(typeof(Loves_Sleeping_IsFrozen), nameof(Loves_Sleeping_IsFrozen.Postfix)));
 
