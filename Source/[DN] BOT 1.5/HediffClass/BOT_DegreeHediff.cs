@@ -34,7 +34,7 @@ namespace More_Traits.HediffClass
         {
             get
             {
-                if (Find.TickManager.TicksGame % 300 != 0) return false;
+                if (pawn.IsHashIntervalTick(300)) return false;
                 return !pawn.HasTrait(traitDef);
             }
         }
