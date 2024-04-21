@@ -46,5 +46,11 @@ namespace More_Traits.DefOfs
         public static ThoughtDef BOT_ComedianBadJokeOpinionSelf;
 
         public static ThoughtDef BOT_ComedianGoodJokeOpinionSelf;
+
+        public static ThoughtDef BOT_SadistHurtHumanlike;
+
+        public static ThoughtDef BOT_SadistHarvestedOrgan;
+
+        public static ThoughtDef BOT_SadistWitnessedDamage;
     }
 }

@@ -12,6 +12,7 @@ using More_Traits.HarmonyPatching.Patches.Vulgar;
 using More_Traits.HarmonyPatching.Patches.Apathetic;
 using System;
 using More_Traits.HarmonyPatching.Patches.Communal;
+using More_Traits.HarmonyPatching.Patches.Sadist;
 
 namespace More_Traits.HarmonyPatching
 {
@@ -37,7 +38,9 @@ namespace More_Traits.HarmonyPatching
             harmony.Patch(Method(typeof(JobDriver_LayDown), "MakeNewToils"), postfix: new HarmonyMethod(typeof(LayDownJobDriver), nameof(LayDownJobDriver.MakeNewToils_PostFix)));
             harmony.Patch(PropertyGetter(typeof(Need), "IsFrozen"), postfix: new HarmonyMethod(typeof(Loves_Sleeping_IsFrozen), nameof(Loves_Sleeping_IsFrozen.Postfix)));
 
+            harmony.Patch(Method(typeof(Recipe_RemoveBodyPart), nameof(Recipe_RemoveBodyPart.ApplyThoughts)), postfix: new HarmonyMethod(typeof(Sadist_RemoveBodyPart), nameof(Sadist_RemoveBodyPart.ApplyThoughtsPatch)));
             harmony.Patch(Method(typeof(Toils_Ingest), nameof(Toils_Ingest.FinalizeIngest)), postfix: new HarmonyMethod(typeof(EclecticPalate_FinalizeIngestPatch), nameof(EclecticPalate_FinalizeIngestPatch.Postfix)));
+            harmony.Patch(Method(typeof(Pawn_StanceTracker), nameof(Pawn_StanceTracker.Notify_DamageTaken)), postfix: new HarmonyMethod(typeof(Sadist_StanceTracker), nameof(Sadist_StanceTracker.NotifyDamageTaken)));
             harmony.Patch(Method(typeof(ThoughtWorker), nameof(ThoughtWorker.MoodMultiplier)), postfix: new HarmonyMethod(typeof(Hyperalgesia_Thoughts), nameof(Hyperalgesia_Thoughts.MoodMultiplier_Post)));
             harmony.Patch(Method(typeof(TraitSet), nameof(TraitSet.GainTrait)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.GainTrait)));
             harmony.Patch(Method(typeof(Pawn), nameof(Pawn.SpawnSetup)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.SpawnSetup)));
