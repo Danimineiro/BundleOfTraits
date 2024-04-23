@@ -6,19 +6,13 @@
 		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<RootNamespace>_DN__BOT</RootNamespace>
-		<AssemblyVersion>1.1.0.2</AssemblyVersion>
-		<FileVersion>1.1.0.2</FileVersion>
+		<RootNamespace>More_Traits</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <Compile Remove="Source\**" />
 	  <EmbeddedResource Remove="Source\**" />
 	  <None Remove="Source\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="LoadData\CommonSince\1.4\Defs\" />
 	</ItemGroup>
 	
 </Project>
