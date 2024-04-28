@@ -16,7 +16,7 @@ namespace More_Traits.HarmonyPatching.ModCompatibility
         {
             if (sr.Pawn.HasTrait(BOT_TraitDefOf.BOT_Apathetic))
             {
-                __result = 0.5f;
+                __result = 1f;
                 return false;
             }
 

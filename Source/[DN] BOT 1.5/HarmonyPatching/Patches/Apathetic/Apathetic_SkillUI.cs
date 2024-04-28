@@ -22,7 +22,7 @@ namespace More_Traits.HarmonyPatching.Patches.Apathetic
         {
             if (!descriptionIsForApatheticPawn) return true;
 
-            __result = .75f;
+            __result = 1f;
             return false;
         }
     }

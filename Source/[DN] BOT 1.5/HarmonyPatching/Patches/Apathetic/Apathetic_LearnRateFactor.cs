@@ -19,7 +19,7 @@ namespace More_Traits.HarmonyPatching.Patches.Apathetic
             Pawn pawn = __instance.Pawn;
             if (!pawn.HasTrait(BOT_TraitDefOf.BOT_Apathetic)) return true;
 
-            __result = .75f;
+            __result = 1f;
             if (direct) return false;
 
             __result *= pawn.GetStatValue(StatDefOf.GlobalLearningFactor, true, -1);

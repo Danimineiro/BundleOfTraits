@@ -213,8 +213,11 @@
 				<label>apathetic</label>
 				<description>{PAWN_nameDef} has no goals in life. No dreams, motivation or passions. It's going to take a lot to break what is left of them.</description>
 				<statOffsets>
-					<MentalBreakThreshold>-0.24</MentalBreakThreshold>
+					<MentalBreakThreshold>-0.18</MentalBreakThreshold>
 				</statOffsets>
+				<statFactors>
+					<GlobalLearningFactor>0.75</GlobalLearningFactor>
+				</statFactors>
 				<!-- Inspirations are dissabled at More_Traits.TraitEdits.StartupTraitEditor
 				<disallowedInspirations>
 					<li>Frenzy_Work</li>
