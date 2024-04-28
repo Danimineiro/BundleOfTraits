@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_PyrophobiaHoldingIncendiary</defName>
+		<workerClass>ThoughtWorker_IsCarryingIncendiaryWeapon</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<requiredTraits>
+			<li>BOT_Pyrophobia</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>pyrophobic has incendiary weapon</label>
+				<description>I hate fire. Why do I need to burn things?</description>
+				<baseMoodEffect>-12</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_PyrophobiaBurned</defName>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_PyrophobiaBurned</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<requiredTraits>
+			<li>BOT_Pyrophobia</li>
+		</requiredTraits>
+		<nullifyingTraits>
+			<li>Masochist</li>
+		</nullifyingTraits>
+		<neverNullifyIfAnyTrait>
+			<li>Wimp</li>
+		</neverNullifyIfAnyTrait>
+		<stages>
+			<li>
+				<label>pyrophobic has burns</label>
+				<description>These burns remind me of scalding hot flames...</description>
+				<baseMoodEffect>-12</baseMoodEffect>
+			</li>
+			<li>
+				<label>pyrophobic has burns</label>
+				<description>These burns remind me of scalding hot flames...</description>
+				<baseMoodEffect>-8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
+	<ThoughtDef>
+		<defName>BOT_PyrophobiaNearFire</defName>
+		<workerClass>ThoughtWorker_PyromaniacNearFlames</workerClass>
+		<stackLimit>4</stackLimit>
+		<requiredTraits>
+			<li>BOT_Pyrophobia</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>horrifying fire</label>
+				<description>It's going to burn me any second.. I can't be here. I can't be here. I can't be here...</description>
+				<baseMoodEffect>-8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_PyrophobiaOnFire</defName>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_PyrophobiaOnFire</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<requiredTraits>
+			<li>BOT_Pyrophobia</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>pyrophobic burning</label>
+				<description>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</description>
+				<baseMoodEffect>-100</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>

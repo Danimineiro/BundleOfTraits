@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<HediffDef>
+		<defName>BOT_Metabolism</defName>
+		<label>metabolism</label>
+		<labelNoun>metabolism</labelNoun>
+		<description>metabolism hediff</description>
+		<hediffClass>More_Traits.HediffClass.BOT_DegreeHediff</hediffClass>
+		<isBad>false</isBad>
+		<makesSickThought>false</makesSickThought>
+		<tendable>false</tendable>
+		<makesAlert>false</makesAlert>
+		<chronic>true</chronic>
+		<scenarioCanAdd>false</scenarioCanAdd>
+		<everCurableByItem>false</everCurableByItem>
+		<stages>
+			<li>
+				<naturalHealingFactor>1.25</naturalHealingFactor>
+				<becomeVisible>true</becomeVisible>
+				<lifeThreatening>false</lifeThreatening>
+				<minSeverity>0</minSeverity>
+			</li>
+			<li>
+				<naturalHealingFactor>0.75</naturalHealingFactor>
+				<becomeVisible>true</becomeVisible>
+				<lifeThreatening>false</lifeThreatening>
+				<minSeverity>1</minSeverity>
+			</li>
+		</stages>
+		<modExtensions>
+			<li Class="More_Traits.ModExtensions.BOT_HediffExtension">
+				<traitDef>BOT_Metabolism</traitDef>
+				<stageColors>
+					<li>(86, 93, 76)</li>
+					<li>(132, 84, 72)</li>
+				</stageColors>
+			</li>
+		</modExtensions>
+	</HediffDef>
+</Defs>

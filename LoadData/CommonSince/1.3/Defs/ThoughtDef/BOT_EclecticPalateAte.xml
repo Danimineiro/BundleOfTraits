@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_EclecticPalateAte</defName>
+		<durationDays>1</durationDays>
+		<requiredTraits>
+			<li>BOT_Eclectic_Palate</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>ate meal with one ingredient</label>
+				<description>This was such a boring meal. Don't we have something more appealing?</description>
+				<baseMoodEffect>-3</baseMoodEffect>
+			</li>
+			<li>
+				<label>ate meal with two ingredients</label>
+				<description>I liked this meal. It was kinda neat.</description>
+				<baseMoodEffect>1</baseMoodEffect>
+			</li>
+			<li>
+				<label>ate meal with three ingredients</label>
+				<description>I ate a great meal, it had a nice bit of variety in it.</description>
+				<baseMoodEffect>3</baseMoodEffect>
+			</li>
+			<li>
+				<label>ate meal with four ingredients</label>
+				<description>This meal was incredible. It was very fulfilling.</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+			<li>
+				<label>ate meal with five ingredients</label>
+				<description>I ate an amazing meal, every little detail just came together in a glorious result.</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>

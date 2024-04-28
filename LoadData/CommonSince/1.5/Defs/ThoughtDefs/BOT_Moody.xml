@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_MoodyModifier</defName>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_Moody</workerClass>
+		<stages>
+			<li>
+				<label>moody pawn is very unhappy</label>
+				<description>I hate how everything is going.</description>
+				<baseMoodEffect>-10</baseMoodEffect>
+			</li>
+			<li>
+				<label>moody pawn is unhappy</label>
+				<description>I really dislike the current situation.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+			<li>
+				<label>moody pawn is happy</label>
+				<description>Today is a good day.</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+			<li>
+				<label>moody pawn is very happy</label>
+				<description>Everything has been going great!</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_Moody</li>
+		</requiredTraits>
+	</ThoughtDef>
+</Defs>

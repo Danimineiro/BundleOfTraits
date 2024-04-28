@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_GunCrazyHoldingMelee</defName>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_IsCarryingMeleeWeapon</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<requiredTraits>
+			<li>BOT_GunCrazy</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>gun crazy has melee weapon</label>
+				<description>What is this, it can't even shoot?</description>
+				<baseMoodEffect>-10</baseMoodEffect>
+			</li>
+			<li>
+				<label>gun crazy has ranged weapon</label>
+				<description>For my neutral special, I wield a gun!</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>

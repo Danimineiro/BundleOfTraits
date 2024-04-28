@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<InteractionDef>
+		<defName>BOT_ComedianJoke</defName>
+		<label>joke</label>
+		<workerClass>More_Traits.InteractionWorkers.ComedianInteractionWorker</workerClass>
+		<symbol>Things/Mote/SpeechSymbols/Speech</symbol>
+		<initiatorXpGainSkill>Social</initiatorXpGainSkill>
+		<initiatorXpGainAmount>20</initiatorXpGainAmount>
+		<logRulesInitiator>
+			<rulesStrings>
+				<li>r_logentry->[INITIATOR_nameDef] [joked] [target]'s [PersonalCharacteristic].</li>
+				<li>r_logentry->[INITIATOR_nameDef] funnily compared [Curious] [Enemy]s to [Badass] [Animal]s.</li>
+				<li>r_logentry->[INITIATOR_nameDef] [joked] [TalkTopicHeavy] to [target].</li>
+				<li>r_logentry->[INITIATOR_nameDef] [joked] [target] turning into [turnInto].</li>
+				<li>r_logentry->[INITIATOR_nameDef] [joked] [Concept_Badass] being [Badass].</li>
+
+				<li>target(p=4)->[RECIPIENT_nameDef]</li>
+				<li>target->[RECIPIENT_nameDef]'s [PersonFamily]</li>
+
+				<li>joked->joked about</li>
+				<li>joked->made a joke about</li>
+				<li>joked->funnily described</li>
+				<li>joked->ridiculously described</li>
+				<li>joked->satirically insulted</li>
+				<li>joked->ironically mentioned</li>
+				<li>joked->funnily disrespected</li>
+				<li>joked->dramatically described</li>
+				<li>joked->inventively described</li>
+
+				<li>turnInto->(p=0.5)one [Angsty] [Animal]</li>
+				<li>turnInto->(p=0.5)one [Badass] [Animal]</li>
+				<li>turnInto(p=0.2)->a pickle</li>
+				<li>turnInto->a carrot</li>
+				<li>turnInto->an onion</li>
+				<li>turnInto->a turnip</li>
+				<li>turnInto->a gourd</li>
+				<li>turnInto->a pumpkin</li>
+				<li>turnInto->a cauliflower</li>
+				<li>turnInto->a bell pepper</li>
+				<li>turnInto->a pepper</li>
+				<li>turnInto->a mushroom</li>
+				<li>turnInto->a pea</li>
+				<li>turnInto->an artichoke</li>
+				<li>turnInto->an eggplant</li>
+				<li>turnInto->a lentil</li>
+				<li>turnInto->a cabbage</li>
+				<li>turnInto->a beet</li>
+				<li>turnInto->a corn cob</li>
+				<li>turnInto->a yam</li>
+				<li>turnInto->a zucchini</li>
+			</rulesStrings>
+		</logRulesInitiator>
+	</InteractionDef>
+</Defs>

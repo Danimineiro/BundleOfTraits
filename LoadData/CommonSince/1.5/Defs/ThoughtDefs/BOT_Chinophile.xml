@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_ChionophileLikesSnow</defName>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_ChinophileSnowing</workerClass>
+		<stages>
+			<li>
+				<label>chionophile enjoying the weather</label>
+				<description>It's so beautiful when it's snowing. I could watch it all day.</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_Chionophile</li>
+		</requiredTraits>
+	</ThoughtDef>
+</Defs>
