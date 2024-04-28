@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_Narcoleptic_Awake</defName>
+		<durationDays>0.25</durationDays>
+		<stackLimit>1</stackLimit>
+		<requiredTraits>
+			<li>BOT_Narcoleptic</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>woke up from narcoleptic sleep</label>
+				<description>I... fell asleep</description>
+				<baseMoodEffect>-2</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>

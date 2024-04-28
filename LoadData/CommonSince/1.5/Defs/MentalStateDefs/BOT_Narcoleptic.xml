@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<MentalStateDef>
+		<defName>BOT_NarcolepticAsleep</defName>
+		<label>Narcoleptic</label>
+		<description>{PAWN_nameDef} fell asleep due to {PAWN_possessive} narcolepsy.</description>
+		<baseInspectLine>The pawn is asleep.</baseInspectLine>
+		<category>Misc</category>
+		<inCaravanCanDo>false</inCaravanCanDo>
+		<downedCanDo>true</downedCanDo>
+		<blockRandomInteraction>true</blockRandomInteraction>
+		<drugCategory>None</drugCategory>
+		<modExtensions>
+			<li Class="More_Traits.ModExtensions.BOT_MentalStateExtension">
+				<traitDef>BOT_Narcoleptic</traitDef>
+			</li>
+		</modExtensions>
+		<recoveryMtbDays>0.01</recoveryMtbDays>
+		<recoveryMessage>{PAWN} woke up from his narcoleptic sleep.</recoveryMessage>
+		<minTicksBeforeRecovery>300</minTicksBeforeRecovery>
+		<maxTicksBeforeRecovery>10000</maxTicksBeforeRecovery>
+		<stateClass>More_Traits.MentalStates.MentalStates.BOT_NarcolepticAsleepState</stateClass>
+		<workerClass>More_Traits.MentalStates.MentalStateWorkers.BOT_TraitMentalStateWorker</workerClass>
+		<stopsJobs>false</stopsJobs>
+	</MentalStateDef>
+</Defs>

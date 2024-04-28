@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_LovesSleepWellRested</defName>
+		<validWhileDespawned>true</validWhileDespawned>
+		<durationDays>0.25</durationDays>
+		<requiredTraits>
+			<li>BOT_Loves_Sleeping</li>
+		</requiredTraits>
+		<stages>
+			<li>
+				<label>sleep lover well rested</label>
+				<description>I slept really nicely last night.</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>

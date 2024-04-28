@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_EnvironmentCold</defName>
+		<workerClass>More_Traits.BOT_ThoughtWorker_Cold</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<stages>
+			<li>
+				<label>chilly</label>
+				<description>I'm uncomfortably cold.</description>
+				<baseMoodEffect>-8</baseMoodEffect>
+			</li>
+			<li>
+				<label>cold</label>
+				<description>I'm so cold, I'm shivering.</description>
+				<baseMoodEffect>-16</baseMoodEffect>
+			</li>
+			<li>
+				<label>numbing cold</label>
+				<description>I can't stop shivering. My teeth are chattering. All I can think of is getting warm.</description>
+				<baseMoodEffect>-24</baseMoodEffect>
+			</li>
+			<li>
+				<label>absolutely freezing</label>
+				<description>My teeth are chattering so hard I can barely speak. My toes are numb. I need to get warm.</description>
+				<baseMoodEffect>-32</baseMoodEffect>
+			</li>
+			<li>
+				<label>loving the cold</label>
+				<description>It's cold and I'm chilly, just how I like it!</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_Temperature_Love</li>
+		</requiredTraits>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_EnvironmentHot</defName>
+		<workerClass>More_Traits.BOT_ThoughtWorker_Hot</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
+		<stages>
+			<li>
+				<label>sweaty</label>
+				<description>It's too hot here. I'm sweating.</description>
+				<baseMoodEffect>-8</baseMoodEffect>
+			</li>
+			<li>
+				<label>hot</label>
+				<description>It's way too hot here. If I could just have a breath of cool air...</description>
+				<baseMoodEffect>-16</baseMoodEffect>
+			</li>
+			<li>
+				<label>sweltering hot</label>
+				<description>I feel like I'm in an oven! I'm not sure how long I can handle this.</description>
+				<baseMoodEffect>-24</baseMoodEffect>
+			</li>
+			<li>
+				<label>blistering hot</label>
+				<description>This place is searing hot. I think I could die from this heat!</description>
+				<baseMoodEffect>-32</baseMoodEffect>
+			</li>
+			<li>
+				<label>loving the heat</label>
+				<description>It's hot and I'm sweaty, just how I like it!</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_Temperature_Love</li>
+		</requiredTraits>
+	</ThoughtDef>
+</Defs>

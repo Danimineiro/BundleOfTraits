@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+	<!-- Normal food consumption thoughts -->
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="AteLavishMeal"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteLavishMeal"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Dysgeusia</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteLavishMeal"]/nullifyingTraits</xpath>
+			<value>
+				<li>BOT_Dysgeusia</li>
+			</value>
+		</match>
+	</Operation>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="AteFineMeal"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteFineMeal"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Dysgeusia</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteFineMeal"]/nullifyingTraits</xpath>
+			<value>
+				<li>BOT_Dysgeusia</li>
+			</value>
+		</match>
+	</Operation>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="AteRawFood"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteRawFood"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Dysgeusia</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteRawFood"]/nullifyingTraits</xpath>
+			<value>
+				<li>BOT_Dysgeusia</li>
+			</value>
+		</match>
+	</Operation>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="AteKibble"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteKibble"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Dysgeusia</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteKibble"]/nullifyingTraits</xpath>
+			<value>
+				<li>BOT_Dysgeusia</li>
+			</value>
+		</match>
+	</Operation>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="AteInsectMeatDirect"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteInsectMeatDirect"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Dysgeusia</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteInsectMeatDirect"]/nullifyingTraits</xpath>
+			<value>
+				<li>BOT_Dysgeusia</li>
+			</value>
+		</match>
+	</Operation>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="AteInsectMeatAsIngredient"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteInsectMeatAsIngredient"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Dysgeusia</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteInsectMeatAsIngredient"]/nullifyingTraits</xpath>
+			<value>
+				<li>BOT_Dysgeusia</li>
+			</value>
+		</match>
+	</Operation>
+
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThoughtDef[defName="AteNutrientPasteMeal"]/nullifyingTraits</xpath>
+		<nomatch Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteNutrientPasteMeal"]</xpath>
+			<value>
+				<nullifyingTraits>
+					<li>BOT_Dysgeusia</li>
+				</nullifyingTraits>
+			</value>
+		</nomatch>
+		<match Class="PatchOperationAdd">
+			<xpath>/Defs/ThoughtDef[defName="AteNutrientPasteMeal"]/nullifyingTraits</xpath>
+			<value>
+				<li>BOT_Dysgeusia</li>
+			</value>
+		</match>
+	</Operation>
+
+	<!-- Royality food needs -->
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>Royality</li>
+		</mods>
+		<match Class="PatchOperationConditional">
+			<xpath>/Defs/ThoughtDef[defName="AteFoodInappropriateForTitle"]/nullifyingTraits</xpath>
+			<nomatch Class="PatchOperationAdd">
+				<xpath>/Defs/ThoughtDef[defName="AteFoodInappropriateForTitle"]</xpath>
+				<value>
+					<nullifyingTraits>
+						<li>BOT_Dysgeusia</li>
+					</nullifyingTraits>
+				</value>
+			</nomatch>
+			<match Class="PatchOperationAdd">
+				<xpath>/Defs/ThoughtDef[defName="AteFoodInappropriateForTitle"]/nullifyingTraits</xpath>
+				<value>
+					<li>BOT_Dysgeusia</li>
+				</value>
+			</match>
+		</match>
+	</Operation>
+</Patch>

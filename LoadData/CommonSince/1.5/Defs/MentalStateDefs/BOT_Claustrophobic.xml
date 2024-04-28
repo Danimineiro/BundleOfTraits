@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<MentalStateDef ParentName = "BaseMentalState">
+		<defName>BOT_ClaustrophobicBreak</defName>
+		<stateClass>More_Traits.MentalStates.MentalStates.MentalState_ClaustrophobicState</stateClass>
+		<workerClass>More_Traits.MentalStates.MentalStateWorkers.MentalStateWorker_ClaustrophobicPanic</workerClass>
+		<label>claustrophobic panic attack</label>
+		<category>Misc</category>
+		<blockRandomInteraction>true</blockRandomInteraction>
+		<blockInteractionInitiationExcept></blockInteractionInitiationExcept>
+		<blockInteractionRecipientExcept>
+			<li>Insult</li>
+		</blockInteractionRecipientExcept>
+		<moodRecoveryThought>BOT_ClaustrophobicBreakRecovered</moodRecoveryThought>
+		<blockNormalThoughts>true</blockNormalThoughts>
+		<nameColor>(0.6171, 0.2578, 0.957)</nameColor>
+		<beginLetter>{0} has gone into a claustrophobic panic attack.\n\n[PAWN_pronoun] will experience severe symptoms related to it.</beginLetter>
+		<beginLetterDef>ThreatSmall</beginLetterDef>
+		<minTicksBeforeRecovery>10000</minTicksBeforeRecovery>
+		<maxTicksBeforeRecovery>30000</maxTicksBeforeRecovery>
+		<recoveryMtbDays>0.3</recoveryMtbDays>
+		<recoveryMessage>{0}'s panic attack has ended.</recoveryMessage>
+		<baseInspectLine>Mental state: Claustrophobic panic attack</baseInspectLine>
+		<stateEffecter>BOT_ClaustrophobicEffector</stateEffecter>
+		<tale>BOT_ClaustrophobicTale</tale>
+		<recoverFromSleep>true</recoverFromSleep>
+		<unspawnedNotInCaravanCanDo>true</unspawnedNotInCaravanCanDo>
+	</MentalStateDef>
+</Defs>

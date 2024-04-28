@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<TraitDef>
+		<defName>BOT_Metabolism</defName>
+		<commonality>0.8</commonality>
+		<degreeDatas>
+			<li>
+				<label>fast metabolism</label>
+				<description>{PAWN_nameDef}'s body works at a faster rate than a normal person, letting them heal faster at the cost of getting hungry quicker.</description>
+				<hungerRateFactor>1.25</hungerRateFactor>
+				<degree>0</degree>
+			</li>
+			<li>
+				<label>slow metabolism</label>
+				<description>{PAWN_nameDef}'s body works at a slower rate than a normal person, healing much slower as a result. At least they don't eat as much.</description>
+				<hungerRateFactor>0.75</hungerRateFactor>
+				<degree>1</degree>
+			</li>   
+		</degreeDatas>
+		<modExtensions>
+			<li Class="More_Traits.ModExtensions.BOT_TraitExtension">
+				<hediffDef>BOT_Metabolism</hediffDef>
+			</li>
+		</modExtensions>
+	</TraitDef>
+  
+	<TraitDef>
+		<defName>BOT_Temperature_Love</defName>
+		<commonality>0.8</commonality>
+		<degreeDatas>
+			<li>
+				<label>thermophile</label>
+				<description>{PAWN_nameDef} just loves the heat and won't suffer any negative thoughts related to being warm. {PAWN_pronoun} despises being cold, though.</description>
+				<degree>-1</degree>
+				<statOffsets>
+					<ComfyTemperatureMax>5.0</ComfyTemperatureMax>
+				</statOffsets>
+			</li>
+			<li>
+				<label>cryophile</label>
+				<description>{PAWN_nameDef} just loves the cold and won't suffer any negative thoughts related to being cold. {PAWN_pronoun} despises being warm, though.</description>
+				<degree>1</degree>
+				<statOffsets>
+					<ComfyTemperatureMin>-5.0</ComfyTemperatureMin>
+				</statOffsets>
+			</li>   
+		</degreeDatas>
+		<conflictingTraits>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_HeatInclined</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_ColdInclined</li>
+		</conflictingTraits>
+  </TraitDef>
+</Defs>

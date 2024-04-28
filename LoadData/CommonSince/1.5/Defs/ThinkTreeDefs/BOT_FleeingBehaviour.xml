@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThinkTreeDef>
+		<defName>Bot_FleeingBehaviour</defName>
+		<modExtensions>
+			<li Class="More_Traits.ModExtensions.BOT_ThinkTreeExtension">
+				<traitContainers>
+					<BOT_Pyrophobia>
+						<thingDefs>
+							<li>Fire</li>
+						</thingDefs>
+					</BOT_Pyrophobia>
+					<BOT_Entomophobia>
+						<devNotes>
+							<li>insect</li>
+						</devNotes>
+						<ignoreDraft>true</ignoreDraft>
+					</BOT_Entomophobia>
+				</traitContainers>
+			</li>
+		</modExtensions>
+		<thinkRoot Class="More_Traits.ThinkNodes.BOT_JobGiverFleeing" />
+	</ThinkTreeDef>
+</Defs>
