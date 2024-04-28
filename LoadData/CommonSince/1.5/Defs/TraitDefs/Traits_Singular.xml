@@ -471,7 +471,7 @@
 				<label>congenital analgesia</label>
 				<description>{PAWN_nameDef} was born without the ability to feel pain. {PAWN_pronoun} is unable to experience psychic phenomena as a side effect.</description>
 				<statFactors>
-					<PsychicSensitivity>-1</PsychicSensitivity>
+					<PsychicSensitivity>0</PsychicSensitivity>
 				</statFactors>
 				<painFactor>0</painFactor>
 			</li>

@@ -3,6 +3,7 @@
 	<MentalStateDef ParentName = "BaseMentalState">
 		<defName>BOT_ClaustrophobicBreak</defName>
 		<stateClass>More_Traits.MentalStates.MentalStates.MentalState_ClaustrophobicState</stateClass>
+		<workerClass>More_Traits.MentalStates.MentalStateWorkers.MentalStateWorker_ClaustrophobicPanic</workerClass>
 		<label>claustrophobic panic attack</label>
 		<category>Misc</category>
 		<blockRandomInteraction>true</blockRandomInteraction>
