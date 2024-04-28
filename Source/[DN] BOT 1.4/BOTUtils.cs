@@ -88,43 +88,7 @@ namespace More_Traits
 		public static int StageOfTwenty(int n)
         {
 			if (n > 20) n = 20;
-
-			switch (n)
-			{
-				case 20:
-					return 11;
-				case 19:
-				case 18:
-					return 10;
-				case 17:
-				case 16:
-					return 9;
-				case 15:
-				case 14:
-					return 8;
-				case 13:
-				case 12:
-					return 7;
-				case 11:
-				case 10:
-					return 6;
-				case 9:
-				case 8:
-					return 5;
-				case 7:
-				case 6:
-					return 4;
-				case 5:
-				case 4:
-					return 3;
-				case 3:
-				case 2:
-					return 2;
-				case 1:
-					return 1;
-				default:
-					return 0;
-			}
+			return n > 0 ? n / 2 + 1 : 0;
 		}
 	}
 }

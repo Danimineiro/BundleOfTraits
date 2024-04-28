@@ -144,36 +144,30 @@ namespace More_Traits
 			if (actor.GetRoom(RegionType.Set_All).PsychologicallyOutdoors || building_Bed == null || building_Bed.CostListAdjusted().Count == 0) return;
 
 			if (building_Bed != null && building_Bed == actor.ownership.OwnedBed && !building_Bed.ForPrisoners && !actor.HasTrait(TraitDefOf.Ascetic))
-			{
-				ThoughtDef thoughtDef = null;
-				if (building_Bed.GetRoom(RegionType.Set_All).Role == RoomRoleDefOf.Bedroom)
-				{
-					thoughtDef = BOTThoughtDefOf.BOT_Communal_SleptInBedroom;
-				}
-				else if (building_Bed.GetRoom(RegionType.Set_All).Role == RoomRoleDefOf.Barracks)
-				{
-					thoughtDef = BOTThoughtDefOf.BOT_Communal_SleptInBarracks;
-				}
-				if (thoughtDef != null)
-				{
-					int scoreStageIndex = RoomStatDefOf.Impressiveness.GetScoreStageIndex(building_Bed.GetRoom(RegionType.Set_All).GetStat(RoomStatDefOf.Impressiveness));
-					if (thoughtDef.stages[scoreStageIndex] != null)
-					{
-						int owners = 0;
+            {
+                ThoughtDef thoughtDef = null;
+                if (building_Bed.GetRoom(RegionType.Set_All).Role == RoomRoleDefOf.Bedroom)
+                {
+                    thoughtDef = BOTThoughtDefOf.BOT_Communal_SleptInBedroom;
+                }
+                else if (building_Bed.GetRoom(RegionType.Set_All).Role == RoomRoleDefOf.Barracks)
+                {
+                    thoughtDef = BOTThoughtDefOf.BOT_Communal_SleptInBarracks;
+                }
+                if (thoughtDef == null) return;
 
-						foreach (Building_Bed bed in building_Bed.GetRoom(RegionType.Set_All).ContainedBeds)
-						{
-							owners += bed.OwnersForReading.Count;
-						}
+                int scoreStageIndex = RoomStatDefOf.Impressiveness.GetScoreStageIndex(building_Bed.GetRoom(RegionType.Set_All).GetStat(RoomStatDefOf.Impressiveness));
+				if (thoughtDef.stages[scoreStageIndex] == null) return;
 
-						int nrOfOthers = Mathf.Clamp(owners - 1, 0, BOTThoughtDefOf.BOT_CommunalSharing.stages.Count - 1);
+                int owners = -1;
+                foreach (Building_Bed bed in building_Bed.GetRoom(RegionType.Set_All).ContainedBeds) owners += bed.OwnersForReading.Count;
 
-						actor.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_CommunalSharing, BOTUtils.StageOfTwenty(nrOfOthers)));
-						actor.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(thoughtDef, scoreStageIndex));
-					}
-				}
-			}
-		}
+                int nrOfOthers = Mathf.Clamp(owners, 0, 20);
+
+                actor.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(BOTThoughtDefOf.BOT_CommunalSharing, BOTUtils.StageOfTwenty(nrOfOthers)));
+                actor.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(thoughtDef, scoreStageIndex));
+            }
+        }
 	}
 
 	[HarmonyPatch(typeof(ThoughtUtility), "RemovePositiveBedroomThoughts")]
