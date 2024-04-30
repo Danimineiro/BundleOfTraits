@@ -17,11 +17,12 @@ namespace More_Traits.HarmonyPatching.Patches.Eclectic
         {
             if (!(ingester.CurJob.GetTarget(ingestibleInd).Thing is Thing food)) return;
             if (!(food.def.IsNutritionGivingIngestible && food.def.ingestible.IsMeal)) return;
+            if (!ingester.HasTrait(BOT_TraitDefOf.BOT_Eclectic_Palate)) return;
 
             void action()
             {
-                List<ThingDef> ingredients = food.TryGetComp<CompIngredients>().ingredients;
-                int nrOfIngredients = Math.Min(BOT_ThoughtDefOf.BOT_EclecticPalateAte.stages.Count - 1, Math.Max(0, ingredients.Count - 1));
+                int ingredientsCount = food.TryGetComp<CompIngredients>()?.ingredients?.Count ?? 0;
+                int nrOfIngredients = Math.Min(BOT_ThoughtDefOf.BOT_EclecticPalateAte.stages.Count - 1, Math.Max(0, ingredientsCount - 1));
 
                 ingester.TryGainMemory(BOT_ThoughtDefOf.BOT_EclecticPalateAte, nrOfIngredients);
             }
