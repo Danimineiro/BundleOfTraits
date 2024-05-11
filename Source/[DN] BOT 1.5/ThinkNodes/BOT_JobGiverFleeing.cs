@@ -36,6 +36,8 @@ namespace More_Traits.ThinkNodes
 
         protected override Job TryGiveJob(Pawn pawn)
         {
+            if (!pawn.Spawned) return null;
+
             List<TraitDef> fleeTraits = GetTraits(pawn, out bool ignoreDrafted);
             int traitCount = fleeTraits.Count;
 
