@@ -32,7 +32,7 @@ namespace More_Traits.HarmonyPatching.Patches.LovesSleeping
 
                 //We're somehow at ~50% rest gain
                 float recGain = bed.GetStatValue(StatDefOf.BedRestEffectiveness) * actor.GetStatValue(StatDefOf.RestRateMultiplier) * ExtraMult;
-                actor.needs.joy.GainJoy(recGain, BOT_JoyKindDefOf.BOT_LovesSleepSleeping);
+                actor.needs.joy?.GainJoy(recGain, BOT_JoyKindDefOf.BOT_LovesSleepSleeping);
             }
 
             void finishAction()

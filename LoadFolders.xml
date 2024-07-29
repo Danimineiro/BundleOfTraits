@@ -7,13 +7,11 @@
 	</v1.3>
 	<v1.4>
 		<li>LoadData/CommonSince/1.3</li>
-		<li>LoadData/CommonSince/1.4</li>
 		<li>LoadData/CommonTill/1.4</li>
 		<li>LoadData/VersionSpecific/1.4</li>
 	</v1.4>
 	<v1.5>
 		<li>LoadData/CommonSince/1.3</li>
-		<li>LoadData/CommonSince/1.4</li>
 		<li>LoadData/CommonSince/1.5</li>
 		<li>LoadData/VersionSpecific/1.5</li>
 	</v1.5>
