@@ -2,11 +2,6 @@
 using More_Traits.DefOfs;
 using More_Traits.Extensions;
 using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace More_Traits.HarmonyPatching.Patches.Vulgar
@@ -18,7 +13,7 @@ namespace More_Traits.HarmonyPatching.Patches.Vulgar
             if (!__result) return;
             if (interaction != InteractionDefOf.Insult) return;
 
-            Pawn recipient = Traverse.Create(__instance).Field("pawn").GetValue() as Pawn;
+            Pawn recipient = (Pawn)Traverse.Create(__instance).Field("pawn").GetValue();
             __result = !recipient.HasTrait(BOT_TraitDefOf.BOT_Vulgar);
         }
     }

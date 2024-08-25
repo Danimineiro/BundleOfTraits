@@ -1,19 +1,19 @@
 ﻿using static HarmonyLib.AccessTools;
-using More_Traits.HarmonyPatching.Patches;
-using More_Traits.HarmonyPatching.Patches.Pacifist;
-using More_Traits.HarmonyPatching.Patches.Eclectic;
-using More_Traits.HarmonyPatching.Patches.LovesSleeping;
 using HarmonyLib;
 using RimWorld;
 using Verse;
-using More_Traits.HarmonyPatching.Patches.Hyperalgesia;
-using More_Traits.HarmonyPatching.ModCompatibility;
-using More_Traits.HarmonyPatching.Patches.Vulgar;
-using More_Traits.HarmonyPatching.Patches.Apathetic;
 using System;
-using More_Traits.HarmonyPatching.Patches.Communal;
+using More_Traits.HarmonyPatching.Patches.Apathetic;
 using More_Traits.HarmonyPatching.Patches.Sadist;
+using More_Traits.HarmonyPatching.Patches.Communal;
+using More_Traits.HarmonyPatching.Patches.Vulgar;
+using More_Traits.HarmonyPatching.Patches;
+using More_Traits.HarmonyPatching.Patches.Eclectic;
+using More_Traits.HarmonyPatching.Patches.LovesSleeping;
+using More_Traits.HarmonyPatching.Patches.Pacifist;
+using More_Traits.HarmonyPatching.Patches.Hyperalgesia;
 using More_Traits.HarmonyPatching.Patches.Chinophile;
+using More_Traits.HarmonyPatching.ModCompatibility;
 
 namespace More_Traits.HarmonyPatching
 {
@@ -26,7 +26,7 @@ namespace More_Traits.HarmonyPatching
 
         static HarmonyPatcher()
         {
-            Harmony harmony = new Harmony("BOT_Patcher");
+            Harmony harmony = new("BOT_Patcher");
 
             harmony.Patch(Method(typeof(SkillRecord), nameof(SkillRecord.LearnRateFactor)), prefix: new HarmonyMethod(typeof(Apathetic_LearnRateFactor), nameof(Apathetic_LearnRateFactor.LearnRateFactor)));
             harmony.Patch(Method(typeof(SkillUI), nameof(SkillUI.GetLearningFactor)), prefix: new HarmonyMethod(typeof(Apathetic_SkillUI), nameof(Apathetic_SkillUI.GetLearningFactor_Prefix)));
@@ -54,7 +54,7 @@ namespace More_Traits.HarmonyPatching
 
         private static void MadSkillsPatches(Harmony _)
         {
-            if(!ModLister.HasActiveModWithName("Mad Skills")) return;
+            if (!ModLister.HasActiveModWithName("Mad Skills")) return;
             madSkillsSaturatedXPMult = (Func<float>)PropertyGetter(TypeByName("RTMadSkills.ModSettings"), "saturatedXPMultiplier").CreateDelegate(typeof(Func<float>));
         }
 

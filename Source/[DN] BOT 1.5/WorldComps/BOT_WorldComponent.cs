@@ -1,11 +1,8 @@
 ﻿using More_Traits.Extensions;
 using RimWorld;
 using RimWorld.Planet;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace More_Traits.WorldComps
@@ -14,19 +11,21 @@ namespace More_Traits.WorldComps
     {
         private bool postInitDone = false;
 
-        private HashSet<Pawn> notifiedNyctoPawnSet = new HashSet<Pawn>();
+        private HashSet<Pawn> notifiedNyctoPawnSet = [];
 
         public HashSet<Pawn> NotifiedNyctoPawnSet => notifiedNyctoPawnSet;
 
         public BOT_WorldComponent(World world) : base(world) { }
 
-        public static BOT_WorldComponent Instance => Verse.Current.Game.World.GetComponent<BOT_WorldComponent>();
+        public static BOT_WorldComponent Instance => Current.Game.World.GetComponent<BOT_WorldComponent>();
 
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Collections.Look(ref notifiedNyctoPawnSet, nameof(notifiedNyctoPawnSet), LookMode.Reference);
         }
+
+        private readonly record struct Test();
 
         public override void WorldComponentTick()
         {

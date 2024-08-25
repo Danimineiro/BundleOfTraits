@@ -1,5 +1,4 @@
-﻿using More_Traits.DefOfs;
-using More_Traits.Extensions;
+﻿using More_Traits.Extensions;
 using More_Traits.ModExtensions;
 using RimWorld;
 using UnityEngine;
@@ -9,12 +8,12 @@ namespace More_Traits.HediffClass
 {
     public class BOT_DegreeHediff : Hediff
     {
-        private BOT_HediffExtension extension;
-        private TraitDef traitDef;
+        private BOT_HediffExtension? extension;
+        private TraitDef traitDef = null!;
 
         private int degreeCache = 0;
 
-        public BOT_HediffExtension Extension => extension ?? (extension = def.GetModExtension<BOT_HediffExtension>());
+        public BOT_HediffExtension Extension => extension ??= def.GetModExtension<BOT_HediffExtension>();
 
         public override string Label => traitDef.DataAtDegree(degreeCache).label;
 

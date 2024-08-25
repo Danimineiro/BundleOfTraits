@@ -1,13 +1,9 @@
 ﻿using RimWorld;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse.AI;
 using Verse;
-using More_Traits.DefOfs;
 using More_Traits.Extensions;
+using More_Traits.DefOfs;
 
 namespace More_Traits.HarmonyPatching.Patches.Eclectic
 {
@@ -15,7 +11,7 @@ namespace More_Traits.HarmonyPatching.Patches.Eclectic
     {
         public static void Postfix(Pawn ingester, TargetIndex ingestibleInd, ref Toil __result)
         {
-            if (!(ingester.CurJob.GetTarget(ingestibleInd).Thing is Thing food)) return;
+            if (ingester.CurJob.GetTarget(ingestibleInd).Thing is not Thing food) return;
             if (!(food.def.IsNutritionGivingIngestible && food.def.ingestible.IsMeal)) return;
             if (!ingester.HasTrait(BOT_TraitDefOf.BOT_Eclectic_Palate)) return;
 

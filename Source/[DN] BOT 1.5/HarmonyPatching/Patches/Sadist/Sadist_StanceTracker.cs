@@ -1,11 +1,7 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.Extensions;
 using RimWorld;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace More_Traits.HarmonyPatching.Patches.Sadist
@@ -15,7 +11,7 @@ namespace More_Traits.HarmonyPatching.Patches.Sadist
         public static void NotifyDamageTaken(Pawn_StanceTracker __instance, DamageInfo dinfo)
         {
             Pawn victim = __instance.pawn;
-            Pawn instigator = dinfo.Instigator as Pawn;
+            Pawn? instigator = dinfo.Instigator as Pawn;
 
             if (dinfo.Def == DamageDefOf.SurgicalCut) return;
             if (dinfo.Def == DamageDefOf.ExecutionCut) return;
@@ -31,7 +27,7 @@ namespace More_Traits.HarmonyPatching.Patches.Sadist
             }
         }
 
-        private static bool IsValidWitness(Pawn witness, Pawn instigator, Pawn victim)
+        private static bool IsValidWitness(Pawn witness, Pawn? instigator, Pawn victim)
         {
             if (witness.Dead) return false;
             if (witness == victim) return false;

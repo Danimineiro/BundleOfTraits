@@ -1,16 +1,12 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace More_Traits.ModExtensions
 {
     public class BOT_MentalStateExtension : DefModExtension
     {
-        public TraitDef traitDef;
+        public TraitDef traitDef = null!;
 
         public override IEnumerable<string> ConfigErrors()
         {

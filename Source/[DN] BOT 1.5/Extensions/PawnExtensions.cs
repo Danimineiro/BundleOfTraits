@@ -1,10 +1,5 @@
 ﻿using More_Traits.ModExtensions;
 using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace More_Traits.Extensions
@@ -27,7 +22,7 @@ namespace More_Traits.Extensions
         {
             foreach (Trait trait in pawn.story.traits.allTraits)
             {
-                if (!(trait.def.GetModExtension<BOT_TraitExtension>() is BOT_TraitExtension link)) continue;
+                if (trait.def.GetModExtension<BOT_TraitExtension>() is not BOT_TraitExtension link) continue;
                 pawn.health.GetOrAddHediff(link.hediffDef);
             }
         }

@@ -1,13 +1,8 @@
-﻿using More_Traits.DefOfs;
-using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RimWorld;
 using Verse.AI;
 using Verse;
 using More_Traits.Extensions;
+using More_Traits.DefOfs;
 
 namespace More_Traits.HarmonyPatching.Patches.LovesSleeping
 {
@@ -28,7 +23,7 @@ namespace More_Traits.HarmonyPatching.Patches.LovesSleeping
                 JobDriver curDriver = actor.jobs.curDriver;
 
                 if (!curDriver.asleep) return;
-                if (!(actor.CurJob.GetTarget(TargetIndex.A).Thing is Building_Bed bed)) return;
+                if (actor.CurJob.GetTarget(TargetIndex.A).Thing is not Building_Bed bed) return;
 
                 //We're somehow at ~50% rest gain
                 float recGain = bed.GetStatValue(StatDefOf.BedRestEffectiveness) * actor.GetStatValue(StatDefOf.RestRateMultiplier) * ExtraMult;
