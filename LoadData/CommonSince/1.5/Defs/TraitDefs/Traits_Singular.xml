@@ -529,4 +529,22 @@
 			<li>BOT_CongenitalAnalgesia</li>
 		</conflictingTraits>
 	</TraitDef>
+	
+	<!-- Ideas -->
+	<TraitDef>
+		<defName>BOT_AnimalWhisperer</defName>
+		<commonality>0.3</commonality>
+		<degreeDatas>
+			<li>
+				<label>animal whisperer</label>
+				<description>{PAWN_nameDef} is strangely proficient at dealing with animals of all kinds and sizes and never triggers attacks if taming attempts fail. {PAWN_pronoun} likes having animals in the colony, having bonded animals and especially loves getting nuzzled.</description>
+			</li>
+		</degreeDatas>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Astraphobia</defName>
+		<commonality>0.2</commonality>
+		<degreeDatas>{PAWN_nameDef} has an extreme and irrational fear of lightning and thunder, and will run and hide in {PAWN_pronoun} room when there's thunderstorms outside.</degreeDatas>
+	</TraitDef>
 </Defs>
