@@ -538,6 +538,9 @@
 			<li>
 				<label>animal whisperer</label>
 				<description>{PAWN_nameDef} is strangely proficient at dealing with animals of all kinds and sizes and never triggers attacks if taming attempts fail. {PAWN_pronoun} likes having animals in the colony, having bonded animals and especially loves getting nuzzled.</description>
+				<skillGains>
+					<Animals>4</Animals>
+				</skillGains>
 			</li>
 		</degreeDatas>
 	</TraitDef>

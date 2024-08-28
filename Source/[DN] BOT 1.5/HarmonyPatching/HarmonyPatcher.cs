@@ -14,6 +14,8 @@ using More_Traits.HarmonyPatching.Patches.Pacifist;
 using More_Traits.HarmonyPatching.Patches.Hyperalgesia;
 using More_Traits.HarmonyPatching.Patches.Chinophile;
 using More_Traits.HarmonyPatching.ModCompatibility;
+using Verse.AI;
+using More_Traits.HarmonyPatching.Patches.AnimalWhisperer;
 
 namespace More_Traits.HarmonyPatching
 {
@@ -47,6 +49,9 @@ namespace More_Traits.HarmonyPatching
             harmony.Patch(Method(typeof(TraitSet), nameof(TraitSet.GainTrait)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.GainTrait)));
             harmony.Patch(Method(typeof(Pawn), nameof(Pawn.SpawnSetup)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.SpawnSetup)));
             harmony.Patch(Method(typeof(Pawn), "TicksPerMove"), postfix: new HarmonyMethod(typeof(Chinophile_Pawn), nameof(Chinophile_Pawn.TicksPerMove)));
+
+            //Round 4
+            harmony.Patch(Method(typeof(Pawn_MindState), "CheckStartMentalStateBecauseRecruitAttempted"), prefix: new (typeof(AnimalWhisperer_TamingFail), nameof(AnimalWhisperer_TamingFail.CheckStartMentalStateBecauseRecruitAttempted)))
 
             VSEPatches(harmony);
             MadSkillsPatches(harmony);
