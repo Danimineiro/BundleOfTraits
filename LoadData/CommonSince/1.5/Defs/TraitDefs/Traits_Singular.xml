@@ -543,6 +543,12 @@
 				</skillGains>
 			</li>
 		</degreeDatas>
+		<conflictingTraits>
+			<li>Psychopath</li>
+			<li>BOT_Apathetic</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_AnimalLover</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_AnimalHater</li>
+		</conflictingTraits>
 	</TraitDef>
 
 	<TraitDef>
