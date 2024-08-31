@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_AnimalWhispererNuzzled</defName>
+		<durationDays>1</durationDays>
+		<stackLimit>3</stackLimit>
+		<stackedEffectMultiplier>0.5</stackedEffectMultiplier>
+		<developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<nullifyingHediffs>
+			<li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
+		</nullifyingHediffs>
+		<stages>
+			<li>
+				<label>nuzzled</label>
+				<description>A cute animal nuzzled me!!!</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
+	<ThoughtDef>
+		<defName>BOT_AnimalWhispererAnimalCount</defName>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_AnimalWhispererAnimalCount</workerClass>
+		<developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<nullifyingHediffs>
+			<li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
+		</nullifyingHediffs>
+		<stages>
+			<li>
+				<label>no animals</label>
+				<description>There are no animals in out colony... It's dull.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+			<li>
+				<label>animal</label>
+				<description>We have a cute pet.</description>
+				<baseMoodEffect>1</baseMoodEffect>
+			</li>
+			<li>
+				<label>some animals</label>
+				<description>It's nice having some animals around in our colony.</description>
+				<baseMoodEffect>2</baseMoodEffect>
+			</li>
+			<li>
+				<label>some animals</label>
+				<description>It's nice having some animals around in our colony.</description>
+				<baseMoodEffect>3</baseMoodEffect>
+			</li>
+			<li>
+				<label>some animals</label>
+				<description>It's nice having some animals around in our colony.</description>
+				<baseMoodEffect>4</baseMoodEffect>
+			</li>
+			<li>
+				<label>some animals</label>
+				<description>It's nice having some animals around in our colony.</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+			<li>
+				<label>many animals</label>
+				<description>I love how many fluffy furs we've got!</description>
+				<baseMoodEffect>6</baseMoodEffect>
+			</li>
+			<li>
+				<label>many animals</label>
+				<description>I love how many fluffy furs we've got!</description>
+				<baseMoodEffect>7</baseMoodEffect>
+			</li>
+			<li>
+				<label>many animals</label>
+				<description>I love how many fluffy furs we've got!</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+			<li>
+				<label>many animals</label>
+				<description>I love how many fluffy furs we've got!</description>
+				<baseMoodEffect>9</baseMoodEffect>
+			</li>
+			<li>
+				<label>many animals</label>
+				<description>I love how many fluffy furs we've got!</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_AnimalWhisperer_BondedAnimalMaster</defName>
+		<thoughtClass>Thought_BondedAnimalMaster</thoughtClass>
+		<workerClass>ThoughtWorker_BondedAnimalMaster</workerClass>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifyingHediffs>
+			<li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
+		</nullifyingHediffs>
+		<stages>
+			<li>
+				<label>{0}'s master</label>
+				<description>Being together with my bonded animal makes me feel better.</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+			<li>
+				<label>master of {0}</label>
+				<description>Being together with my bonded animals makes me feel better.</description>
+				<baseMoodEffect>10</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_AnimalWhisperer_NotBondedAnimalMaster</defName>
+		<thoughtClass>Thought_NotBondedAnimalMaster</thoughtClass>
+		<workerClass>ThoughtWorker_NotBondedAnimalMaster</workerClass>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<validWhileDespawned>true</validWhileDespawned>
+		<nullifyingHediffs>
+			<li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
+		</nullifyingHediffs>
+		<stages>
+			<li>
+				<label>not {0}'s master</label>
+				<description>I should be together with my bonded animal.</description>
+				<baseMoodEffect>-6</baseMoodEffect>
+			</li>
+			<li>
+				<label>not master of {0}</label>
+				<description>I should be together with my bonded animals.</description>
+				<baseMoodEffect>-6</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_AnimalWhisperer_BondedAnimalBanished</defName>
+		<thoughtClass>Thought_Banished</thoughtClass>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<durationDays>6</durationDays>
+		<stackLimit>5</stackLimit>
+		<showBubble>true</showBubble>
+		<nullifyingTraits>
+			<li>Psychopath</li>
+		</nullifyingTraits>
+		<nullifyingHediffs>
+			<li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
+		</nullifyingHediffs>
+		<stages>
+			<li>
+				<label>bonded animal {0} banished</label>
+				<description>My bonded animal was banished!</description>
+				<baseMoodEffect>-12</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_AnimalWhisperer_SoldMyBondedAnimal</defName>
+		<thoughtClass>Thought_MemorySocial</thoughtClass>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<durationDays>60</durationDays>
+		<stackLimit>10</stackLimit>
+		<stackLimitForSameOtherPawn>2</stackLimitForSameOtherPawn>
+		<stages>
+			<li>
+				<label>bonded animal given away</label>
+				<labelSocial>gave away my bonded animal</labelSocial>
+				<description>My special bonded animal was given away!</description>
+				<baseOpinionOffset>-20</baseOpinionOffset>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_AnimalWhisperer_SoldMyBondedAnimalMood</defName>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<durationDays>60</durationDays>
+		<stackLimit>10</stackLimit>
+		<nullifyingHediffs>
+			<li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
+		</nullifyingHediffs>
+		<stages>
+			<li>
+				<label>bonded animal given away</label>
+				<labelSocial>gave away my bonded animal</labelSocial>
+				<description>My special bonded animal was given away!</description>
+				<baseMoodEffect>-20</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>BOT_AnimalWhisperer_BondedAnimalBanished</defName>
+		<thoughtClass>Thought_Banished</thoughtClass>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<durationDays>6</durationDays>
+		<stackLimit>5</stackLimit>
+		<showBubble>true</showBubble>
+		<nullifyingHediffs>
+			<li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
+		</nullifyingHediffs>
+		<stages>
+			<li>
+				<label>bonded animal {0} banished</label>
+				<description>My bonded animal was banished!</description>
+				<baseMoodEffect>-6</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef ParentName="DeathMemory">
+		<defName>BOT_AnimalWhisperer_BondedAnimalDied</defName>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<showBubble>true</showBubble>
+		<durationDays>20</durationDays>
+		<stackLimit>5</stackLimit>
+		<stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+		<nullifyingTraits>
+			<li>Psychopath</li>
+		</nullifyingTraits>
+		<stages>
+			<li>
+				<label>bonded animal {0} died</label>
+				<description>Such a tender, unique animal. This universe is evil!</description>
+				<baseMoodEffect>-16</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
+	<ThoughtDef ParentName="LostMemory">
+		<defName>BOT_AnimalWhisperer_BondedAnimalReleased</defName>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<showBubble>true</showBubble>
+		<durationDays>15</durationDays>
+		<stackLimit>5</stackLimit>
+		<stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+		<stages>
+			<li>
+				<label>bonded animal {0} released</label>
+				<description>Such a tender, unique animal. Why did it have to go?</description>
+				<baseMoodEffect>-10</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef ParentName="LostMemory">
+		<defName>BOT_AnimalWhisperer_BondedAnimalLost</defName>
+		<requiredTraits>
+			<li>BOT_AnimalWhisperer</li>
+		</requiredTraits>
+		<showBubble>true</showBubble>
+		<durationDays>20</durationDays>
+		<stackLimit>5</stackLimit>
+		<stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+		<stages>
+			<li>
+				<label>bonded animal {0} lost</label>
+				<description>Such a tender, unique animal. This universe is evil!</description>
+				<baseMoodEffect>-16</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>

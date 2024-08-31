@@ -489,7 +489,7 @@
 
 	<TraitDef>
 		<defName>BOT_GunCrazy</defName>
-		<commonality>0.6</commonality>
+		<commonality>0.5</commonality>
 		<forcedPassions>
 			<li>Shooting</li>
 		</forcedPassions>
@@ -515,7 +515,7 @@
 
 	<TraitDef>
 		<defName>BOT_Hyperalgesia</defName>
-		<commonality>0.6</commonality>
+		<commonality>0.4</commonality>
 		<degreeDatas>
 			<li>
 				<label>hyperalgesia</label>
@@ -530,7 +530,52 @@
 		</conflictingTraits>
 	</TraitDef>
 	
-	<!-- Ideas -->
+	<!-- Round 4 -->
+	<TraitDef MayRequire="Ludeon.RimWorld.Biotech">
+		<defName>BOT_FamilyOriented</defName>
+		<commonality>0.5</commonality>
+		<degreeDatas>
+			<li>
+				<label>family oriented</label>
+				<description>{PAWN_nameDef} values the concept of a family very highly, and likes to guide young minds. Knowing that the families in the colony are happy is important to them and being a parent is one of {PAWN_pronoun}'s dreams.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Psychopath</li>
+			<li>BOT_ChildHate</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef MayRequire="Ludeon.RimWorld.Biotech">
+		<defName>BOT_ChildHate</defName>
+		<commonality>0.5</commonality>
+		<degreeDatas>
+			<li>
+				<label>hates children</label>
+				<description>{PAWN_nameDef} despises children. To {PAWN_pronoun} they're small, loud and obnoxious parasites that ruin every place they infest. {PAWN_nameDef} actively go out of {PAWN_pronoun}s way to avoid having children.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Psychopath</li>
+			<li>BOT_FamilyOriented</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef MayRequire="Ludeon.RimWorld.Biotech">
+		<defName>BOT_PressureCooker</defName>
+		<commonality>0.3</commonality>
+		<degreeDatas>
+			<li>
+				<label>pressure cooker</label>
+				<description>{PAWN_nameDef} has issues letting their feelings bottle up and consequentially eventually explodes from all the stress. They'll break more often than normal pawns but they'll feel massive relief for a long period of time afterwards.</description>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Nerves</li>
+			<li>BOT_Apathetic</li>
+		</conflictingTraits>
+	</TraitDef>
+
 	<TraitDef>
 		<defName>BOT_AnimalWhisperer</defName>
 		<commonality>0.3</commonality>
@@ -541,6 +586,16 @@
 				<skillGains>
 					<Animals>4</Animals>
 				</skillGains>
+				<disallowedThoughts>
+					<li>Nuzzled</li>
+					<li>BondedAnimalBanished</li>
+					<li>BondedAnimalReleased</li>
+					<li>BondedAnimalLost</li>
+					<li>BondedAnimalDied</li>
+					<li>SoldMyBondedAnimal</li>
+					<li>BondedAnimalMaster</li>
+					<li>NotBondedAnimalMaster</li>
+				</disallowedThoughts>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>

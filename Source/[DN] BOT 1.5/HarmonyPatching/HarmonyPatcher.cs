@@ -30,28 +30,30 @@ namespace More_Traits.HarmonyPatching
         {
             Harmony harmony = new("BOT_Patcher");
 
-            harmony.Patch(Method(typeof(SkillRecord), nameof(SkillRecord.LearnRateFactor)), prefix: new HarmonyMethod(typeof(Apathetic_LearnRateFactor), nameof(Apathetic_LearnRateFactor.LearnRateFactor)));
-            harmony.Patch(Method(typeof(SkillUI), nameof(SkillUI.GetLearningFactor)), prefix: new HarmonyMethod(typeof(Apathetic_SkillUI), nameof(Apathetic_SkillUI.GetLearningFactor_Prefix)));
-            harmony.Patch(Method(typeof(SkillUI), "GetSkillDescription"), prefix: new HarmonyMethod(typeof(Apathetic_SkillUI), nameof(Apathetic_SkillUI.GetSkillDescription_Marker)));
+            harmony.Patch(Method(typeof(SkillRecord), nameof(SkillRecord.LearnRateFactor)), prefix: new(typeof(Apathetic_LearnRateFactor), nameof(Apathetic_LearnRateFactor.LearnRateFactor)));
+            harmony.Patch(Method(typeof(SkillUI), nameof(SkillUI.GetLearningFactor)), prefix: new(typeof(Apathetic_SkillUI), nameof(Apathetic_SkillUI.GetLearningFactor_Prefix)));
+            harmony.Patch(Method(typeof(SkillUI), "GetSkillDescription"), prefix: new(typeof(Apathetic_SkillUI), nameof(Apathetic_SkillUI.GetSkillDescription_Marker)));
 
-            harmony.Patch(Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_ForHumanlike"), postfix: new HarmonyMethod(typeof(Pacifist_WittnessDeath), nameof(Pacifist_WittnessDeath.Postfix)));
-            harmony.Patch(Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_Relations"), postfix: new HarmonyMethod(typeof(Pacifist_KilledAnimal), nameof(Pacifist_KilledAnimal.Postfix)));
-            harmony.Patch(Method(typeof(Pawn_InteractionsTracker), "CheckSocialFightStart"), postfix: new HarmonyMethod(typeof(Vulgar_SocialFightStart), nameof(Vulgar_SocialFightStart.Postfix)));
-            harmony.Patch(Method(typeof(ThoughtUtility), "RemovePositiveBedroomThoughts"), postfix: new HarmonyMethod(typeof(Communal_RemoveThoughts), nameof(Communal_RemoveThoughts.Postfix)));
-            harmony.Patch(Method(typeof(JobDriver_LayDown), "MakeNewToils"), postfix: new HarmonyMethod(typeof(LayDownJobDriver), nameof(LayDownJobDriver.MakeNewToils_PostFix)));
-            harmony.Patch(PropertyGetter(typeof(Need), "IsFrozen"), postfix: new HarmonyMethod(typeof(Loves_Sleeping_IsFrozen), nameof(Loves_Sleeping_IsFrozen.Postfix)));
+            harmony.Patch(Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_ForHumanlike"), postfix: new (typeof(Pacifist_WittnessDeath), nameof(Pacifist_WittnessDeath.Postfix)));
+            harmony.Patch(Method(typeof(PawnDiedOrDownedThoughtsUtility), "AppendThoughts_Relations"), postfix: new(typeof(Pacifist_KilledAnimal), nameof(Pacifist_KilledAnimal.Postfix)));
+            harmony.Patch(Method(typeof(Pawn_InteractionsTracker), "CheckSocialFightStart"), postfix: new(typeof(Vulgar_SocialFightStart), nameof(Vulgar_SocialFightStart.Postfix)));
+            harmony.Patch(Method(typeof(ThoughtUtility), "RemovePositiveBedroomThoughts"), postfix: new(typeof(Communal_RemoveThoughts), nameof(Communal_RemoveThoughts.Postfix)));
+            harmony.Patch(Method(typeof(JobDriver_LayDown), "MakeNewToils"), postfix: new(typeof(LayDownJobDriver), nameof(LayDownJobDriver.MakeNewToils_PostFix)));
+            harmony.Patch(PropertyGetter(typeof(Need), "IsFrozen"), postfix: new(typeof(Loves_Sleeping_IsFrozen), nameof(Loves_Sleeping_IsFrozen.Postfix)));
 
-            harmony.Patch(Method(typeof(InteractionWorker_Insult), nameof(InteractionWorker_Insult.RandomSelectionWeight)), postfix: new HarmonyMethod(typeof(Vulgar_InsultWorker), nameof(Vulgar_InsultWorker.RandomSelectionWeight)));
-            harmony.Patch(Method(typeof(Recipe_RemoveBodyPart), nameof(Recipe_RemoveBodyPart.ApplyThoughts)), postfix: new HarmonyMethod(typeof(Sadist_RemoveBodyPart), nameof(Sadist_RemoveBodyPart.ApplyThoughtsPatch)));
-            harmony.Patch(Method(typeof(Toils_Ingest), nameof(Toils_Ingest.FinalizeIngest)), postfix: new HarmonyMethod(typeof(EclecticPalate_FinalizeIngestPatch), nameof(EclecticPalate_FinalizeIngestPatch.Postfix)));
-            harmony.Patch(Method(typeof(Pawn_StanceTracker), nameof(Pawn_StanceTracker.Notify_DamageTaken)), postfix: new HarmonyMethod(typeof(Sadist_StanceTracker), nameof(Sadist_StanceTracker.NotifyDamageTaken)));
-            harmony.Patch(Method(typeof(ThoughtWorker), nameof(ThoughtWorker.MoodMultiplier)), postfix: new HarmonyMethod(typeof(Hyperalgesia_Thoughts), nameof(Hyperalgesia_Thoughts.MoodMultiplier_Post)));
-            harmony.Patch(Method(typeof(TraitSet), nameof(TraitSet.GainTrait)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.GainTrait)));
-            harmony.Patch(Method(typeof(Pawn), nameof(Pawn.SpawnSetup)), postfix: new HarmonyMethod(typeof(HediffTraitPatches), nameof(HediffTraitPatches.SpawnSetup)));
-            harmony.Patch(Method(typeof(Pawn), "TicksPerMove"), postfix: new HarmonyMethod(typeof(Chinophile_Pawn), nameof(Chinophile_Pawn.TicksPerMove)));
+            harmony.Patch(Method(typeof(InteractionWorker_Insult), nameof(InteractionWorker_Insult.RandomSelectionWeight)), postfix: new(typeof(Vulgar_InsultWorker), nameof(Vulgar_InsultWorker.RandomSelectionWeight)));
+            harmony.Patch(Method(typeof(Recipe_RemoveBodyPart), nameof(Recipe_RemoveBodyPart.ApplyThoughts)), postfix: new(typeof(Sadist_RemoveBodyPart), nameof(Sadist_RemoveBodyPart.ApplyThoughtsPatch)));
+            harmony.Patch(Method(typeof(Toils_Ingest), nameof(Toils_Ingest.FinalizeIngest)), postfix: new(typeof(EclecticPalate_FinalizeIngestPatch), nameof(EclecticPalate_FinalizeIngestPatch.Postfix)));
+            harmony.Patch(Method(typeof(Pawn_StanceTracker), nameof(Pawn_StanceTracker.Notify_DamageTaken)), postfix: new(typeof(Sadist_StanceTracker), nameof(Sadist_StanceTracker.NotifyDamageTaken)));
+            harmony.Patch(Method(typeof(ThoughtWorker), nameof(ThoughtWorker.MoodMultiplier)), postfix: new(typeof(Hyperalgesia_Thoughts), nameof(Hyperalgesia_Thoughts.MoodMultiplier_Post)));
+            harmony.Patch(Method(typeof(TraitSet), nameof(TraitSet.GainTrait)), postfix: new(typeof(HediffTraitPatches), nameof(HediffTraitPatches.GainTrait)));
+            harmony.Patch(Method(typeof(Pawn), nameof(Pawn.SpawnSetup)), postfix: new(typeof(HediffTraitPatches), nameof(HediffTraitPatches.SpawnSetup)));
+            harmony.Patch(Method(typeof(Pawn), "TicksPerMove"), postfix: new(typeof(Chinophile_Pawn), nameof(Chinophile_Pawn.TicksPerMove)));
 
             //Round 4
-            harmony.Patch(Method(typeof(Pawn_MindState), "CheckStartMentalStateBecauseRecruitAttempted"), prefix: new (typeof(AnimalWhisperer_TamingFail), nameof(AnimalWhisperer_TamingFail.CheckStartMentalStateBecauseRecruitAttempted)))
+            harmony.Patch(Method(typeof(Pawn_MindState), "CheckStartMentalStateBecauseRecruitAttempted"), prefix: new(AnimalWhisperer_TamingFail.CheckStartMentalStateBecauseRecruitAttempted));
+            harmony.Patch(Method(typeof(InteractionWorker_Nuzzle), nameof(InteractionWorker_Nuzzle.Interacted)), postfix: new(AnimalWhisperer_Nuzzled.InteractionWorker_Nuzzle_Interacted));
+            harmony.Patch(Method(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.RemoveDirectRelation)), postfix: new(AnimalWhisperer_RelationsTracker.RemoveDirectRelation));
 
             VSEPatches(harmony);
             MadSkillsPatches(harmony);
