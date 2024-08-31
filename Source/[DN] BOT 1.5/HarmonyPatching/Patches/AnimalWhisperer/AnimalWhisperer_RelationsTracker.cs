@@ -17,6 +17,6 @@ internal static class AnimalWhisperer_RelationsTracker
     {
         if (def != PawnRelationDefOf.Bond) return;
 
-        Traverse.Create<Pawn_RelationsTracker>().Field<Pawn>("pawn").Value.TryGainMemory(BOT_ThoughtDefOf.BOT_AnimalWhisperer_SoldMyBondedAnimalMood);
+        Traverse.Create(__instance).Field<Pawn>("pawn").Value.TryGainMemory(BOT_ThoughtDefOf.BOT_AnimalWhisperer_SoldMyBondedAnimalMood);
     }
 }

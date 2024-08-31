@@ -606,9 +606,9 @@
 		</conflictingTraits>
 	</TraitDef>
 
-	<TraitDef>
+	<!--<TraitDef>
 		<defName>BOT_Astraphobia</defName>
 		<commonality>0.2</commonality>
 		<degreeDatas>{PAWN_nameDef} has an extreme and irrational fear of lightning and thunder, and will run and hide in {PAWN_pronoun} room when there's thunderstorms outside.</degreeDatas>
-	</TraitDef>
+	</TraitDef>-->
 </Defs>

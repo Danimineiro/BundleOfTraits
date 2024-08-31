@@ -203,27 +203,6 @@
 		</stages>
 	</ThoughtDef>
 
-	<ThoughtDef>
-		<defName>BOT_AnimalWhisperer_BondedAnimalBanished</defName>
-		<thoughtClass>Thought_Banished</thoughtClass>
-		<requiredTraits>
-			<li>BOT_AnimalWhisperer</li>
-		</requiredTraits>
-		<durationDays>6</durationDays>
-		<stackLimit>5</stackLimit>
-		<showBubble>true</showBubble>
-		<nullifyingHediffs>
-			<li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
-		</nullifyingHediffs>
-		<stages>
-			<li>
-				<label>bonded animal {0} banished</label>
-				<description>My bonded animal was banished!</description>
-				<baseMoodEffect>-6</baseMoodEffect>
-			</li>
-		</stages>
-	</ThoughtDef>
-
 	<ThoughtDef ParentName="DeathMemory">
 		<defName>BOT_AnimalWhisperer_BondedAnimalDied</defName>
 		<requiredTraits>

@@ -30,7 +30,7 @@ namespace More_Traits.HarmonyPatching.Patches.AnimalWhisperer
                     other.TryGainMemory(BOT_ThoughtDefOf.BOT_AnimalWhisperer_BondedAnimalBanished);
                 }
 
-                PawnDiedOrDownedThoughtsUtility.< AppendThoughts_Relations > g__GiveThoughtsForAnimalBond | 8_0(ThoughtDefOf.BondedAnimalBanished, ref CS$<> 8__locals1);
+                //PawnDiedOrDownedThoughtsUtility.< AppendThoughts_Relations > g__GiveThoughtsForAnimalBond | 8_0(ThoughtDefOf.BondedAnimalBanished, ref CS$<> 8__locals1);
             }
         }
     }

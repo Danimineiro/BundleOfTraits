@@ -53,7 +53,7 @@ namespace More_Traits.HarmonyPatching
             //Round 4
             harmony.Patch(Method(typeof(Pawn_MindState), "CheckStartMentalStateBecauseRecruitAttempted"), prefix: new(AnimalWhisperer_TamingFail.CheckStartMentalStateBecauseRecruitAttempted));
             harmony.Patch(Method(typeof(InteractionWorker_Nuzzle), nameof(InteractionWorker_Nuzzle.Interacted)), postfix: new(AnimalWhisperer_Nuzzled.InteractionWorker_Nuzzle_Interacted));
-            harmony.Patch(Method(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.RemoveDirectRelation)), postfix: new(AnimalWhisperer_RelationsTracker.RemoveDirectRelation));
+            harmony.Patch(Method(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.RemoveDirectRelation), [typeof(PawnRelationDef), typeof(Pawn)]), postfix: new(AnimalWhisperer_RelationsTracker.RemoveDirectRelation));
 
             VSEPatches(harmony);
             MadSkillsPatches(harmony);
