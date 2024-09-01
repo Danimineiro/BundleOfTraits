@@ -2,15 +2,14 @@
 using RimWorld;
 using Verse;
 
-namespace More_Traits.TraitEdits
+namespace More_Traits.TraitEdits;
+
+[StaticConstructorOnStartup]
+public static class StartupTraitEditor
 {
-    [StaticConstructorOnStartup]
-    public static class StartupTraitEditor
+    static StartupTraitEditor()
     {
-        static StartupTraitEditor()
-        {
-            BOT_TraitDefOf.BOT_Apathetic.DataAtDegree(0).disallowedInspirations = DefDatabase<InspirationDef>.AllDefsListForReading;
-            BOT_TraitDefOf.BOT_Apathetic.conflictingPassions = DefDatabase<SkillDef>.AllDefsListForReading;
-        }
+        BOT_TraitDefOf.BOT_Apathetic.DataAtDegree(0).disallowedInspirations = DefDatabase<InspirationDef>.AllDefsListForReading;
+        BOT_TraitDefOf.BOT_Apathetic.conflictingPassions = DefDatabase<SkillDef>.AllDefsListForReading;
     }
 }

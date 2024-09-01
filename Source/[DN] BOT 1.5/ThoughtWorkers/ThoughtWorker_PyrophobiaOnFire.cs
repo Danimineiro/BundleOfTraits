@@ -1,10 +1,9 @@
 ﻿using RimWorld;
 using Verse;
 
-namespace More_Traits.ThoughtWorkers
+namespace More_Traits.ThoughtWorkers;
+
+public class ThoughtWorker_PyrophobiaOnFire : ThoughtWorker
 {
-    public class ThoughtWorker_PyrophobiaOnFire : ThoughtWorker
-    {
-        protected override ThoughtState CurrentStateInternal(Pawn p) => p.IsBurning();
-    }
+    protected override ThoughtState CurrentStateInternal(Pawn p) => p.IsBurning();
 }

@@ -1,8 +1,7 @@
-﻿namespace More_Traits.ThoughtWorkers.Enums
+﻿namespace More_Traits.ThoughtWorkers.Enums;
+
+public enum TemperaturLove : int
 {
-    public enum TemperaturLove : int
-    {
-        Heat = -1,
-        Cold = 1
-    }
+    Heat = -1,
+    Cold = 1
 }
