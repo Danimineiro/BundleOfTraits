@@ -34,7 +34,7 @@
 		<stages>
 			<li>
 				<label>no animals</label>
-				<description>There are no animals in out colony... It's dull.</description>
+				<description>There are no animals in our colony... It's dull.</description>
 				<baseMoodEffect>-5</baseMoodEffect>
 			</li>
 			<li>
@@ -44,47 +44,17 @@
 			</li>
 			<li>
 				<label>some animals</label>
-				<description>It's nice having some animals around in our colony.</description>
+				<description>This is great already, I think we can house a few more though...</description>
 				<baseMoodEffect>2</baseMoodEffect>
 			</li>
 			<li>
-				<label>some animals</label>
-				<description>It's nice having some animals around in our colony.</description>
-				<baseMoodEffect>3</baseMoodEffect>
-			</li>
-			<li>
-				<label>some animals</label>
-				<description>It's nice having some animals around in our colony.</description>
-				<baseMoodEffect>4</baseMoodEffect>
-			</li>
-			<li>
-				<label>some animals</label>
-				<description>It's nice having some animals around in our colony.</description>
+				<label>animals!</label>
+				<description>It's nice having so many animals around in our colony.</description>
 				<baseMoodEffect>5</baseMoodEffect>
 			</li>
 			<li>
 				<label>many animals</label>
-				<description>I love how many fluffy furs we've got!</description>
-				<baseMoodEffect>6</baseMoodEffect>
-			</li>
-			<li>
-				<label>many animals</label>
-				<description>I love how many fluffy furs we've got!</description>
-				<baseMoodEffect>7</baseMoodEffect>
-			</li>
-			<li>
-				<label>many animals</label>
-				<description>I love how many fluffy furs we've got!</description>
-				<baseMoodEffect>8</baseMoodEffect>
-			</li>
-			<li>
-				<label>many animals</label>
-				<description>I love how many fluffy furs we've got!</description>
-				<baseMoodEffect>9</baseMoodEffect>
-			</li>
-			<li>
-				<label>many animals</label>
-				<description>I love how many fluffy furs we've got!</description>
+				<description>I love how many animals we've got!</description>
 				<baseMoodEffect>10</baseMoodEffect>
 			</li>
 		</stages>
@@ -123,6 +93,7 @@
 			<li>BOT_AnimalWhisperer</li>
 		</requiredTraits>
 		<validWhileDespawned>true</validWhileDespawned>
+		<nullifiedIfNotColonist>true</nullifiedIfNotColonist>
 		<nullifyingHediffs>
 			<li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
 		</nullifyingHediffs>
