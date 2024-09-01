@@ -588,11 +588,6 @@
 				</skillGains>
 				<disallowedThoughts>
 					<li>Nuzzled</li>
-					<li>BondedAnimalBanished</li>
-					<li>BondedAnimalReleased</li>
-					<li>BondedAnimalLost</li>
-					<li>BondedAnimalDied</li>
-					<li>SoldMyBondedAnimal</li>
 					<li>BondedAnimalMaster</li>
 					<li>NotBondedAnimalMaster</li>
 				</disallowedThoughts>

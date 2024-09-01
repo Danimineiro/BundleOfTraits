@@ -47,9 +47,5 @@ namespace More_Traits.DefOfs
         public static ThoughtDef BOT_SadistHarvestedOrgan = null!;
 
         public static ThoughtDef BOT_SadistWitnessedDamage = null!;
-
-        public static ThoughtDef BOT_AnimalWhisperer_SoldMyBondedAnimalMood = null!;
-
-        public static ThoughtDef BOT_AnimalWhisperer_BondedAnimalBanished = null!;
     }
 }
