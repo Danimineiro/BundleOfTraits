@@ -11,5 +11,7 @@ namespace More_Traits.DefOfs
         public static HediffDef Burn = null!;
 
         public static HediffDef BOT_ClaustrophobicBreakdown = null!;
+
+        public static HediffDef BOT_AnimalWhispererInteractionTag = null!;
     }
 }

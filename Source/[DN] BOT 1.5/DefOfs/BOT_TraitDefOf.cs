@@ -39,7 +39,5 @@ namespace More_Traits.DefOfs
         public static TraitDef BOT_Eclectic_Palate = null!;
 
         public static TraitDef BOT_AnimalWhisperer = null!;
-
-        public static ThoughtDef BOT_AnimalWhispererNuzzled = null!;
     }
 }

@@ -12,8 +12,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4104" />
 		<PackageReference Include="Lib.Harmony" Version="2.3.3" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Reference Include="ListConvert, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+	    <HintPath>..\ListConvert.dll</HintPath>
+	    <Private>True</Private>
+	    <EmbedInteropTypes>False</EmbedInteropTypes>
+	  </Reference>
+	</ItemGroup>
 </Project>
