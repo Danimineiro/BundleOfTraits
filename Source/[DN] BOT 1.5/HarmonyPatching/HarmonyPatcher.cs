@@ -53,7 +53,8 @@ public static class HarmonyPatcher
         //Round 4
         harmony.Patch(Method(typeof(Pawn_MindState), "CheckStartMentalStateBecauseRecruitAttempted"), prefix: new(AnimalWhisperer_TamingFail.CheckStartMentalStateBecauseRecruitAttempted));
         harmony.Patch(Method(typeof(InteractionWorker_Nuzzle), nameof(InteractionWorker_Nuzzle.Interacted)), postfix: new(AnimalWhisperer_Nuzzled.InteractionWorker_Nuzzle_Interacted));
-        
+        harmony.Patch(Method(typeof(InteractionWorker), nameof(InteractionWorker.Interacted)), postfix: new(InteractionWorkerPatches.Interacted));
+
         VSEPatches(harmony);
         MadSkillsPatches(harmony);
     }
