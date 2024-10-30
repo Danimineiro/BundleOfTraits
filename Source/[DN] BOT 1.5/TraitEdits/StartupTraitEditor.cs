@@ -1,6 +1,4 @@
 ﻿using More_Traits.DefOfs;
-using RimWorld;
-using Verse;
 
 namespace More_Traits.TraitEdits;
 
@@ -9,7 +7,7 @@ public static class StartupTraitEditor
 {
     static StartupTraitEditor()
     {
-        BOT_TraitDefOf.BOT_Apathetic.DataAtDegree(0).disallowedInspirations.AddRange(DefDatabase<InspirationDef>.AllDefsListForReading);
-        BOT_TraitDefOf.BOT_Apathetic.conflictingPassions.AddRange(DefDatabase<SkillDef>.AllDefsListForReading);
+        BOT_TraitDefOf.BOT_Apathetic.DataAtDegree(0).disallowedInspirations = new(DefDatabase<InspirationDef>.AllDefsListForReading);
+        BOT_TraitDefOf.BOT_Apathetic.conflictingPassions = new(DefDatabase<SkillDef>.AllDefsListForReading);
     }
 }
