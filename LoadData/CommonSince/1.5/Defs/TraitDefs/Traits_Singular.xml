@@ -538,6 +538,13 @@
 			<li>
 				<label>family oriented</label>
 				<description>{PAWN_nameDef} values the concept of a family very highly, and likes to guide young minds. Knowing that the families in the colony are happy is important to them and being a parent is one of {PAWN_pronoun}'s dreams.</description>
+
+				<disallowedThoughts>
+					<li>MyChildHappy</li>
+					<li>MyChildrenHappy</li>
+					<li>MyChildSad</li>
+					<li>MyChildrenSad</li>
+				</disallowedThoughts>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
@@ -604,6 +611,6 @@
 	<!--<TraitDef>
 		<defName>BOT_Astraphobia</defName>
 		<commonality>0.2</commonality>
-		<degreeDatas>{PAWN_nameDef} has an extreme and irrational fear of lightning and thunder, and will run and hide in {PAWN_pronoun} room when there's thunderstorms outside.</degreeDatas>
+		<degreeDatas>{PAWN_nameDef} has an extreme and irrational fear of lightning and thunder, and will run and hide in {PAWN_pronoun} room when there are thunderstorms outside.</degreeDatas>
 	</TraitDef>-->
 </Defs>

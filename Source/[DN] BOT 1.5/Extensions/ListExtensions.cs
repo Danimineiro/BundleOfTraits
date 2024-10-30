@@ -10,7 +10,7 @@ internal static class ListExtensions
 
     internal static bool UnsafeContains<TItem>(this List<TItem> list, TItem item) where TItem : class
     {
-        Span<TItem> values = list.AsSpanUnsafe();
+        ReadOnlySpan<TItem> values = list.AsSpanUnsafe();
 
         int length = values.Length;
         for (int i = 0; i < length; i++)
@@ -23,7 +23,7 @@ internal static class ListExtensions
 
     internal static bool UnsafeContains<TItem>(this List<TItem> list, Func<TItem, bool> predicate) where TItem : class 
     {
-        Span<TItem> values = list.AsSpanUnsafe();
+        ReadOnlySpan<TItem> values = list.AsSpanUnsafe();
 
         int length = values.Length;
         for (int i = 0; i < length; i++)
@@ -36,7 +36,7 @@ internal static class ListExtensions
 
     internal static bool UnsafeTryGet<TItem>(this List<TItem> list, Func<TItem, bool> predicate, out TItem? item) where TItem : class
     {
-        Span<TItem> values = list.AsSpanUnsafe();
+        ReadOnlySpan<TItem> values = list.AsSpanUnsafe();
 
         int length = values.Length;
         for (int i = 0; i < length; i++)
@@ -48,5 +48,19 @@ internal static class ListExtensions
 
         item = null;
         return false;
+    }
+
+    internal static int UnsafeCount<TItem>(this List<TItem> list, Func<TItem, bool> predicate) where TItem : class
+    {
+        ReadOnlySpan<TItem> values = list.AsSpanUnsafe();
+
+        int count = 0;
+        int length = values.Length;
+        for (int i = 0; i < length; i++)
+        {
+            if (predicate.Invoke(values[i])) count++;
+        }
+
+        return count;
     }
 }

@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_FamilyOriented_ChildCount</defName>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_FamilyOriented_ChildCount</workerClass>
+		<stages>
+			<li>
+				<label>no children in colony</label>
+				<description>Without any new blood, this colony is doomed.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+			<li>
+				<label>children in the colony</label>
+				<description>It's good to see the colony thriving.</description>
+				<baseMoodEffect>3</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_FamilyOriented</li>
+		</requiredTraits>
+	</ThoughtDef>
+	
+	<ThoughtDef ParentName="ThoughtAboutChildBase">
+		<defName>BOT_FamilyOriented_MyChildHappy</defName>
+		<workerClass>ThoughtWorker_MyChildHappy</workerClass>
+		<stages>
+			<li>
+				<label>my child {CHILD_nameDef} is happy</label>
+				<description>Nothing makes me feel better than my kid being happy.</description>
+				<baseMoodEffect>12</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_FamilyOriented</li>
+		</requiredTraits>
+	</ThoughtDef>
+
+	<ThoughtDef ParentName="ThoughtAboutChildBase">
+		<defName>BOT_FamilyOriented_MyChildrenHappy</defName>
+		<workerClass>ThoughtWorker_MyChildrenHappy</workerClass>
+		<stages>
+			<li>
+				<label>my children are happy</label>
+				<description>Nothing makes me feel better than my kids being happy.</description>
+				<baseMoodEffect>16</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_FamilyOriented</li>
+		</requiredTraits>
+	</ThoughtDef>
+
+	<ThoughtDef ParentName="ThoughtAboutChildBase">
+		<defName>BOT_FamilyOriented_MyChildSad</defName>
+		<workerClass>ThoughtWorker_MyChildSad</workerClass>
+		<stages>
+			<li>
+				<label>my child {CHILD_nameDef} is unhappy</label>
+				<description>I worry about my child. If they're not happy, I'm not happy.</description>
+				<baseMoodEffect>-12</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef ParentName="ThoughtAboutChildBase">
+		<defName>BOT_FamilyOriented_MyChildrenSad</defName>
+		<workerClass>ThoughtWorker_MyChildrenSad</workerClass>
+		<stages>
+			<li>
+				<label>my children are unhappy</label>
+				<description>I worry about my children. If they're not happy, I'm not happy.</description>
+				<baseMoodEffect>-16</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_FamilyOriented</li>
+		</requiredTraits>
+	</ThoughtDef>
+</Defs>
