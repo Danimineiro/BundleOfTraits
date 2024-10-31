@@ -2,7 +2,7 @@
 <Defs>
 	<ThoughtDef>
 		<defName>BOT_FamilyOriented_ChildCount</defName>
-		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_FamilyOriented_ChildCount</workerClass>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_ChildCount</workerClass>
 		<stages>
 			<li>
 				<label>no children in colony</label>
@@ -60,6 +60,9 @@
 				<baseMoodEffect>-12</baseMoodEffect>
 			</li>
 		</stages>
+		<requiredTraits>
+			<li>BOT_FamilyOriented</li>
+		</requiredTraits>
 	</ThoughtDef>
 
 	<ThoughtDef ParentName="ThoughtAboutChildBase">

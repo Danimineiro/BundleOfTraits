@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace More_Traits.ThoughtWorkers;
 
-internal class ThoughtWorker_FamilyOriented_ChildCount : ThoughtWorker
+internal class ThoughtWorker_ChildCount : ThoughtWorker
 {
-    private readonly static Dictionary<Map, (int childCount, int lastCountTick)> mapChildCount = [];
+    private readonly static Dictionary<Map, (int childCount, int nextCountTick)> mapChildCount = [];
 
     /// <summary>
     ///     Quarter of a RimWorld day
@@ -45,9 +45,9 @@ internal class ThoughtWorker_FamilyOriented_ChildCount : ThoughtWorker
     private void RefreshChildCountForMap(Map map)
     {
         int currentTick = Find.TickManager.TicksGame;
-        if (mapChildCount.TryGetValue(map, out (int childCount, int lastCountTick) value))
+        if (mapChildCount.TryGetValue(map, out (int childCount, int nextCountTick) value))
         {
-            if (currentTick - CountTickInterval <= value.lastCountTick) return;
+            if (currentTick < value.nextCountTick) return;
         }
 
         RefreshChildCount(map, currentTick);
@@ -56,6 +56,6 @@ internal class ThoughtWorker_FamilyOriented_ChildCount : ThoughtWorker
     private static void RefreshChildCount(Map map, int currentTick)
     {
         int childCount = map.mapPawns.FreeColonistsSpawned.UnsafeCount(pawn => !pawn.ageTracker.Adult);
-        mapChildCount[map] = (childCount, currentTick);
+        mapChildCount[map] = (childCount, currentTick + CountTickInterval + map.HashOffsetTicks());
     }
 }

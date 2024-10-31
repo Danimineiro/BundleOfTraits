@@ -560,6 +560,19 @@
 			<li>
 				<label>hates children</label>
 				<description>{PAWN_nameDef} despises children. To {PAWN_pronoun} they're small, loud and obnoxious parasites that ruin every place they infest. {PAWN_nameDef} actively go out of {PAWN_pronoun}s way to avoid having children.</description>
+
+				<disallowedThoughts>
+					<li>MyChildHappy</li>
+					<li>MyChildrenHappy</li>
+					<li>MyChildSad</li>
+					<li>MyChildrenSad</li>
+					<li>KilledChild</li>
+					<li>KilledChild_Opinion</li>
+					<li>Stillbirth</li>
+					<li>Miscarried</li>
+					<li>EnslavedChild</li>
+					<li>ChildInGrowthVat</li>
+				</disallowedThoughts>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>

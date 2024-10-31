@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>BOT_ChildHate_ChildCount</defName>
+		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_ChildCount</workerClass>
+		<stages>
+			<li>
+				<label>no children in colony</label>
+				<description>I very much prefer it this way.</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+			<li>
+				<label>children in the colony</label>
+				<description>The constant noise is driving me crazy.</description>
+				<baseMoodEffect>-3</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_FamilyOriented</li>
+		</requiredTraits>
+	</ThoughtDef>
+
+	<ThoughtDef ParentName="ThoughtAboutChildBase">
+		<defName>BOT_ChildHate_MyChildSad</defName>
+		<workerClass>ThoughtWorker_MyChildSad</workerClass>
+		<stages>
+			<li>
+				<label>my child {CHILD_nameDef} is unhappy</label>
+				<description>Seeing my child have a bad time, it's amusing to me.</description>
+				<baseMoodEffect>6</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_ChildHate</li>
+		</requiredTraits>
+	</ThoughtDef>
+
+	<ThoughtDef ParentName="ThoughtAboutChildBase">
+		<defName>BOT_ChildHate_MyChildrenSad</defName>
+		<workerClass>ThoughtWorker_MyChildrenSad</workerClass>
+		<stages>
+			<li>
+				<label>my children are unhappy</label>
+				<description>Seeing my children have a bad time, it's amusing to me.</description>
+				<baseMoodEffect>8</baseMoodEffect>
+			</li>
+		</stages>
+		<requiredTraits>
+			<li>BOT_ChildHate</li>
+		</requiredTraits>
+	</ThoughtDef>
+</Defs>
