@@ -16,6 +16,7 @@ using More_Traits.HarmonyPatching.Patches.Chinophile;
 using More_Traits.HarmonyPatching.ModCompatibility;
 using Verse.AI;
 using More_Traits.HarmonyPatching.Patches.AnimalWhisperer;
+using More_Traits.HarmonyPatching.Patches.IngestionThoughts;
 
 namespace More_Traits.HarmonyPatching;
 
@@ -57,6 +58,8 @@ public static class HarmonyPatcher
 
         harmony.Patch(Method(typeof(Thought), nameof(Thought.MoodOffset)), postfix: new(CatharsisPatches.MoodOffsetPatch));
         harmony.Patch(PropertyGetter(typeof(Thought), nameof(Thought.DurationTicks)), postfix: new(CatharsisPatches.GetDurationTicks));
+
+        harmony.Patch(Method(typeof(TraitSet), nameof(TraitSet.IsThoughtFromIngestionDisallowed)), prefix: new(IngestionPatches.IsThoughtFromIngestionDisallowed));
 
         VSEPatches(harmony);
         MadSkillsPatches(harmony);

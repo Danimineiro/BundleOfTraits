@@ -662,6 +662,11 @@
 						<poisonChanceOverride>0</poisonChanceOverride>
 					</li>
 				</ingestibleModifiers>
+
+				<disallowedThoughts>
+					<li>AteFineMeal</li>
+					<li>AteLavishMeal</li>
+				</disallowedThoughts>
 				
 				<possessions>
 					<MealNutrientPaste>4</MealNutrientPaste>
