@@ -588,11 +588,16 @@
 			<li>
 				<label>pressure cooker</label>
 				<description>{PAWN_nameDef} has issues letting their feelings bottle up and consequentially eventually explodes from all the stress. They'll break more often than normal pawns but they'll feel massive relief for a long period of time afterwards.</description>
+
+				<statOffsets>
+					<MentalBreakThreshold>.22</MentalBreakThreshold>
+				</statOffsets>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
 			<li>Nerves</li>
 			<li>BOT_Apathetic</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Brave</li>
 		</conflictingTraits>
 	</TraitDef>
 
@@ -613,6 +618,7 @@
 				</disallowedThoughts>
 			</li>
 		</degreeDatas>
+		
 		<conflictingTraits>
 			<li>Psychopath</li>
 			<li>BOT_Apathetic</li>

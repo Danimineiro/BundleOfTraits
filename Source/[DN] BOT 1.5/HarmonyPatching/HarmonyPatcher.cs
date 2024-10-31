@@ -55,6 +55,9 @@ public static class HarmonyPatcher
         harmony.Patch(Method(typeof(InteractionWorker_Nuzzle), nameof(InteractionWorker_Nuzzle.Interacted)), postfix: new(AnimalWhisperer_Nuzzled.InteractionWorker_Nuzzle_Interacted));
         harmony.Patch(Method(typeof(InteractionWorker), nameof(InteractionWorker.Interacted)), postfix: new(InteractionWorkerPatches.Interacted));
 
+        harmony.Patch(Method(typeof(Thought), nameof(Thought.MoodOffset)), postfix: new(CatharsisPatches.MoodOffsetPatch));
+        harmony.Patch(PropertyGetter(typeof(Thought), nameof(Thought.DurationTicks)), postfix: new(CatharsisPatches.GetDurationTicks));
+
         VSEPatches(harmony);
         MadSkillsPatches(harmony);
     }
