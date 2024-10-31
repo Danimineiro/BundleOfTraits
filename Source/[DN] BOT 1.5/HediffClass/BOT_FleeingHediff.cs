@@ -1,17 +1,12 @@
-﻿using More_Traits.Extensions;
-using More_Traits.ModExtensions;
+﻿using More_Traits.ModExtensions;
 using More_Traits.ThinkNodes;
-using RimWorld;
-using System.Linq;
-using Verse;
 using Verse.AI;
 
 namespace More_Traits.HediffClass;
 
-public class BOT_FleeingHediff : Hediff
+public class BOT_FleeingHediff : TraitHediff
 {
     private readonly BOT_JobGiverFleeing jobGiver = new();
-    private TraitDef? traitDef;
 
     public override void Tick()
     {
@@ -28,15 +23,6 @@ public class BOT_FleeingHediff : Hediff
     {
         base.PostMake();
         traitDef = pawn.story.traits.allTraits.FirstOrDefault(trait => trait.def.GetModExtension<BOT_TraitExtension>()?.hediffDef == def)?.def;
-    }
-
-    public override bool ShouldRemove
-    {
-        get
-        {
-            if (Find.TickManager.TicksGame % 300 != 0) return false;
-            return traitDef is null || !pawn.HasTrait(traitDef);
-        }
     }
 
     public override void ExposeData()
