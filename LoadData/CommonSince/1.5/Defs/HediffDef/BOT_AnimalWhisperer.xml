@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<HediffDef ParentName="BOT_PermanentHiddenHediff">
+	<HediffDef ParentName="BOT_PermanentHiddenHediff_Full">
 		<defName>BOT_AnimalWhispererInteractionTag</defName>
 		<label>animalWhispererInteracted</label>
 		<labelNoun>animalWhispererInteracted</labelNoun>

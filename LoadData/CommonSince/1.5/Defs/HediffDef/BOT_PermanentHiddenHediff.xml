@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<HediffDef Name="BOT_PermanentHiddenHediff" Abstract="True">
+	<HediffDef Name="BOT_PermanentHiddenHediff_Base" Abstract="True">
 		<isBad>false</isBad>
 		<makesSickThought>false</makesSickThought>
 		<tendable>false</tendable>
@@ -8,6 +8,9 @@
 		<chronic>true</chronic>
 		<scenarioCanAdd>false</scenarioCanAdd>
 		<everCurableByItem>false</everCurableByItem>
+	</HediffDef>
+
+	<HediffDef ParentName="BOT_PermanentHiddenHediff_Base" Name="BOT_PermanentHiddenHediff_Full" Abstract="True">
 		<stages>
 			<li>
 				<becomeVisible>false</becomeVisible>

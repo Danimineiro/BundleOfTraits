@@ -1,10 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<HediffDef ParentName="BOT_PermanentHiddenHediff">
+	<HediffDef ParentName="BOT_PermanentHiddenHediff_Base">
 		<defName>BOT_Composed</defName>
 		<label>composed</label>
 		<labelNoun>composed</labelNoun>
 		<description>BOT_Composed hediff</description>
 		<hediffClass>More_Traits.HediffClass.BOT_Composed</hediffClass>
+		<stages>
+			<li>
+				<becomeVisible>false</becomeVisible>
+				<lifeThreatening>false</lifeThreatening>
+				<statFactors>
+					<WorkSpeedGlobal>1</WorkSpeedGlobal>
+				</statFactors>
+			</li>
+		</stages>
 	</HediffDef>
 </Defs>
