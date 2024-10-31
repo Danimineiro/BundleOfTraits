@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <ThoughtDef>
+        <defName>BOT_SoylentNeed_AteNutrientPasteMeal</defName>
+        <durationDays>1</durationDays>
+        <stages>
+            <li>
+                <label>ate nutrient paste meal</label>
+                <description>Nothing can beat a rich meal like nutrient paste.</description>
+                <baseMoodEffect>12</baseMoodEffect>
+            </li>
+        </stages>
+    </ThoughtDef>
+</Defs>

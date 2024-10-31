@@ -266,6 +266,7 @@
 				<description>{PAWN_nameDef} has an intense fear of insects and will not hesitate to run away upon spotting one.</description>
 			</li>
 		</degreeDatas>
+		
 		<modExtensions>
 			<li Class="More_Traits.ModExtensions.BOT_TraitExtension">
 				<hediffDef>BOT_Fleeing</hediffDef>
@@ -625,10 +626,59 @@
 		<conflictingTraits>
 			<li>Nerves</li>
 			<li>BOT_Apathetic</li>
-			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Brave</li>
 		</conflictingTraits>
 	</TraitDef>
 
+	<TraitDef>
+		<defName>BOT_SoylentNeed</defName>
+		<commonality>0.3</commonality>
+		<degreeDatas>
+			<li>
+				<label>soylent need</label>
+				<description>{PAWN_nameDef} tasted the green sludge once and can't get enough of it now. {PAWN_pronoun} will prefer to eat from a Nutrient Paste Dispenser over anything else.</description>
+				
+				<disallowedThoughtsFromIngestion>
+					<li>
+						<thing>MealNutrientPaste</thing>
+						<thoughts>
+							<li>AteNutrientPasteMeal</li>
+						</thoughts>
+					</li>
+				</disallowedThoughtsFromIngestion>
+				
+				<extraThoughtsFromIngestion>
+					<li>
+						<thing>MealNutrientPaste</thing>
+						<thoughts>
+							<li>BOT_SoylentNeed_AteNutrientPasteMeal</li>
+						</thoughts>
+					</li>
+				</extraThoughtsFromIngestion>
+
+				<ingestibleModifiers>
+					<li>
+						<ingestible>MealNutrientPaste</ingestible>
+						<optimalityOffset>25</optimalityOffset>
+						<poisonChanceOverride>0</poisonChanceOverride>
+					</li>
+				</ingestibleModifiers>
+				
+				<possessions>
+					<MealNutrientPaste>4</MealNutrientPaste>
+				</possessions>
+			</li>
+		</degreeDatas>
+		
+		<conflictingTraits>
+			<li>Cannibal</li>
+			<li>BOT_Dysgeusia</li>
+			<li>BOT_Entomophobia</li>
+			<li>BOT_Eclectic_Palate</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_RefinedPalate</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Gastronomist</li>
+		</conflictingTraits>
+	</TraitDef>
+	
 	<TraitDef>
 		<defName>BOT_AnimalWhisperer</defName>
 		<commonality>0.3</commonality>
