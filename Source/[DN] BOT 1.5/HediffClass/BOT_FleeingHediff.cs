@@ -1,4 +1,5 @@
-﻿using More_Traits.ModExtensions;
+﻿using More_Traits.Extensions;
+using More_Traits.ModExtensions;
 using More_Traits.ThinkNodes;
 using Verse.AI;
 
@@ -17,17 +18,5 @@ public class BOT_FleeingHediff : TraitHediff
         if (job is null) return;
 
         pawn.jobs.StartJob(job, JobCondition.Incompletable);
-    }
-
-    public override void PostMake()
-    {
-        base.PostMake();
-        traitDef = pawn.story.traits.allTraits.FirstOrDefault(trait => trait.def.GetModExtension<BOT_TraitExtension>()?.hediffDef == def)?.def;
-    }
-
-    public override void ExposeData()
-    {
-        base.ExposeData();
-        Scribe_Defs.Look(ref traitDef, nameof(traitDef));
     }
 }

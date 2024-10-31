@@ -5,9 +5,8 @@ namespace More_Traits.HediffClass;
 
 public class BOT_DegreeHediff : TraitHediff
 {
-    private BOT_HediffExtension? extension;
-
     private int degreeCache = 0;
+    private BOT_HediffExtension? extension;
 
     public BOT_HediffExtension Extension => extension ??= def.GetModExtension<BOT_HediffExtension>();
 
@@ -15,7 +14,6 @@ public class BOT_DegreeHediff : TraitHediff
 
     public override void PostMake()
     {
-        base.PostMake();
         degreeCache = pawn.story.traits.GetTrait(traitDef = Extension.traitDef).Degree;
     }
 
@@ -24,7 +22,6 @@ public class BOT_DegreeHediff : TraitHediff
     public override void ExposeData()
     {
         base.ExposeData();
-        Scribe_Defs.Look(ref traitDef, nameof(traitDef));
         Scribe_Values.Look(ref degreeCache, nameof(degreeCache));
     }
 }

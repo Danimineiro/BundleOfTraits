@@ -63,4 +63,19 @@ internal static class ListExtensions
 
         return count;
     }
+
+    internal static TItem? UnsafeFirstOrDefault<TItem>(this List<TItem> list, Func<TItem, bool> predicate) where TItem : class
+    {
+        ReadOnlySpan<TItem> values = list.AsSpanUnsafe();
+
+        int length = values.Length;
+        for (int i = 0; i < length; i++)
+        {
+            TItem item = values[i];
+            if (!predicate.Invoke(item)) continue;
+            return item;
+        }
+
+        return default;
+    }
 }

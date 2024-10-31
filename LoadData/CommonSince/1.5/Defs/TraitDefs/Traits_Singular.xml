@@ -594,6 +594,34 @@
 				</statOffsets>
 			</li>
 		</degreeDatas>
+		
+		<conflictingTraits>
+			<li>Nerves</li>
+			<li>BOT_Apathetic</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Brave</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Composed</defName>
+		<commonality>0.3</commonality>
+		<degreeDatas>
+			<li>
+				<label>composed</label>
+				<description>{PAWN_nameDef} is able to keep cool under pressure, and will even perform better when there's a risk for mental breaks.</description>
+
+				<statOffsets>
+					<MentalBreakThreshold>.22</MentalBreakThreshold>
+				</statOffsets>
+			</li>
+		</degreeDatas>
+		
+		<modExtensions>
+			<li Class="More_Traits.ModExtensions.BOT_TraitExtension">
+				<hediffDef>BOT_Composed</hediffDef>
+			</li>
+		</modExtensions>
+
 		<conflictingTraits>
 			<li>Nerves</li>
 			<li>BOT_Apathetic</li>
