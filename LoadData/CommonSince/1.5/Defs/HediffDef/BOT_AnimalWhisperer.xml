@@ -1,23 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<HediffDef>
+	<HediffDef ParentName="BOT_PermanentHiddenHediff">
 		<defName>BOT_AnimalWhispererInteractionTag</defName>
 		<label>animalWhispererInteracted</label>
 		<labelNoun>animalWhispererInteracted</labelNoun>
 		<description>animalWhispererInteracted hediff</description>
 		<hediffClass>More_Traits.HediffClass.BOT_AnimalWhispererInteractionHediff</hediffClass>
-		<isBad>false</isBad>
-		<makesSickThought>false</makesSickThought>
-		<tendable>false</tendable>
-		<makesAlert>false</makesAlert>
-		<chronic>true</chronic>
-		<scenarioCanAdd>false</scenarioCanAdd>
-		<everCurableByItem>false</everCurableByItem>
-		<stages>
-			<li>
-				<becomeVisible>false</becomeVisible>
-				<lifeThreatening>false</lifeThreatening>
-			</li>
-		</stages>
 	</HediffDef>
 </Defs>
