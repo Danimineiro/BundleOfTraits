@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configuration>
-  <Excluded>
-    <exclude>.git</exclude>
-    <exclude>.vs</exclude>
-    <exclude>[DN] BOT.csproj</exclude>
-    <exclude>[DN] BOT.sln</exclude>
-    <exclude>[DN] BOT.zip</exclude>
-    <exclude>obj</exclude>
-    <exclude>Source</exclude>
-    <exclude>SteamPageImages</exclude>
-  </Excluded>
+	<Excluded>
+		<exclude>.git</exclude>
+		<exclude>.vs</exclude>
+		<exclude>[DN] BOT Common.csproj</exclude>
+		<exclude>[DN] BOT.csproj</exclude>
+		<exclude>[DN] BOT.sln</exclude>
+		<exclude>[DN] BOT.zip</exclude>
+		<exclude>bin</exclude>
+		<exclude>obj</exclude>
+		<exclude>Source</exclude>
+		<exclude>SteamPageImages</exclude>
+	</Excluded>
 </Configuration>
