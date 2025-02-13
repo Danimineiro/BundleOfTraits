@@ -1,4 +1,6 @@
-﻿namespace More_Traits.Extensions;
+﻿using System.Runtime.CompilerServices;
+
+namespace More_Traits.Extensions;
 
 internal static class ListExtensions
 {
@@ -6,72 +8,98 @@ internal static class ListExtensions
 
     internal static bool UnsafeContains<TItem>(this List<TItem> list, TItem item) where TItem : class
     {
-        ReadOnlySpan<TItem> values = list.AsSpanUnsafe();
+        if (list.Count == 0) return false;
 
-        int length = values.Length;
-        for (int i = 0; i < length; i++)
+        Span<TItem> values = list.AsSpanUnsafe();
+        ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
+        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
+        
+        do
         {
-            if (values[i] == item) return true;
-        }
+            if (item == refLeft) return true;
+
+            refLeft = ref Unsafe.Add(ref refLeft, 1);
+        } while (Unsafe.IsAddressLessThan(ref refLeft, ref refRight));
 
         return false;
     }
 
-    internal static bool UnsafeContains<TItem>(this List<TItem> list, Func<TItem, bool> predicate) where TItem : class 
+    internal static bool UnsafeContains<TItem>(this List<TItem> list, Func<TItem, bool> predicate) where TItem : class
     {
-        ReadOnlySpan<TItem> values = list.AsSpanUnsafe();
+        if (list.Count == 0) return false;
 
-        int length = values.Length;
-        for (int i = 0; i < length; i++)
+        Span<TItem> values = list.AsSpanUnsafe();
+        ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
+        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
+
+        do
         {
-            if (predicate.Invoke(values[i])) return true;
-        }
+            if (predicate.Invoke(refLeft)) return true;
+
+            refLeft = ref Unsafe.Add(ref refLeft, 1);
+        } while (Unsafe.IsAddressLessThan(ref refLeft, ref refRight));
 
         return false;
     }
 
     internal static bool UnsafeTryGet<TItem>(this List<TItem> list, Func<TItem, bool> predicate, out TItem? item) where TItem : class
     {
-        ReadOnlySpan<TItem> values = list.AsSpanUnsafe();
-
-        int length = values.Length;
-        for (int i = 0; i < length; i++)
-        {
-            item = values[i];
-            if (!predicate.Invoke(item)) continue;
-            return true;
-        }
-
         item = null;
+        if (list.Count == 0) return false; 
+
+        Span<TItem> values = list.AsSpanUnsafe();
+        ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
+        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
+
+        do
+        {
+            if (predicate.Invoke(refLeft)) 
+            {
+                item = refLeft;
+                return true; 
+            }
+
+            refLeft = ref Unsafe.Add(ref refLeft, 1);
+        } while (Unsafe.IsAddressLessThan(ref refLeft, ref refRight));
+
         return false;
     }
 
     internal static int UnsafeCount<TItem>(this List<TItem> list, Func<TItem, bool> predicate) where TItem : class
     {
-        ReadOnlySpan<TItem> values = list.AsSpanUnsafe();
+        if (list.Count == 0) return 0;
 
         int count = 0;
-        int length = values.Length;
-        for (int i = 0; i < length; i++)
+
+        Span<TItem> values = list.AsSpanUnsafe();
+        ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
+        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
+
+        do
         {
-            if (predicate.Invoke(values[i])) count++;
-        }
+            if (predicate.Invoke(refLeft)) count++;
+
+            refLeft = ref Unsafe.Add(ref refLeft, 1);
+        } while (Unsafe.IsAddressLessThan(ref refLeft, ref refRight));
 
         return count;
     }
 
-    internal static TItem? UnsafeFirstOrDefault<TItem>(this List<TItem> list, Func<TItem, bool> predicate) where TItem : class
+    internal static TItem? UnsafeFirstOrNull<TItem>(this List<TItem> list, Func<TItem, bool> predicate) where TItem : class
     {
-        ReadOnlySpan<TItem> values = list.AsSpanUnsafe();
+        if (list.Count == 0) return null;
 
-        int length = values.Length;
-        for (int i = 0; i < length; i++)
+        Span<TItem> values = list.AsSpanUnsafe();
+        ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
+        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
+
+        do
         {
-            TItem item = values[i];
-            if (!predicate.Invoke(item)) continue;
-            return item;
-        }
+            if (predicate.Invoke(refLeft)) return refLeft;
 
-        return default;
+            refLeft = ref Unsafe.Add(ref refLeft, 1);
+        } while (Unsafe.IsAddressLessThan(ref refLeft, ref refRight));
+
+        return null;
     }
 }
