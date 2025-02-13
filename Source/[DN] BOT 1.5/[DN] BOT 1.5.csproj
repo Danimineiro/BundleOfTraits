@@ -7,7 +7,7 @@
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<RootNamespace>More_Traits</RootNamespace>
 		<OutputPath>../../LoadData/VersionSpecific/1.5/Assemblies</OutputPath>
-		<LangVersion>12.0</LangVersion>
+		<LangVersion>13.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
