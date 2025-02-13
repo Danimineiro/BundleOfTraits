@@ -1,11 +1,6 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.Extensions;
 using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -47,7 +42,7 @@ namespace More_Traits.HarmonyPatching.Patches.Communal
             if (actor.HasTrait(TraitDefOf.Ascetic)) return;
             if (actor.GetRoom(RegionType.Set_All).PsychologicallyOutdoors) return;
 
-            ThoughtDef thoughtDef = null;
+            ThoughtDef thoughtDef;
 
             Room bedRoom = building_Bed.GetRoom(RegionType.Set_All);
             if (bedRoom.Role == RoomRoleDefOf.Bedroom)
@@ -58,8 +53,7 @@ namespace More_Traits.HarmonyPatching.Patches.Communal
             {
                 thoughtDef = BOT_ThoughtDefOf.BOT_Communal_SleptInBarracks;
             }
-
-            if (thoughtDef == null) return;
+            else return;
 
             int scoreStageIndex = RoomStatDefOf.Impressiveness.GetScoreStageIndex(bedRoom.GetStat(RoomStatDefOf.Impressiveness));
             if (thoughtDef.stages[scoreStageIndex] == null) return;

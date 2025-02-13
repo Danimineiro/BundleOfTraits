@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 using Verse;
 
 namespace More_Traits.ModExtensions
 {
     public class BOT_ThinkTreeExtension : DefModExtension
     {
-        public List<TraitContainer> traitContainers = new List<TraitContainer>();
+        public List<TraitContainer> traitContainers = [];
 
         public override IEnumerable<string> ConfigErrors()
         {

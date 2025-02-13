@@ -8,9 +8,9 @@ namespace More_Traits.ModExtensions
 {
     public class TraitContainer
     {
-        public TraitDef traitDef;
-        public List<ThingDef> thingDefs = new List<ThingDef>();
-        public List<string> devNotes = new List<string>();
+        public TraitDef traitDef = null!;
+        public List<ThingDef> thingDefs = [];
+        public List<string> devNotes = [];
         public bool ignoreDraft = false;
 
         public void LoadDataFromXmlCustom(XmlNode root)
@@ -30,7 +30,7 @@ namespace More_Traits.ModExtensions
                 for (int i = 0; i < count; i++)
                 {
                     XmlNode node = xmlThingDefs[i];
-                    node.TryGetMayRequireAttributeValues(out string mayRequireMod, out string mayRequireAnyMod);
+                    node.TryGetMayRequireAttributeValues(out string? mayRequireMod, out string? mayRequireAnyMod);
                     DirectXmlCrossRefLoader.RegisterListWantsCrossRef(thingDefs, node.FirstChild.Value, $"{nameof(TraitContainer)}.{nameof(thingDefs)}", mayRequireMod, mayRequireAnyMod);
                 }
             }
@@ -51,7 +51,7 @@ namespace More_Traits.ModExtensions
 
         private void ResolveChildNode(XmlNode root, object wanter, string fieldName)
         {
-            if (!(root.SelectSingleNode(fieldName) is XmlNode child)) return;
+            if (root.SelectSingleNode(fieldName) is not XmlNode child) return;
             DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(wanter, fieldName, child.FirstChild.Value);
         }
     }

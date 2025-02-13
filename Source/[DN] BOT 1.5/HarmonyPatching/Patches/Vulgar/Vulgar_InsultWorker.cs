@@ -1,11 +1,6 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.Extensions;
 using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace More_Traits.HarmonyPatching.Patches.Vulgar

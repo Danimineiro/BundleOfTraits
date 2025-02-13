@@ -1,13 +1,8 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.Extensions;
-using More_Traits.WorldComps;
 using RimWorld;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 using Verse.AI;
 
@@ -15,7 +10,7 @@ namespace More_Traits.HarmonyPatching.Patches.Nyctophobe
 {
     internal class Nyctophobe_CanNotSleep
     {
-        internal static Toil NoSleepToil(JobDriver_LayDown jobDriver)
+        internal static Toil? NoSleepToil(JobDriver_LayDown jobDriver)
         {
             if (!jobDriver.CanRest) return null;
             if (!jobDriver.CanSleep) return null;
@@ -32,8 +27,8 @@ namespace More_Traits.HarmonyPatching.Patches.Nyctophobe
             {
                 Pawn actor = toil.actor;
                 Job curJob = actor.CurJob;
-                JobDriver_LayDown driver = actor.jobs.curDriver as JobDriver_LayDown;
-                Building_Bed bed = actor.CurJob.GetTarget(TargetIndex.A).Thing as Building_Bed;
+                JobDriver_LayDown driver = (JobDriver_LayDown)actor.jobs.curDriver;
+                Building_Bed bed = (Building_Bed)actor.CurJob.GetTarget(TargetIndex.A).Thing;
 
                 if (!bed.OccupiedRect().Contains(actor.Position))
                 {
@@ -60,12 +55,12 @@ namespace More_Traits.HarmonyPatching.Patches.Nyctophobe
             void tickAction()
             {
                 Pawn actor = toil.actor;
-                JobDriver_LayDown driver = actor.jobs.curDriver as JobDriver_LayDown;
-                Building_Bed bed = actor.CurJob.GetTarget(TargetIndex.A).Thing as Building_Bed;
+                JobDriver_LayDown driver = (JobDriver_LayDown)actor.jobs.curDriver;
+                Building_Bed bed = (Building_Bed)actor.CurJob.GetTarget(TargetIndex.A).Thing;
 
                 Type boolType = typeof(bool);
                 MethodInfo ApplyBedEffects = typeof(Toils_LayDown).GetMethod("ApplyBedRelatedEffects", BindingFlags.Static | BindingFlags.NonPublic);
-                ApplyBedEffects.Invoke(null, new object[] { actor, bed, false, true, false });
+                ApplyBedEffects.Invoke(null, [actor, bed, false, true, false]);
 
                 if (!TooDarkFor(actor) || actor.needs.rest.CurCategory >= RestCategory.VeryTired)
                 {

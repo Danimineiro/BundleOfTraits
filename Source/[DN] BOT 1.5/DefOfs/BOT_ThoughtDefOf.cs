@@ -1,9 +1,4 @@
 ﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace More_Traits.DefOfs
 {
@@ -15,42 +10,42 @@ namespace More_Traits.DefOfs
             DefOfHelper.EnsureInitializedInCtor(typeof(ThoughtDefOf));
         }
 
-        public static ThoughtDef BOT_EclecticPalateAte;
+        public static ThoughtDef BOT_EclecticPalateAte = null!;
 
-        public static ThoughtDef BOT_WittnessedDeathPacifist;
+        public static ThoughtDef BOT_WittnessedDeathPacifist = null!;
 
-        public static ThoughtDef BOT_Pacifist_KilledHuman;
+        public static ThoughtDef BOT_Pacifist_KilledHuman = null!;
 
-        public static ThoughtDef BOT_Pacifist_KilledAnimal;
+        public static ThoughtDef BOT_Pacifist_KilledAnimal = null!;
 
-        public static ThoughtDef BOT_NyctophobiaCantSleep;
+        public static ThoughtDef BOT_NyctophobiaCantSleep = null!;
 
-        public static ThoughtDef BOT_Narcoleptic_Awake;
+        public static ThoughtDef BOT_Narcoleptic_Awake = null!;
 
-        public static ThoughtDef BOT_LovesSleepWellRested;
+        public static ThoughtDef BOT_LovesSleepWellRested = null!;
 
-        public static ThoughtDef BOT_Communal_SleptInBarracks;
+        public static ThoughtDef BOT_Communal_SleptInBarracks = null!;
 
-        public static ThoughtDef BOT_Communal_SleptInBedroom;
+        public static ThoughtDef BOT_Communal_SleptInBedroom = null!;
 
-        public static ThoughtDef BOT_Communal_Sharing;
+        public static ThoughtDef BOT_Communal_Sharing = null!;
 
-        public static ThoughtDef BOT_ComedianBadJokeMood;
+        public static ThoughtDef BOT_ComedianBadJokeMood = null!;
 
-        public static ThoughtDef BOT_ComedianGoodJokeMood;
+        public static ThoughtDef BOT_ComedianGoodJokeMood = null!;
 
-        public static ThoughtDef BOT_ComedianBadJokeOpinion;
+        public static ThoughtDef BOT_ComedianBadJokeOpinion = null!;
 
-        public static ThoughtDef BOT_ComedianGoodJokeOpinion;
+        public static ThoughtDef BOT_ComedianGoodJokeOpinion = null!;
 
-        public static ThoughtDef BOT_ComedianBadJokeOpinionSelf;
+        public static ThoughtDef BOT_ComedianBadJokeOpinionSelf = null!;
 
-        public static ThoughtDef BOT_ComedianGoodJokeOpinionSelf;
+        public static ThoughtDef BOT_ComedianGoodJokeOpinionSelf = null!;
 
-        public static ThoughtDef BOT_SadistHurtHumanlike;
+        public static ThoughtDef BOT_SadistHurtHumanlike = null!;
 
-        public static ThoughtDef BOT_SadistHarvestedOrgan;
+        public static ThoughtDef BOT_SadistHarvestedOrgan = null!;
 
-        public static ThoughtDef BOT_SadistWitnessedDamage;
+        public static ThoughtDef BOT_SadistWitnessedDamage = null!;
     }
 }

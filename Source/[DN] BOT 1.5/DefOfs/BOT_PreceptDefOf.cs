@@ -1,9 +1,4 @@
 ﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace More_Traits.DefOfs
 {
@@ -13,6 +8,6 @@ namespace More_Traits.DefOfs
         static BOT_PreceptDefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(PreceptDefOf));
 
         [MayRequireIdeology]
-        public static PreceptDef Pain_Idealized;
+        public static PreceptDef Pain_Idealized = null!;
     }
 }

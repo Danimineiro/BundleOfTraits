@@ -1,12 +1,7 @@
-﻿using More_Traits.DefOfs;
-using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RimWorld;
 using Verse.AI;
 using Verse;
+using More_Traits.DefOfs;
 
 namespace More_Traits.MentalStates.MentalStateWorkers
 {

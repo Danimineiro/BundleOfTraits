@@ -1,10 +1,6 @@
 ﻿using More_Traits.DefOfs;
 using RimWorld;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace More_Traits.InteractionWorkers
@@ -20,7 +16,7 @@ namespace More_Traits.InteractionWorkers
             return BaseSelectionWeight * compatibilityFactorCurve.Evaluate(initiator.relations.CompatibilityWith(recipient));
         }
 
-        private readonly SimpleCurve compatibilityFactorCurve = new SimpleCurve
+        private readonly SimpleCurve compatibilityFactorCurve = new()
         {
             {
                 new CurvePoint(-1.5f, 0f)

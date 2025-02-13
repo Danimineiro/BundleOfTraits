@@ -1,12 +1,7 @@
-﻿using More_Traits.DefOfs;
-using More_Traits.Extensions;
-using RimWorld;
+﻿using RimWorld;
 using RimWorld.Planet;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 
@@ -14,7 +9,7 @@ namespace More_Traits.ThoughtWorkers
 {
     public class ThoughtWorker_GregariousCompany : ThoughtWorker
     {
-        private static readonly Dictionary<Pawn, int> cachedCountDic = new Dictionary<Pawn, int>();
+        private static readonly Dictionary<Pawn, int> cachedCountDic = [];
 
         public override string PostProcessDescription(Pawn pawn, string description)
         {

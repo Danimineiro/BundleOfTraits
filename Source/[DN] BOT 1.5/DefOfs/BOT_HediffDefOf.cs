@@ -1,10 +1,4 @@
 ﻿using RimWorld;
-using Steamworks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace More_Traits.DefOfs
@@ -14,8 +8,8 @@ namespace More_Traits.DefOfs
     {
         static BOT_HediffDefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(HediffDefOf));
 
-        public static HediffDef Burn;
+        public static HediffDef Burn = null!;
 
-        public static HediffDef BOT_ClaustrophobicBreakdown;
+        public static HediffDef BOT_ClaustrophobicBreakdown = null!;
     }
 }

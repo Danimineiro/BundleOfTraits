@@ -1,9 +1,4 @@
 ﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace More_Traits.ThoughtWorkers
@@ -13,7 +8,7 @@ namespace More_Traits.ThoughtWorkers
         protected override ThoughtState CurrentStateInternal(Pawn pawn)
         {
             if (!pawn.Awake()) return ThoughtState.Inactive;
-            if (!(pawn.GetRoom() is Room room)) return ThoughtState.Inactive;
+            if (pawn.GetRoom() is not Room room) return ThoughtState.Inactive;
 
             RoomStatDef spaceDef = RoomStatDefOf.Space;
             int score = spaceDef.GetScoreStageIndex(room.GetStat(RoomStatDefOf.Space));

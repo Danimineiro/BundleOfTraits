@@ -1,13 +1,9 @@
-﻿using More_Traits.DefOfs;
-using RimWorld;
-using System;
+﻿using RimWorld;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse.AI;
 using Verse;
 using More_Traits.Extensions;
+using More_Traits.DefOfs;
 
 namespace More_Traits.HarmonyPatching.Patches.Pacifist
 {
@@ -23,7 +19,7 @@ namespace More_Traits.HarmonyPatching.Patches.Pacifist
                 if (!IsValidPawn(pawn, victim)) continue;
                 outIndividualThoughts.Add(new IndividualThoughtToAdd(BOT_ThoughtDefOf.BOT_WittnessedDeathPacifist, pawn));
 
-                if (pawn != (Pawn)dinfo?.Instigator) continue;
+                if (pawn != dinfo?.Instigator as Pawn) continue;
                 outIndividualThoughts.Add(new IndividualThoughtToAdd(BOT_ThoughtDefOf.BOT_Pacifist_KilledHuman, pawn));
             }
         }

@@ -2,11 +2,7 @@
 using More_Traits.ModExtensions;
 using More_Traits.ThinkNodes;
 using RimWorld;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 using Verse.AI;
 
@@ -14,8 +10,8 @@ namespace More_Traits.HediffClass
 {
     public class BOT_FleeingHediff : Hediff
     {
-        private readonly BOT_JobGiverFleeing jobGiver = new BOT_JobGiverFleeing();
-        private TraitDef traitDef;
+        private readonly BOT_JobGiverFleeing jobGiver = new();
+        private TraitDef? traitDef;
 
         public override void Tick()
         {
