@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Verse;
-
-namespace More_Traits.ModExtensions;
+﻿namespace More_Traits.ModExtensions;
 
 public class BOT_TraitExtension : DefModExtension
 {

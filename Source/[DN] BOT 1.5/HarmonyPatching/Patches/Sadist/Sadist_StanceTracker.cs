@@ -1,8 +1,5 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.Extensions;
-using RimWorld;
-using System.Linq;
-using Verse;
 
 namespace More_Traits.HarmonyPatching.Patches.Sadist;
 

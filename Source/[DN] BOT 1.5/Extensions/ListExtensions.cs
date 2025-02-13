@@ -1,8 +1,4 @@
-﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-
-namespace More_Traits.Extensions;
+﻿namespace More_Traits.Extensions;
 
 internal static class ListExtensions
 {

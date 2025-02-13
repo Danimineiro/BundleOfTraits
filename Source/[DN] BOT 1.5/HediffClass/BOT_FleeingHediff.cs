@@ -1,6 +1,4 @@
-﻿using More_Traits.Extensions;
-using More_Traits.ModExtensions;
-using More_Traits.ThinkNodes;
+﻿using More_Traits.ThinkNodes;
 using Verse.AI;
 
 namespace More_Traits.HediffClass;

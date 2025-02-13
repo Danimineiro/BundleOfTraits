@@ -1,7 +1,4 @@
 ﻿using More_Traits.ModExtensions;
-using RimWorld;
-using System;
-using Verse;
 
 namespace More_Traits.Extensions;
 

@@ -1,6 +1,4 @@
 ﻿using More_Traits.DefOfs;
-using RimWorld;
-using Verse;
 using Verse.AI;
 
 namespace More_Traits.MentalStates.MentalStates;

@@ -1,10 +1,5 @@
 ﻿using More_Traits.Extensions;
-using RimWorld;
 using RimWorld.Planet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Verse;
 
 namespace More_Traits.WorldComps;
 

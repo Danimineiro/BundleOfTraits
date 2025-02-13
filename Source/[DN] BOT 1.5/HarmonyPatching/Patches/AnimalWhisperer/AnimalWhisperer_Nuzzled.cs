@@ -1,8 +1,5 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.Extensions;
-using More_Traits.HediffClass;
-using RimWorld;
-using Verse;
 
 namespace More_Traits.HarmonyPatching.Patches.AnimalWhisperer;
 

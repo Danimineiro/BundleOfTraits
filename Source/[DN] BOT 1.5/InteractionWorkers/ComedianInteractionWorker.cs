@@ -1,7 +1,4 @@
 ﻿using More_Traits.DefOfs;
-using RimWorld;
-using System.Collections.Generic;
-using Verse;
 
 namespace More_Traits.InteractionWorkers;
 

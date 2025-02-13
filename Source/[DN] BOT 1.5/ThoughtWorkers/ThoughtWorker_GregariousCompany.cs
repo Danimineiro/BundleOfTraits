@@ -1,9 +1,5 @@
-﻿using RimWorld;
-using RimWorld.Planet;
-using System.Collections.Generic;
-using System.Linq;
+﻿using RimWorld.Planet;
 using UnityEngine;
-using Verse;
 
 namespace More_Traits.ThoughtWorkers;
 

@@ -1,7 +1,4 @@
-﻿using RimWorld;
-using System;
-using Verse.AI;
-using Verse;
+﻿using Verse.AI;
 using More_Traits.Extensions;
 using More_Traits.DefOfs;
 

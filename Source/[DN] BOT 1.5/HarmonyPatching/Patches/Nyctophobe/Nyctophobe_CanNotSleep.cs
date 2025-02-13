@@ -1,9 +1,6 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.Extensions;
-using RimWorld;
-using System;
 using System.Reflection;
-using Verse;
 using Verse.AI;
 
 namespace More_Traits.HarmonyPatching.Patches.Nyctophobe;

@@ -1,7 +1,4 @@
-﻿using RimWorld;
-using Verse;
-
-namespace More_Traits.ThoughtWorkers;
+﻿namespace More_Traits.ThoughtWorkers;
 
 public class ThoughtWorker_Claustrophobic : ThoughtWorker
 {

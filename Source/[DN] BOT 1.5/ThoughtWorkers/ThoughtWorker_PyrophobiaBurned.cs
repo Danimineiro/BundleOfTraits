@@ -1,6 +1,4 @@
 ﻿using More_Traits.DefOfs;
-using RimWorld;
-using Verse;
 
 namespace More_Traits.ThoughtWorkers;
 

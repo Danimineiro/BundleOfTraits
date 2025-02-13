@@ -1,7 +1,4 @@
-﻿using RimWorld;
-using Verse;
-
-namespace More_Traits.DefOfs;
+﻿namespace More_Traits.DefOfs;
 
 [DefOf]
 public static class BOT_ThinkTreeDefOf

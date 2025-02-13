@@ -1,8 +1,5 @@
 ﻿using More_Traits.Extensions;
-using RimWorld;
-using System.Collections.Generic;
 using System.Xml;
-using Verse;
 
 namespace More_Traits.ModExtensions;
 

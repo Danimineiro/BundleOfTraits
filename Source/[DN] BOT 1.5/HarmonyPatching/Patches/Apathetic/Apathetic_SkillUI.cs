@@ -1,6 +1,5 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.Extensions;
-using RimWorld;
 
 namespace More_Traits.HarmonyPatching.Patches.Apathetic;
 

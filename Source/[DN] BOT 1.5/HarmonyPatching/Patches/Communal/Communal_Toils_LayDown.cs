@@ -1,8 +1,6 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.Extensions;
-using RimWorld;
 using UnityEngine;
-using Verse;
 using Verse.AI;
 
 namespace More_Traits.HarmonyPatching.Patches.Communal;

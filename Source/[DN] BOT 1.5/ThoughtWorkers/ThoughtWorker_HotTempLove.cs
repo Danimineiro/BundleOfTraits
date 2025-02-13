@@ -1,8 +1,5 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.ThoughtWorkers.Enums;
-using RimWorld;
-using System;
-using Verse;
 
 namespace More_Traits.ThoughtWorkers;
 

@@ -1,8 +1,4 @@
-﻿using RimWorld;
-using System;
-using Verse;
-
-namespace More_Traits.ThoughtWorkers;
+﻿namespace More_Traits.ThoughtWorkers;
 
 public class ThoughtWorker_AnimalWhispererAnimalCount : ThoughtWorker
 {

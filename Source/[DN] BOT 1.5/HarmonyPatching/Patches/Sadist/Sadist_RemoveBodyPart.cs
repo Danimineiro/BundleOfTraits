@@ -1,6 +1,5 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.Extensions;
-using Verse;
 
 namespace More_Traits.HarmonyPatching.Patches.Sadist;
 

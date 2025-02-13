@@ -1,6 +1,5 @@
 ﻿using More_Traits.Extensions;
 using More_Traits.ModExtensions;
-using Verse;
 using Verse.AI;
 
 namespace More_Traits.MentalStates.MentalStateWorkers;

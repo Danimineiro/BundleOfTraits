@@ -1,9 +1,5 @@
 ﻿using More_Traits.DefOfs;
 using More_Traits.ModExtensions;
-using RimWorld;
-using System.Collections.Generic;
-using System.Linq;
-using Verse;
 using Verse.AI;
 
 namespace More_Traits.ThinkNodes;

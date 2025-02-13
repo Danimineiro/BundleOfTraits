@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Verse;
-
-namespace More_Traits.ModExtensions;
+﻿namespace More_Traits.ModExtensions;
 
 public class BOT_ThinkTreeExtension : DefModExtension
 {

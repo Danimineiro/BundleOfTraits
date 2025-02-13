@@ -1,8 +1,6 @@
 ﻿using HarmonyLib;
 using More_Traits.DefOfs;
 using More_Traits.Extensions;
-using RimWorld;
-using Verse;
 
 namespace More_Traits.HarmonyPatching.Patches.Vulgar;
 

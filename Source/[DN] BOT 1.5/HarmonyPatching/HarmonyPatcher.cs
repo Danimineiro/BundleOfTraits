@@ -1,8 +1,5 @@
 ﻿using static HarmonyLib.AccessTools;
 using HarmonyLib;
-using RimWorld;
-using Verse;
-using System;
 using More_Traits.HarmonyPatching.Patches.Apathetic;
 using More_Traits.HarmonyPatching.Patches.Sadist;
 using More_Traits.HarmonyPatching.Patches.Communal;

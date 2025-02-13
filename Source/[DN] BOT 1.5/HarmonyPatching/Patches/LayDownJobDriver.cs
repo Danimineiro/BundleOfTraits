@@ -1,6 +1,4 @@
-﻿using RimWorld;
-using System.Collections.Generic;
-using Verse.AI;
+﻿using Verse.AI;
 using More_Traits.HarmonyPatching.Patches.Communal;
 using More_Traits.HarmonyPatching.Patches.LovesSleeping;
 using More_Traits.HarmonyPatching.Patches.Nyctophobe;
