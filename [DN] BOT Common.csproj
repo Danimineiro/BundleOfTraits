@@ -1,12 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project>
+	<Sdk Name="Microsoft.Build.NoTargets" Version="3.7.56" />
 
 	<PropertyGroup>
-		<TargetFramework>net48</TargetFramework>
+		<TargetFramework>net481</TargetFramework>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<RootNamespace>More_Traits</RootNamespace>
+		<OutputPath>../../LoadData/VersionSpecific/1.5/Assemblies</OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -14,5 +16,4 @@
 	  <EmbeddedResource Remove="Source\**" />
 	  <None Remove="Source\**" />
 	</ItemGroup>
-	
 </Project>
