@@ -18,28 +18,23 @@ public class BOT_NarcolepticAsleepState : MentalState
         if (PawnUtility.ShouldSendNotificationAbout(pawn)) Messages.Message("BOTNarcolepticInvoluntarySleep".Translate(pawn.LabelShort, pawn), pawn, MessageTypeDefOf.NegativeEvent);
     }
 
-    public override void MentalStateTick()
+    public override void MentalStateTick(int delta)
     {
-        base.MentalStateTick();
+        base.MentalStateTick(delta);
         pawn.needs.rest.TickResting(StatDefOf.BedRestEffectiveness.valueIfMissing);
 
-        Thing spawnedParentOrMe;
-        if (pawn.IsHashIntervalTick(100) && (spawnedParentOrMe = pawn.SpawnedParentOrMe) != null && !spawnedParentOrMe.Position.Fogged(spawnedParentOrMe.Map))
+        if (!pawn.IsHashIntervalTick(100, delta)) return;
+        if (pawn.SpawnedParentOrMe is not Thing spawnedParentOrMe) return;
+        if (spawnedParentOrMe.Position.Fogged(spawnedParentOrMe.Map)) return;
+        
+        (FleckDef fleckDef, float velocitySpeed) = pawn.ageTracker.CurLifeStage.developmentalStage switch
         {
-            FleckDef fleckDef = FleckDefOf.SleepZ;
-            float velocitySpeed = 0.42f;
-            if (pawn.ageTracker.CurLifeStage.developmentalStage == DevelopmentalStage.Baby || pawn.ageTracker.CurLifeStage.developmentalStage == DevelopmentalStage.Newborn)
-            {
-                fleckDef = FleckDefOf.SleepZ_Tiny;
-                velocitySpeed = 0.25f;
-            }
-            else if (pawn.ageTracker.CurLifeStage.developmentalStage == DevelopmentalStage.Child)
-            {
-                fleckDef = FleckDefOf.SleepZ_Small;
-                velocitySpeed = 0.33f;
-            }
-            FleckMaker.ThrowMetaIcon(spawnedParentOrMe.Position, spawnedParentOrMe.Map, fleckDef, velocitySpeed);
-        }
+            DevelopmentalStage.Baby or DevelopmentalStage.Newborn => (FleckDefOf.SleepZ_Tiny, .25f),
+            DevelopmentalStage.Child => (FleckDefOf.SleepZ_Small, .33f),
+            _ => (FleckDefOf.SleepZ, .42f)
+        };
+
+        FleckMaker.ThrowMetaIcon(spawnedParentOrMe.Position, spawnedParentOrMe.Map, fleckDef, velocitySpeed);
     }
 
     public override void PostEnd()

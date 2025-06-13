@@ -7,7 +7,7 @@ public class MentalStateWorker_ClaustrophobicPanic : MentalBreakWorker
 {
     public override bool BreakCanOccur(Pawn pawn)
     {
-        if (pawn.Awake() && pawn.GetRoom() is Room room && room != null)
+        if (pawn.Awake() && pawn.GetRoom() is Room room)
         {
             RoomStatDef spaceDef = RoomStatDefOf.Space;
 

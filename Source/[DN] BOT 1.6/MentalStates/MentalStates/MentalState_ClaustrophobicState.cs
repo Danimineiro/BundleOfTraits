@@ -9,14 +9,14 @@ public class MentalState_ClaustrophobicState : MentalState
 
     public override RandomSocialMode SocialModeMax() => RandomSocialMode.Off;
 
-    public override void MentalStateTick()
+    public override void MentalStateTick(int delta)
     {
         if (pawn.CurJob?.def != JobDefOf.Wait_MaintainPosture)
         {
             pawn.jobs.StartJob(new Job(JobDefOf.Wait_MaintainPosture), JobCondition.InterruptForced);
         }
 
-        base.MentalStateTick();
+        base.MentalStateTick(delta);
     }
 
     public override void PostEnd()
