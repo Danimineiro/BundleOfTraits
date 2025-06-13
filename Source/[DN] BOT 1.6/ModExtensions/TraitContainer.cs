@@ -1,11 +1,14 @@
 ﻿using More_Traits.Extensions;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
 namespace More_Traits.ModExtensions;
 
 public class TraitContainer
 {
-    public TraitDef traitDef = null!;
+    [AllowNull] 
+    public TraitDef traitDef;
+    
     public List<ThingDef> thingDefs = [];
     public List<string> devNotes = [];
     public bool ignoreDraft = false;

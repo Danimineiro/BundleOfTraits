@@ -1,8 +1,10 @@
-﻿namespace More_Traits.ModExtensions;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace More_Traits.ModExtensions;
 
 public class BOT_TraitExtension : DefModExtension
 {
-    public HediffDef hediffDef = null!;
+    [AllowNull] public HediffDef hediffDef;
 
     public override IEnumerable<string> ConfigErrors()
     {

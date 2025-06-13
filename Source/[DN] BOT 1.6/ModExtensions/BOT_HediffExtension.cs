@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 
 namespace More_Traits.ModExtensions;
 
 public class BOT_HediffExtension : DefModExtension
 {
-    public TraitDef traitDef = null!;
-    public List<Color> stageColors = null!;
+    [AllowNull] public TraitDef traitDef;
+    [AllowNull] public List<Color> stageColors;
 
     public override IEnumerable<string> ConfigErrors()
     {

@@ -1,8 +1,10 @@
-﻿namespace More_Traits.ModExtensions;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace More_Traits.ModExtensions;
 
 public class BOT_MentalStateExtension : DefModExtension
 {
-    public TraitDef traitDef = null!;
+    [AllowNull] public TraitDef traitDef;
 
     public override IEnumerable<string> ConfigErrors()
     {
