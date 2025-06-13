@@ -194,7 +194,7 @@
 				</statOffsets>
 				<skillGains>
 					<Melee>-2</Melee>
-					<Mining>2</Mining>
+					<Mining>-2</Mining>
 				</skillGains>
 			</li>   
 		</degreeDatas>
