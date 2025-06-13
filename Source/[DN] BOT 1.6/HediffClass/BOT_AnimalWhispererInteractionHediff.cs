@@ -13,9 +13,11 @@ public sealed class BOT_AnimalWhispererInteractionHediff : Hediff
 
     private List<InteractionCounter> values = [];
 
-    public override void Tick()
+    public override void TickInterval(int delta)
     {
-        if (!pawn.IsHashIntervalTick(400)) return;
+        base.TickInterval(delta);
+        
+        if (!pawn.IsHashIntervalTick(400, delta)) return;
 
         List<Pawn> keysToRemove = [];
         foreach((Pawn key, InteractionCounter counter) in interactionStages)
@@ -61,7 +63,7 @@ public sealed class BOT_AnimalWhispererInteractionHediff : Hediff
         if (!hediffs.UnsafeTryGet(item => item.def == BOT_HediffDefOf.BOT_AnimalWhispererInteractionTag, out Hediff? hediff))
         {
             animal.health.AddHediff(BOT_HediffDefOf.BOT_AnimalWhispererInteractionTag);
-            hediff = hediffs[hediffs.Count - 1];
+            hediff = hediffs[^1];
         }
 
         ((BOT_AnimalWhispererInteractionHediff)hediff!).AddInteraction(human);

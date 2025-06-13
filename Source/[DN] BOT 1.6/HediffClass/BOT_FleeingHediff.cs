@@ -7,13 +7,12 @@ public class BOT_FleeingHediff : TraitHediff
 {
     private readonly BOT_JobGiverFleeing jobGiver = new();
 
-    public override void Tick()
+    public override void TickInterval(int delta)
     {
-        base.Tick();
-        if (!pawn.IsHashIntervalTick(120)) return;
+        base.TickInterval(delta);
+        if (!pawn.IsHashIntervalTick(120, delta)) return;
 
-        Job job = jobGiver.TryIssueJobPackage(pawn, new JobIssueParams()).Job;
-        if (job is null) return;
+        if (jobGiver.TryIssueJobPackage(pawn, new JobIssueParams()).Job is not Job job) return;
 
         pawn.jobs.StartJob(job, JobCondition.Incompletable);
     }
