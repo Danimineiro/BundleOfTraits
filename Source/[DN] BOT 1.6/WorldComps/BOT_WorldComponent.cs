@@ -1,12 +1,11 @@
-﻿using More_Traits.Extensions;
+﻿using HarmonyLib;
+using More_Traits.Extensions;
 using RimWorld.Planet;
 
 namespace More_Traits.WorldComps;
 
 public class BOT_WorldComponent(World world) : WorldComponent(world)
 {
-    private bool postInitDone = false;
-
     private HashSet<Pawn> notifiedNyctoPawnSet = [];
 
     public HashSet<Pawn> NotifiedNyctoPawnSet => notifiedNyctoPawnSet;
@@ -19,22 +18,16 @@ public class BOT_WorldComponent(World world) : WorldComponent(world)
         Scribe_Collections.Look(ref notifiedNyctoPawnSet, nameof(notifiedNyctoPawnSet), LookMode.Reference);
     }
 
-    public override void WorldComponentTick()
+    /// <summary>
+    ///     Adds <see cref="Trait"/> related <see cref="Hediff"/>s on world start.
+    /// </summary>
+    /// <param name="fromLoad">Ignored.</param>
+    public override void FinalizeInit(bool fromLoad)
     {
-        base.WorldComponentTick();
+        PawnsFinder.All_AliveOrDead
+            .Where(pawn => pawn.CanHandlePawn())
+            .Do(pawn => pawn.AddTraitHediffs());
 
-        if (postInitDone) return;
-        
-
-        Span<Pawn> values = PawnsFinder.All_AliveOrDead.AsSpanUnsafe();
-
-        int count = values.Length;
-        for (int i = 0; i < count; i++)
-        {
-            Pawn pawn = values[i];
-            if (pawn.CanHandlePawn()) pawn.AddTraitHediffs();
-        }
-
-        postInitDone = true;
+        base.FinalizeInit(fromLoad);
     }
 }
