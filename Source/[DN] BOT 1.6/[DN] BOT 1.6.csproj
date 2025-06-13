@@ -13,9 +13,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4297" />
-		<PackageReference Include="Lib.Harmony" Version="2.3.5" />
-		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.0" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4489-beta" />
+		<PackageReference Include="Lib.Harmony" Version="2.3.6" />
+		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
 	</ItemGroup>
 
 	<ItemGroup>
