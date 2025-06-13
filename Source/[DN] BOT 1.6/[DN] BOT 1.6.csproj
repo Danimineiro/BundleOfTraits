@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net481</TargetFramework>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+		<RootNamespace>More_Traits</RootNamespace>
+		<OutputPath>../../LoadData/VersionSpecific/1.6/Assemblies</OutputPath>
+		<LangVersion>13.0</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4297" />
+		<PackageReference Include="Lib.Harmony" Version="2.3.5" />
+		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="ListConvert, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+	    <HintPath>..\ListConvert.dll</HintPath>
+	    <Private>True</Private>
+	    <EmbedInteropTypes>False</EmbedInteropTypes>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Using Include="RimWorld" />
+	  <Using Include="Verse" />
+	</ItemGroup>
+</Project>
