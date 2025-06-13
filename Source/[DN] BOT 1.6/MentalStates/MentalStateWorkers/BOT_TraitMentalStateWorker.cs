@@ -6,9 +6,12 @@ namespace More_Traits.MentalStates.MentalStateWorkers;
 
 public class BOT_TraitMentalStateWorker : MentalStateWorker
 {
+    private TraitDef? traitDef;
+    private TraitDef TraitDef => traitDef ??= def.GetModExtension<BOT_MentalStateExtension>().traitDef; 
+
     public override bool StateCanOccur(Pawn pawn)
     {
-        if (!pawn.HasTrait(def.GetModExtension<BOT_MentalStateExtension>().traitDef)) return false;
+        if (!pawn.HasTrait(TraitDef)) return false;
         return base.StateCanOccur(pawn);
     }
 }
