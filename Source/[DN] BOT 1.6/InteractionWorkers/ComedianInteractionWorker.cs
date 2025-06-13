@@ -4,6 +4,15 @@ namespace More_Traits.InteractionWorkers;
 
 public class ComedianInteractionWorker : InteractionWorker
 {
+    private readonly SimpleCurve compatibilityFactorCurve = new(
+    [
+        new CurvePoint(-1.5f, 0f),
+        new CurvePoint(-0.5f, 0.1f),
+        new CurvePoint(0.5f, 1f),
+        new CurvePoint(1f, 1.8f),
+        new CurvePoint(2f, 3f)
+    ]);
+
     private const float BaseSelectionWeight = 0.1f;
 
     public override float RandomSelectionWeight(Pawn initiator, Pawn recipient)
@@ -13,24 +22,6 @@ public class ComedianInteractionWorker : InteractionWorker
         return BaseSelectionWeight * compatibilityFactorCurve.Evaluate(initiator.relations.CompatibilityWith(recipient));
     }
 
-    private readonly SimpleCurve compatibilityFactorCurve = new()
-    {
-        {
-            new CurvePoint(-1.5f, 0f)
-        },
-        {
-            new CurvePoint(-0.5f, 0.1f)
-        },
-        {
-            new CurvePoint(0.5f, 1f)
-        },
-        {
-            new CurvePoint(1f, 1.8f)
-        },
-        {
-            new CurvePoint(2f, 3f)
-        }
-    };
 
     public override void Interacted(Pawn initiator, Pawn recipient, List<RulePackDef> extraSentencePacks, out string letterText, out string letterLabel, out LetterDef letterDef, out LookTargets lookTargets)
     {
