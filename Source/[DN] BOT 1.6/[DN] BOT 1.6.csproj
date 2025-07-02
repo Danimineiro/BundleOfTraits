@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project=".steam.props" />
 
 	<PropertyGroup>
 		<TargetFramework>net481</TargetFramework>
@@ -13,11 +14,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4489-beta" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4507-beta" />
 		<PackageReference Include="Lib.Harmony" Version="2.3.6" />
 		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 	  <Using Include="RimWorld" />
 	  <Using Include="Verse" />

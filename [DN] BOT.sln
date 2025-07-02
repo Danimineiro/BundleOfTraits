@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "[DN] BOT 1.5", "Source\[DN]
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "[DN] BOT 1.6", "Source\[DN] BOT 1.6\[DN] BOT 1.6.csproj", "{74BBAF32-2DA1-E3DE-7FB1-B83BA74237E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "..\..\Data.csproj", "{FE509684-2022-0003-E522-600C6F51CD77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{74BBAF32-2DA1-E3DE-7FB1-B83BA74237E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74BBAF32-2DA1-E3DE-7FB1-B83BA74237E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74BBAF32-2DA1-E3DE-7FB1-B83BA74237E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE509684-2022-0003-E522-600C6F51CD77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE509684-2022-0003-E522-600C6F51CD77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE509684-2022-0003-E522-600C6F51CD77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE509684-2022-0003-E522-600C6F51CD77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

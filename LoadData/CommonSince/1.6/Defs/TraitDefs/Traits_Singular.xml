@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- Round 4 -->
+	<TraitDef MayRequire="Ludeon.RimWorld.Biotech">
+		<defName>BOT_FamilyOriented</defName>
+		<commonality>0.5</commonality>
+		<degreeDatas>
+			<li>
+				<label>family oriented</label>
+				<description>{PAWN_nameDef} values the concept of a family very highly, and likes to guide young minds. Knowing that the families in the colony are happy is important to them and being a parent is one of {PAWN_pronoun}'s dreams.</description>
+
+				<disallowedThoughts>
+					<li>MyChildHappy</li>
+					<li>MyChildrenHappy</li>
+					<li>MyChildSad</li>
+					<li>MyChildrenSad</li>
+				</disallowedThoughts>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Psychopath</li>
+			<li>BOT_ChildHate</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef MayRequire="Ludeon.RimWorld.Biotech">
+		<defName>BOT_ChildHate</defName>
+		<commonality>0.5</commonality>
+		<degreeDatas>
+			<li>
+				<label>hates children</label>
+				<description>{PAWN_nameDef} despises children. To {PAWN_pronoun} they're small, loud and obnoxious parasites that ruin every place they infest. {PAWN_nameDef} actively go out of {PAWN_pronoun}s way to avoid having children.</description>
+
+				<disallowedThoughts>
+					<li>MyChildHappy</li>
+					<li>MyChildrenHappy</li>
+					<li>MyChildSad</li>
+					<li>MyChildrenSad</li>
+					<li>KilledChild</li>
+					<li>KilledChild_Opinion</li>
+					<li>Stillbirth</li>
+					<li>Miscarried</li>
+					<li>EnslavedChild</li>
+					<li>ChildInGrowthVat</li>
+				</disallowedThoughts>
+			</li>
+		</degreeDatas>
+		<conflictingTraits>
+			<li>Psychopath</li>
+			<li>BOT_FamilyOriented</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef MayRequire="Ludeon.RimWorld.Biotech">
+		<defName>BOT_PressureCooker</defName>
+		<commonality>0.3</commonality>
+		<degreeDatas>
+			<li>
+				<label>pressure cooker</label>
+				<description>{PAWN_nameDef} has issues letting their feelings bottle up and consequentially eventually explodes from all the stress. They'll break more often than normal pawns but they'll feel massive relief for a long period of time afterwards.</description>
+
+				<statOffsets>
+					<MentalBreakThreshold>.22</MentalBreakThreshold>
+				</statOffsets>
+			</li>
+		</degreeDatas>
+		
+		<conflictingTraits>
+			<li>Nerves</li>
+			<li>BOT_Apathetic</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Brave</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_Composed</defName>
+		<commonality>0.3</commonality>
+		<degreeDatas>
+			<li>
+				<label>composed</label>
+				<description>{PAWN_nameDef} is able to keep cool under pressure, and will even perform better when there's a risk for mental breaks.</description>
+
+				<statOffsets>
+					<MentalBreakThreshold>.22</MentalBreakThreshold>
+				</statOffsets>
+			</li>
+		</degreeDatas>
+		
+		<modExtensions>
+			<li Class="More_Traits.ModExtensions.BOT_TraitExtension">
+				<hediffDef>BOT_Composed</hediffDef>
+			</li>
+		</modExtensions>
+
+		<conflictingTraits>
+			<li>Nerves</li>
+			<li>BOT_Apathetic</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<TraitDef>
+		<defName>BOT_SoylentNeed</defName>
+		<commonality>0.3</commonality>
+		<degreeDatas>
+			<li>
+				<label>soylent need</label>
+				<description>{PAWN_nameDef} tasted the green sludge once and can't get enough of it now. {PAWN_pronoun} will prefer to eat from a Nutrient Paste Dispenser over anything else.</description>
+				
+				<disallowedThoughtsFromIngestion>
+					<li>
+						<thing>MealNutrientPaste</thing>
+						<thoughts>
+							<li>AteNutrientPasteMeal</li>
+						</thoughts>
+					</li>
+				</disallowedThoughtsFromIngestion>
+				
+				<extraThoughtsFromIngestion>
+					<li>
+						<thing>MealNutrientPaste</thing>
+						<thoughts>
+							<li>BOT_SoylentNeed_AteNutrientPasteMeal</li>
+						</thoughts>
+					</li>
+				</extraThoughtsFromIngestion>
+
+				<ingestibleModifiers>
+					<li>
+						<ingestible>MealNutrientPaste</ingestible>
+						<optimalityOffset>25</optimalityOffset>
+						<poisonChanceOverride>0</poisonChanceOverride>
+					</li>
+				</ingestibleModifiers>
+
+				<disallowedThoughts>
+					<li>AteFineMeal</li>
+					<li>AteLavishMeal</li>
+				</disallowedThoughts>
+				
+				<possessions>
+					<MealNutrientPaste>4</MealNutrientPaste>
+				</possessions>
+			</li>
+		</degreeDatas>
+		
+		<conflictingTraits>
+			<li>Cannibal</li>
+			<li>BOT_Dysgeusia</li>
+			<li>BOT_Entomophobia</li>
+			<li>BOT_Eclectic_Palate</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_RefinedPalate</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_Gastronomist</li>
+		</conflictingTraits>
+	</TraitDef>
+	
+	<TraitDef>
+		<defName>BOT_AnimalWhisperer</defName>
+		<commonality>0.3</commonality>
+		<degreeDatas>
+			<li>
+				<label>animal whisperer</label>
+				<description>{PAWN_nameDef} is strangely proficient at dealing with animals of all kinds and sizes and never triggers attacks if taming attempts fail. {PAWN_pronoun} likes having animals in the colony, having bonded animals and especially loves getting nuzzled.</description>
+				<skillGains>
+					<Animals>4</Animals>
+				</skillGains>
+				<disallowedThoughts>
+					<li>Nuzzled</li>
+					<li>BondedAnimalMaster</li>
+					<li>NotBondedAnimalMaster</li>
+				</disallowedThoughts>
+			</li>
+		</degreeDatas>
+		
+		<conflictingTraits>
+			<li>Psychopath</li>
+			<li>BOT_Apathetic</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_AnimalLover</li>
+			<li MayRequire="VanillaExpanded.VanillaTraitsExpanded">VTE_AnimalHater</li>
+		</conflictingTraits>
+	</TraitDef>
+
+	<!--<TraitDef>
+		<defName>BOT_Astraphobia</defName>
+		<commonality>0.2</commonality>
+		<degreeDatas>{PAWN_nameDef} has an extreme and irrational fear of lightning and thunder, and will run and hide in {PAWN_pronoun} room when there are thunderstorms outside.</degreeDatas>
+	</TraitDef>-->
+</Defs>

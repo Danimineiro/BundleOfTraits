@@ -22,7 +22,4 @@ public static class BOT_TraitDefOf
     public static TraitDef BOT_Chionophile = null!;
     public static TraitDef BOT_Gregarious = null!;
     public static TraitDef BOT_Eclectic_Palate = null!;
-    public static TraitDef BOT_AnimalWhisperer = null!;
-    public static TraitDef BOT_PressureCooker = null!;
-    public static TraitDef BOT_SoylentNeed = null!;
 }

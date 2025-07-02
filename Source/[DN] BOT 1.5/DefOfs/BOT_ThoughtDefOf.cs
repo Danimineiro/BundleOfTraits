@@ -27,6 +27,4 @@ public static class BOT_ThoughtDefOf
     public static ThoughtDef BOT_SadistHurtHumanlike = null!;
     public static ThoughtDef BOT_SadistHarvestedOrgan = null!;
     public static ThoughtDef BOT_SadistWitnessedDamage = null!;
-    public static ThoughtDef BOT_AnimalWhispererNuzzled = null!;
-    public static ThoughtDef BOT_SoylentNeed_AteNutrientPasteMeal = null!;
 }
