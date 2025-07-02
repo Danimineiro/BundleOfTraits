@@ -75,12 +75,12 @@
 			<li>
 				<label>{0}'s master</label>
 				<description>Being together with my bonded animal makes me feel better.</description>
-				<baseMoodEffect>10</baseMoodEffect>
+				<baseMoodEffect>8</baseMoodEffect>
 			</li>
 			<li>
 				<label>master of {0}</label>
 				<description>Being together with my bonded animals makes me feel better.</description>
-				<baseMoodEffect>10</baseMoodEffect>
+				<baseMoodEffect>8</baseMoodEffect>
 			</li>
 		</stages>
 	</ThoughtDef>
