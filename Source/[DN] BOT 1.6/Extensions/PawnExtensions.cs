@@ -34,7 +34,7 @@ public static class PawnExtensions
 
     public static bool TryGetRelation(this Pawn pawn, PawnRelationDef relationDef, out DirectPawnRelation? directPawnRelation, Pawn? otherPawn = null)
     {
-        ReadOnlySpan<DirectPawnRelation> relations = pawn.relations.DirectRelations.AsSpanUnsafe();
+        ReadOnlySpan<DirectPawnRelation> relations = pawn.relations.DirectRelations.AsSpan();
 
         int count = relations.Length;
         bool otherPawnNotNull = otherPawn != null;

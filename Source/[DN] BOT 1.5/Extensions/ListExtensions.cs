@@ -4,13 +4,13 @@ namespace More_Traits.Extensions;
 
 internal static class ListExtensions
 {
-    internal static Span<T> AsSpanUnsafe<T>(this List<T> list) => ListConverter.AsSpan(list);
+    internal static Span<T> AsSpan<T>(this List<T> list) => ListConverter.AsSpan(list);
 
     internal static bool UnsafeContains<TItem>(this List<TItem> list, TItem item) where TItem : class
     {
         if (list.Count == 0) return false;
 
-        Span<TItem> values = list.AsSpanUnsafe();
+        Span<TItem> values = list.AsSpan();
         ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
         ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
         
@@ -28,7 +28,7 @@ internal static class ListExtensions
     {
         if (list.Count == 0) return false;
 
-        Span<TItem> values = list.AsSpanUnsafe();
+        Span<TItem> values = list.AsSpan();
         ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
         ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
 
@@ -47,7 +47,7 @@ internal static class ListExtensions
         item = null;
         if (list.Count == 0) return false; 
 
-        Span<TItem> values = list.AsSpanUnsafe();
+        Span<TItem> values = list.AsSpan();
         ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
         ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
 
@@ -71,7 +71,7 @@ internal static class ListExtensions
 
         int count = 0;
 
-        Span<TItem> values = list.AsSpanUnsafe();
+        Span<TItem> values = list.AsSpan();
         ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
         ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
 
@@ -89,7 +89,7 @@ internal static class ListExtensions
     {
         if (list.Count == 0) return null;
 
-        Span<TItem> values = list.AsSpanUnsafe();
+        Span<TItem> values = list.AsSpan();
         ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
         ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
 

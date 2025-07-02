@@ -19,14 +19,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="ListConvert, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-	    <HintPath>..\ListConvert.dll</HintPath>
-	    <Private>True</Private>
-	    <EmbedInteropTypes>False</EmbedInteropTypes>
-	  </Reference>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Using Include="RimWorld" />
 	  <Using Include="Verse" />
 	</ItemGroup>
