@@ -55,7 +55,7 @@ internal class ThoughtWorker_ChildCount : ThoughtWorker
 
     private static void RefreshChildCount(Map map, int currentTick)
     {
-        int childCount = map.mapPawns.FreeColonistsSpawned.UnsafeCount(pawn => !pawn.ageTracker.Adult);
+        int childCount = map.mapPawns.FreeColonistsSpawned.Count(pawn => !pawn.ageTracker.Adult);
         mapChildCount[map] = (childCount, currentTick + CountTickInterval + map.HashOffsetTicks());
     }
 }

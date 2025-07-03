@@ -26,9 +26,9 @@ public class BOT_WorldComponent(World world) : WorldComponent(world)
         if (postInitDone) return;
         
 
-        Span<Pawn> values = PawnsFinder.All_AliveOrDead.AsSpan();
+        List<Pawn> values = PawnsFinder.All_AliveOrDead;
 
-        int count = values.Length;
+        int count = values.Count;
         for (int i = 0; i < count; i++)
         {
             Pawn pawn = values[i];

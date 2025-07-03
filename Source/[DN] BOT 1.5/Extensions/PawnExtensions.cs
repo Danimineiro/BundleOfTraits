@@ -16,7 +16,7 @@ public static class PawnExtensions
 
     public static bool HasTrait(this Pawn pawn, TraitDef traitDef)
     {
-        return pawn.story?.traits.allTraits.UnsafeContains(trait => trait.def == traitDef) ?? false;
+        return pawn.story?.traits.allTraits.Any(trait => trait.def == traitDef) ?? false;
     }
 
     public static bool CanHandlePawn(this Pawn pawn) => !pawn.Dead && pawn.story?.traits != null;
@@ -34,9 +34,9 @@ public static class PawnExtensions
 
     public static bool TryGetRelation(this Pawn pawn, PawnRelationDef relationDef, out DirectPawnRelation? directPawnRelation, Pawn? otherPawn = null)
     {
-        ReadOnlySpan<DirectPawnRelation> relations = pawn.relations.DirectRelations.AsSpan();
+        List<DirectPawnRelation> relations = pawn.relations.DirectRelations;
 
-        int count = relations.Length;
+        int count = relations.Count;
         bool otherPawnNotNull = otherPawn != null;
         for (int i = 0; i < count; i++)
         {
