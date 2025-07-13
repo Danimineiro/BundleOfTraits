@@ -524,6 +524,7 @@
 				<statFactors>
 					<PsychicSensitivity>2</PsychicSensitivity>
 				</statFactors>
+				<painFactor>1.5</painFactor>
 			</li>
 		</degreeDatas>
 		<conflictingTraits>
