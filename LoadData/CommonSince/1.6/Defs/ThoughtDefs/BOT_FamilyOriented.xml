@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-	<ThoughtDef>
+	<ThoughtDef MayRequire="Ludeon.RimWorld.Biotech">
 		<defName>BOT_FamilyOriented_ChildCount</defName>
 		<workerClass>More_Traits.ThoughtWorkers.ThoughtWorker_ChildCount</workerClass>
 		<stages>
@@ -20,7 +20,7 @@
 		</requiredTraits>
 	</ThoughtDef>
 	
-	<ThoughtDef ParentName="ThoughtAboutChildBase">
+	<ThoughtDef ParentName="ThoughtAboutChildBase" MayRequire="Ludeon.RimWorld.Biotech">
 		<defName>BOT_FamilyOriented_MyChildHappy</defName>
 		<workerClass>ThoughtWorker_MyChildHappy</workerClass>
 		<stages>
@@ -35,7 +35,7 @@
 		</requiredTraits>
 	</ThoughtDef>
 
-	<ThoughtDef ParentName="ThoughtAboutChildBase">
+	<ThoughtDef ParentName="ThoughtAboutChildBase" MayRequire="Ludeon.RimWorld.Biotech">
 		<defName>BOT_FamilyOriented_MyChildrenHappy</defName>
 		<workerClass>ThoughtWorker_MyChildrenHappy</workerClass>
 		<stages>
@@ -50,7 +50,7 @@
 		</requiredTraits>
 	</ThoughtDef>
 
-	<ThoughtDef ParentName="ThoughtAboutChildBase">
+	<ThoughtDef ParentName="ThoughtAboutChildBase" MayRequire="Ludeon.RimWorld.Biotech">
 		<defName>BOT_FamilyOriented_MyChildSad</defName>
 		<workerClass>ThoughtWorker_MyChildSad</workerClass>
 		<stages>
@@ -65,7 +65,7 @@
 		</requiredTraits>
 	</ThoughtDef>
 
-	<ThoughtDef ParentName="ThoughtAboutChildBase">
+	<ThoughtDef ParentName="ThoughtAboutChildBase" MayRequire="Ludeon.RimWorld.Biotech">
 		<defName>BOT_FamilyOriented_MyChildrenSad</defName>
 		<workerClass>ThoughtWorker_MyChildrenSad</workerClass>
 		<stages>

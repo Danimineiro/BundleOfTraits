@@ -53,8 +53,11 @@ public static class HarmonyPatcher
         harmony.Patch(Method(typeof(InteractionWorker_Nuzzle), nameof(InteractionWorker_Nuzzle.Interacted)), postfix: new(AnimalWhisperer_Nuzzled.InteractionWorker_Nuzzle_Interacted));
         harmony.Patch(Method(typeof(InteractionWorker), nameof(InteractionWorker.Interacted)), postfix: new(InteractionWorkerPatches.Interacted));
 
-        harmony.Patch(Method(typeof(Thought), nameof(Thought.MoodOffset)), postfix: new(CatharsisPatches.MoodOffsetPatch));
-        harmony.Patch(PropertyGetter(typeof(Thought), nameof(Thought.DurationTicks)), postfix: new(CatharsisPatches.GetDurationTicks));
+        if (ModLister.GetActiveModWithIdentifier("ludeon.rimworld.biotech")?.Active ?? false)
+        {
+            harmony.Patch(Method(typeof(Thought), nameof(Thought.MoodOffset)), postfix: new(CatharsisPatches.MoodOffsetPatch));
+            harmony.Patch(PropertyGetter(typeof(Thought), nameof(Thought.DurationTicks)), postfix: new(CatharsisPatches.GetDurationTicks));
+        }
 
         harmony.Patch(Method(typeof(TraitSet), nameof(TraitSet.IsThoughtFromIngestionDisallowed)), prefix: new(IngestionPatches.IsThoughtFromIngestionDisallowed));
 

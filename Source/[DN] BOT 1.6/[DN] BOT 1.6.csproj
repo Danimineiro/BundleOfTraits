@@ -10,7 +10,7 @@
 		<LangVersion>13.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>4.0.1</Version>
+		<Version>4.0.2</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
