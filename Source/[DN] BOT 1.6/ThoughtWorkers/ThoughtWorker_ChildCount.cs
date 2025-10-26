@@ -47,6 +47,7 @@ internal class ThoughtWorker_ChildCount : ThoughtWorker
         int currentTick = Find.TickManager.TicksGame;
         if (mapChildCount.TryGetValue(map, out (int childCount, int nextCountTick) value))
         {
+            if (map.IsHashIntervalTick(CountTickInterval)) return;
             if (currentTick < value.nextCountTick) return;
         }
 
@@ -56,6 +57,6 @@ internal class ThoughtWorker_ChildCount : ThoughtWorker
     private static void RefreshChildCount(Map map, int currentTick)
     {
         int childCount = map.mapPawns.FreeColonistsSpawned.UnsafeCount(pawn => !pawn.ageTracker.Adult);
-        mapChildCount[map] = (childCount, currentTick + CountTickInterval + map.HashOffsetTicks());
+        mapChildCount[map] = (childCount, currentTick + CountTickInterval);
     }
 }
