@@ -10,7 +10,7 @@ internal static class ListExtensions
 
         Span<TItem> values = list.AsSpan();
         ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
-        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
+        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length);
         
         do
         {
@@ -28,7 +28,7 @@ internal static class ListExtensions
 
         Span<TItem> values = list.AsSpan();
         ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
-        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
+        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length);
 
         do
         {
@@ -47,7 +47,7 @@ internal static class ListExtensions
 
         Span<TItem> values = list.AsSpan();
         ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
-        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
+        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length);
 
         do
         {
@@ -71,7 +71,7 @@ internal static class ListExtensions
 
         Span<TItem> values = list.AsSpan();
         ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
-        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
+        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length);
 
         do
         {
@@ -89,7 +89,7 @@ internal static class ListExtensions
 
         Span<TItem> values = list.AsSpan();
         ref TItem refLeft = ref Unsafe.AsRef(in values[0]);
-        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length - 1);
+        ref TItem refRight = ref Unsafe.Add(ref refLeft, values.Length);
 
         do
         {
