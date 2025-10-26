@@ -26,7 +26,8 @@ public static class PawnExtensions
         foreach (Trait trait in pawn.story.traits.allTraits)
         {
             if (trait.def.GetModExtension<BOT_TraitExtension>() is not BOT_TraitExtension link) continue;
-            pawn.health.GetOrAddHediff(link.hediffDef);
+            Hediff hediff = pawn.health.GetOrAddHediff(link.hediffDef);
+            hediff.Severity = 1f;
         }
     }
 

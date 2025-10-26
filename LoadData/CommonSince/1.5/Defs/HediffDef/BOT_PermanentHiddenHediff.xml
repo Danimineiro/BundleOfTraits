@@ -5,14 +5,19 @@
 		<makesSickThought>false</makesSickThought>
 		<tendable>false</tendable>
 		<makesAlert>false</makesAlert>
-		<chronic>true</chronic>
+		<chronic>false</chronic>
 		<scenarioCanAdd>false</scenarioCanAdd>
 		<everCurableByItem>false</everCurableByItem>
+		<duplicationAllowed>false</duplicationAllowed>
+		<keepOnBodyPartRestoration>true</keepOnBodyPartRestoration>
+		<minSeverity>.5</minSeverity>
+		<initialSeverity>1</initialSeverity>
 	</HediffDef>
 
 	<HediffDef ParentName="BOT_PermanentHiddenHediff_Base" Name="BOT_PermanentHiddenHediff_Full" Abstract="True">
 		<stages>
 			<li>
+				<minSeverity>.5</minSeverity>
 				<becomeVisible>false</becomeVisible>
 				<lifeThreatening>false</lifeThreatening>
 			</li>

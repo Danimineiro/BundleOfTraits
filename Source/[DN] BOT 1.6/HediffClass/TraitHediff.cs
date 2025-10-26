@@ -8,14 +8,11 @@ public abstract class TraitHediff : Hediff
 
     protected TraitDef? traitDef;
 
-    private bool shouldRemove;
-    public override bool ShouldRemove => shouldRemove;
+    public override bool ShouldRemove => traitDef is null || !pawn.HasTrait(traitDef);
 
     public override void TickInterval(int delta)
     {
         if (!pawn.IsHashIntervalTick(checkInterval, delta)) return;
-
-        shouldRemove = traitDef is null || !pawn.HasTrait(traitDef);
     }
 
     public override void PostMake()
