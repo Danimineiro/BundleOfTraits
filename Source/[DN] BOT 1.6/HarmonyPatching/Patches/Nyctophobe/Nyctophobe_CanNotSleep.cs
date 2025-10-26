@@ -51,13 +51,16 @@ internal class Nyctophobe_CanNotSleep
 
         void tickAction()
         {
+            const bool asleep = false;  // Sleep need
+            const bool gainRest = true; // Health regen
+
             Pawn actor = toil.actor;
             JobDriver_LayDown driver = (JobDriver_LayDown)actor.jobs.curDriver;
             Building_Bed bed = (Building_Bed)actor.CurJob.GetTarget(TargetIndex.A).Thing;
 
             Type boolType = typeof(bool);
             MethodInfo ApplyBedEffects = typeof(Toils_LayDown).GetMethod("ApplyBedRelatedEffects", BindingFlags.Static | BindingFlags.NonPublic);
-            ApplyBedEffects.Invoke(null, [actor, bed, false, true, false]);
+            ApplyBedEffects.Invoke(null, [actor, bed, asleep, gainRest, 1]);
 
             if (!TooDarkFor(actor) || actor.needs.rest.CurCategory >= RestCategory.VeryTired)
             {
