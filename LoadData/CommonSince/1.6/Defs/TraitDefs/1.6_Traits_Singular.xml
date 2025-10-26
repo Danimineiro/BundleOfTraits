@@ -79,10 +79,6 @@
 			<li>
 				<label>composed</label>
 				<description>{PAWN_nameDef} is able to keep cool under pressure, and will even perform better when there's a risk for mental breaks.</description>
-
-				<statOffsets>
-					<MentalBreakThreshold>.22</MentalBreakThreshold>
-				</statOffsets>
 			</li>
 		</degreeDatas>
 		
