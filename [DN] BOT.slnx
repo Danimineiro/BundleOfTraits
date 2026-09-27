@@ -1,0 +1,13 @@
+<Solution>
+  <Project Path="../../Data.csproj" />
+  <Project Path="Source/[DN] BOT 1.4/[DN] BOT 1.4.csproj">
+    <Build Project="false" />
+  </Project>
+  <Project Path="Source/[DN] BOT 1.5/[DN] BOT 1.5.csproj">
+    <Build Project="false" />
+  </Project>
+  <Project Path="Source/[DN] BOT 1.6/[DN] BOT 1.6.csproj" />
+  <Project Path="[DN] BOT Common.csproj">
+    <Build Project="false" />
+  </Project>
+</Solution>
